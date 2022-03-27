@@ -1,12 +1,15 @@
 const express = require("express");
 const app = express();
 const path = require('path');
+
 const db = require('./db/db.js');
 db.authenticate();
+
 const dotenv = require('dotenv')
 dotenv.config();
 
-const userRoutes = require('./Routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
+const articleRoutes = require('./routes/articleRoutes');
 
 app.use(express.json());
 
@@ -17,6 +20,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
+app.use('/api/article', articleRoutes);
 
 module.exports = app;
