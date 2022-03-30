@@ -1,7 +1,7 @@
 const User = require("../models/userSchema");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const auth = require("../middleware/auth");
 
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
@@ -32,10 +32,10 @@ exports.login = async (req, res, next) => {
         return res.status(401).json({ error: "Incorrect password" });
       }
       res.status(200).json({
-        userId: user.id,
-        token: jwt.sign(
+        'userId': user.id,
+        'token': jwt.sign(
           { userId: user.id },
-          'SECRET_TOKEN',
+          'RANDOM_TOKEN_SECRET',
           { expiresIn: '24h' }
         )
       });
@@ -45,35 +45,47 @@ exports.login = async (req, res, next) => {
 
 exports.getOneAccount = (req, res, next) => {
   User.findOne({ id: req.params.id })
-      .then((user) => res.status(200).json(user))
-      .catch((error) => res.status(404).json({ error }));
+    .then((user) => res.status(200).json(user))
+    .catch((error) => res.status(404).json({ error }));
   };
 
 exports.getAllAccounts = (req, res, next) => {
     User.findAll()
-        .then((users) => res.status(200).json(users))
-        .catch((error) => res.status(400).json({ error }));
+      .then((users) => res.status(200).json(users))
+      .catch((error) => res.status(400).json({ error }));
     };
 
 exports.modifyAccount = (req, res, next) => {
-  const userObject = req.file ?
-  {
-    ...JSON.parse(req.body.user),
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  } : { ...req.body };
-User.update({ ...userObject, id:  req.params.id}, { where: {id: req.params.id} })
-  .then(() => res.status(200).json({ message: 'Utilisateur modifié !'}))
-  .catch(error => res.status(400).json({ error }));
-};
-  
+  const userObject = req.body;
+  User.findOne({ where: {id: req.params.id} })
+    .then(user => {
+      if (!user) {
+        res.status(404).json({error: new Error('No such Thing!')});
+      }
+      else if (user.id !== req.auth.userId) {
+        res.status(403).json({
+          error: new Error('Unauthorized request !')
+        });
+      }
+      User.update({ ...userObject, id:  req.params.id}, { where: {id: req.params.id} })
+        .then(() => res.status(200).json({ message: 'Utilisateur modifié !'}))
+        .catch(error => res.status(400).json({ error }));
+      })
+    .catch(error => res.status(500).json({ error }));
+  };
+
 exports.deleteAccount = (req, res, next) => {
   User.findOne({ where: {id: req.params.id} })
     .then(user => {
       if (!user) {
         res.status(404).json({error: new Error('No such Thing!')});
       }
-        User.destroy({ where: {id: req.params.id} })
+      if (user.id !== req.auth.userId) {
+        res.status(403).json({error: new Error('Unauthorized request !')});
+      }
+      User.destroy({ where: {id: req.params.id} })
         .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
         .catch((error) => res.status(400).json({ error }));
-      });
-};
+      })
+    .catch(error => res.status(500).json({ error }));
+  };
