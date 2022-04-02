@@ -6,25 +6,31 @@ const fs = require('fs');
 exports.createArticle = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const content =  req.body.content;
-
   if((content == null || content == "") && (imageUrl == null || imageUrl == "")){
       return res.status(400).json({'error': "Veuillez remplir le champ 'texte' ou 'image' pour créer un article"});
   }
   else if (content != null && imageUrl != null) {
     return res.status(400).json({'error': "Veuillez ne remplir qu'un seul des champs 'texte' ou 'image' pour créer un article"});
   }
-
   const articleObject = req.body;
   const article = new Article({
           ...articleObject,})
-
   article.save()
-      .then(() => res.status(201).json({ message: 'Article créé !'}))
+      .then(() => res.status(201).json(article))
       .catch(error => res.status(400).json({ error }));
 }
 
 exports.getOneArticle = (req, res, next) => {
-    Article.findOne({ id: req.params.id })
+    Article.findOne({ 
+      where:{
+        id: req.params.id 
+      },
+      include:[
+        {
+          model: User
+        }
+      ]
+    })
         .then((article) => res.status(200).json(article))
         .catch((error) => res.status(404).json({ error }));
     };
@@ -60,7 +66,7 @@ exports.deleteArticle = (req, res, next) => {
       res.status(404).json({error: new Error('No such Thing!')});
     }
     Article.destroy({ where: {id: req.params.id} })
-    .then(() => res.status(200).json({ message: 'Article supprimé !'}))
+    .then(() => res.status(204))
     .catch(error => res.status(400).json({ error }));
   })
   .catch(error => res.status(500).json({ error }));

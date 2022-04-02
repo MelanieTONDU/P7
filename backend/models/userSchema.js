@@ -31,5 +31,6 @@ const User = sequelize.define('User', {
 });
 
 User.hasMany(Article, { foreignKey: 'users_id', onDelete:'CASCADE', onUpdate: 'CASCADE'});
+Article.belongsTo(User, {foreignKey: 'users_id'});
 
 module.exports = User;

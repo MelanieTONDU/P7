@@ -1,5 +1,6 @@
 const sequelize = require('../db/db.js');
 const { DataTypes } = require('sequelize');
+const User = require ('../models/userSchema');
 
 const Article = sequelize.define('Article', {
   title: {
@@ -17,6 +18,5 @@ const Article = sequelize.define('Article', {
     allowNull: true,
   },
 });
-
 
 module.exports = Article;
