@@ -1,6 +1,7 @@
 const sequelize = require('../db/db.js');
 const { DataTypes } = require('sequelize');
-const User = require ('../models/userSchema');
+const Comment = require ('./commentSchema');
+
 
 const Article = sequelize.define('Article', {
   title: {
@@ -18,5 +19,8 @@ const Article = sequelize.define('Article', {
     allowNull: true,
   },
 });
+
+Article.hasMany(Comment, { foreignKey: 'articles_id', onDelete:'CASCADE'});
+Comment.belongsTo(Article, {foreignKey: 'articles_id'});
 
 module.exports = Article;
