@@ -84,7 +84,7 @@ exports.deleteAccount = (req, res, next) => {
         res.status(403).json({error: new Error('Unauthorized request !')});
       }
       User.destroy({ where: {id: req.params.id} })
-        .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+        .then(() => res.status(204))
         .catch((error) => res.status(400).json({ error }));
       })
     .catch(error => res.status(500).json({ error }));

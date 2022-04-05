@@ -4,17 +4,18 @@ const User = require('../models/userSchema');
 const fs = require('fs');
 
 exports.createArticle = (req, res, next) => {
-  const imageUrl = req.body.imageUrl;
+  const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
   const content =  req.body.content;
+  const articleObject = req.body;
+  const article = new Article({
+          ...articleObject,imageUrl})
+
   if((content == null || content == "") && (imageUrl == null || imageUrl == "")){
       return res.status(400).json({'error': "Veuillez remplir le champ 'texte' ou 'image' pour créer un article"});
   }
   else if (content != null && imageUrl != null) {
     return res.status(400).json({'error': "Veuillez ne remplir qu'un seul des champs 'texte' ou 'image' pour créer un article"});
   }
-  const articleObject = req.body;
-  const article = new Article({
-          ...articleObject,})
   article.save()
       .then(() => res.status(201).json(article))
       .catch(error => res.status(400).json({ error }));
@@ -52,10 +53,13 @@ exports.modifyArticle = (req, res, next) => {
       if (!article) {
         res.status(404).json({error: new Error('No such Thing!')});
       }
+    const filename = article.imageUrl.split('/images/')[1];
+    fs.unlink(`images/${filename}`, () => {
       Article.update({ ...articleObject, id:  req.params.id}, { where: {id: req.params.id} })
         .then(() => res.status(200).json({ message: 'Article modifié !'}))
         .catch(error => res.status(400).json({ error }));
       })
+    })
     .catch(error => res.status(500).json({ error }));
   };
 
@@ -65,9 +69,12 @@ exports.deleteArticle = (req, res, next) => {
     if (!article) {
       res.status(404).json({error: new Error('No such Thing!')});
     }
-    Article.destroy({ where: {id: req.params.id} })
-    .then(() => res.status(204))
-    .catch(error => res.status(400).json({ error }));
+    const filename = article.imageUrl.split('/images/')[1];
+    fs.unlink(`images/${filename}`, () => {
+      Article.destroy({ where: {id: req.params.id} })
+      .then(() => res.status(204))
+      .catch(error => res.status(400).json({ error }));
+    })
   })
   .catch(error => res.status(500).json({ error }));
 };
