@@ -16,6 +16,11 @@ exports.modifyComment = (req, res, next) => {
       if (!comment) {
         res.status(404).json({error: new Error('No such Thing!')});
       }
+      else if (comment.users_id !== req.auth.userId) {
+        res.status(403).json({
+          error: new Error('Unauthorized request !')
+        })
+      }
       Comment.update({ ...articleObject, id:  req.params.id}, { where: {id: req.params.id} })
         .then(() => res.status(200).json({ message: 'Commentaire modifié !'}))
         .catch(error => res.status(400).json({ error }));
@@ -28,6 +33,11 @@ exports.deleteComment = (req, res, next) => {
   .then(comment => {
     if (!comment) {
       res.status(404).json({error: new Error('No such Thing!')});
+    }
+    else if (comment.users_id !== req.auth.userId) {
+      res.status(403).json({
+        error: new Error('Unauthorized request !')
+      })
     }
     Comment.destroy({ where: {id: req.params.id} })
     .then(() => res.status(204))

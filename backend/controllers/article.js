@@ -53,6 +53,11 @@ exports.modifyArticle = (req, res, next) => {
       if (!article) {
         res.status(404).json({error: new Error('No such Thing!')});
       }
+      else if (article.users_id !== req.auth.userId) {
+        res.status(403).json({
+          error: new Error('Unauthorized request !')
+        })
+      }
     const filename = article.imageUrl.split('/images/')[1];
     fs.unlink(`images/${filename}`, () => {
       Article.update({ ...articleObject, id:  req.params.id}, { where: {id: req.params.id} })
@@ -68,6 +73,11 @@ exports.deleteArticle = (req, res, next) => {
   .then(article => {
     if (!article) {
       res.status(404).json({error: new Error('No such Thing!')});
+    }
+    else if (article.users_id !== req.auth.userId) {
+      res.status(403).json({
+        error: new Error('Unauthorized request !')
+      })
     }
     const filename = article.imageUrl.split('/images/')[1];
     fs.unlink(`images/${filename}`, () => {
