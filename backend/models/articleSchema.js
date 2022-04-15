@@ -2,7 +2,6 @@ const sequelize = require('../db/db.js');
 const { DataTypes } = require('sequelize');
 const Comment = require ('./commentSchema');
 
-
 const Article = sequelize.define('Article', {
   title: {
     type: DataTypes.STRING,

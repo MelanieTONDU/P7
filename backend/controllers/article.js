@@ -7,8 +7,9 @@ exports.createArticle = (req, res, next) => {
   const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
   const content =  req.body.content;
   const articleObject = req.body;
+  const users_id = req.auth.userId;
   const article = new Article({
-          ...articleObject,imageUrl})
+          ...articleObject,imageUrl, users_id})
 
   if((content == null || content == "") && (imageUrl == null || imageUrl == "")){
       return res.status(400).json({'error': "Veuillez remplir le champ 'texte' ou 'image' pour créer un article"});

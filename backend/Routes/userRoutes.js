@@ -6,8 +6,8 @@ const auth = require('../middleware/auth');
 
 router.post('/signup',  userCtrl.signup);
 router.get('/login', userCtrl.login);
-router.get('/:id', userCtrl.getOneAccount);
-router.get('/', userCtrl.getAllAccounts);
+router.get('/:id', auth, userCtrl.getOneAccount);
+router.get('/', auth, userCtrl.getAllAccounts);
 router.put('/:id', auth, userCtrl.modifyAccount);
 router.delete('/:id', auth, userCtrl.deleteAccount);
 

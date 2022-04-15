@@ -6,7 +6,6 @@ const Comment = sequelize.define('Comment', {
       type: DataTypes.STRING,
       allowNull: false,
     },
-     
   });
   
   module.exports = Comment;

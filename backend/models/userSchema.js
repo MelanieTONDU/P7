@@ -31,10 +31,10 @@ const User = sequelize.define('User', {
   },
 });
 
-User.hasMany(Article, { foreignKey: 'users_id', onDelete:'CASCADE'});
+User.hasMany(Article, {foreignKey: 'users_id', onDelete:'CASCADE'});
 Article.belongsTo(User, {foreignKey: 'users_id'});
 
-User.hasMany(Comment, { foreignKey: 'users_id', onDelete:'CASCADE'});
+User.hasMany(Comment, {foreignKey: 'users_id', onDelete:'CASCADE'});
 Comment.belongsTo(User, {foreignKey: 'users_id'});
 
-module.exports = User;
+module.exports = User; 
