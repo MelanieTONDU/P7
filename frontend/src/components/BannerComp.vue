@@ -15,7 +15,7 @@ export default {
 <style scoped lang="scss">
 img{
   width: 100%;
-  height: 810px;
+  height: 86.5vh;
   object-fit: cover;
 }
 

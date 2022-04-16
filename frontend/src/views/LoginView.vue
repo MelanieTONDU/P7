@@ -8,15 +8,15 @@
           <h1>Se connecter</h1>
           <div class="form-group">
             <label>
-              <input id="email" placeholder="email" type="email" required />
+              <input v-model="email" id="email" placeholder="Email" type="email" required />
             </label>
           </div>
           <div class="form-group">
             <label>
-              <input id="email" placeholder="Mot de passe" type="text" required />
+              <input v-model="password" id="password" placeholder="Mot de passe" type="text" required />
             </label>
           </div>
-          <button type="submit">Connexion</button>
+          <button @click="connectAccount()" type="button">Connexion</button>
           <div>
             <p>Vous n'avez pas encore de compte ? <router-link to="/" class="link">S'inscrire</router-link></p>
         </div>
@@ -27,15 +27,30 @@
 <script>
 import HeaderComp from '@/components/HeaderComp.vue'
 import BannerComp from '@/components/BannerComp.vue'
+import axios from "axios";
 
 export default {
   name: 'LoginView',
   components: {
     HeaderComp,
     BannerComp
+  },
+  data : function (){
+    return {
+      email:'',
+      password:'',
+    }
+  },
+	methods:{
+		connectAccount: function() {
+      const user = { email: this.email, password: this.password };
+		axios.post("http://localhost:3000/api/auth/login", user)
+			.then(response => response.data);
+        const router = this.$router;
+        router.push("/article").catch(()=>{});
+        },
   }
 }
-
 </script>
 
 <style scoped lang="scss">
