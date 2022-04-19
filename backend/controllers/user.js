@@ -12,8 +12,12 @@ exports.signup = (req, res, next) => {
           email: req.body.email,
           password: hash,
       });
+
+      console.log(user)
+      console.log()
+    
       user.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+        .then(() => res.status(201).json({user}))
         .catch(error => res.status(401).json({ error }));
       })
     .catch(error => res.status(500).json({ error }));
@@ -25,7 +29,7 @@ exports.login = async (req, res, next) => {
       where: { email: req.body.email },
     });
     if (!user) {
-      return res.status(401).json({ error: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
     const valid = await bcrypt.compare(req.body.password, user.password);
       if (!valid) {
@@ -52,7 +56,7 @@ exports.getOneAccount = (req, res, next) => {
 exports.getAllAccounts = (req, res, next) => {
     User.findAll()
       .then((users) => res.status(200).json(users))
-      .catch((error) => res.status(400).json({ error }));
+      .catch((error) => res.status(404).json({ error }));
     };
 
 exports.modifyAccount = (req, res, next) => {

@@ -5,6 +5,8 @@
 </template>
 
 <style lang="scss">
+$primary : #ff00009d;
+
 body{
   margin: 0;
 }
@@ -15,6 +17,20 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#post {
+  border : 2px solid rgb(116, 116, 116);
+  border-radius: 10px;
+  margin: 0px 20% 20px 20%;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  img {
+    width: 50%;
+  }
 }
 
 form{
@@ -47,7 +63,7 @@ form{
   }
   .link{
     text-decoration: none;
-    color: #ff00009d;
+    color: $primary;
     font-weight: bold;
     &:hover{
       text-decoration: underline;

@@ -16,6 +16,7 @@
               <input v-model="password" id="password" placeholder="Mot de passe" type="password" required />
             </label>
           </div>
+          <p>{{msg}}</p>
           <button @click="connectAccount()" type="button">Connexion</button>
           <div>
             <p>Vous n'avez pas encore de compte ? <router-link to="/" class="link">S'inscrire</router-link></p>
@@ -39,6 +40,7 @@ export default {
     return {
       email:'',
       password:'',
+      msg:''
     }
   },
 	methods:{
@@ -46,10 +48,15 @@ export default {
       const user = { email: this.email, password: this.password };
       axios.post("http://localhost:3000/api/auth/login", user)
         .then(response => {
-          if(response.status === 200) {
             localStorage.setItem("token", response.data.token);
-            this.$router.push('/article' );
-					}
+            this.$router.push('/article' );})
+        .catch(error => { 
+          if (error.response.status == 404) {
+             this.msg = 'Utilisateur inconnu !'
+          }
+          if (error.response.status == 401) {
+              this.msg = "Mot de passe incorrect !"
+          }
       })
     },
 }

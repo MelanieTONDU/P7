@@ -19,7 +19,7 @@
 			</div>
 			<div class="form-group">
 				<label>
-					<input v-model="email" :rules="emailRules" id="email" placeholder="Email" type="email" required />
+					<input v-model="email" id="email" placeholder="Email" type="email" required />
 				</label>
 			</div>
 			<div class="form-group">
@@ -27,6 +27,7 @@
 					<input v-model="password" id="password" placeholder="Mot de passe"  type="password" required />
 				</label>
 			</div>
+			<p class="message">{{msg}}</p>
 			<button :disabled="email && password && lastName && firstName == ''" @click="createAccount()" type="button">S'inscrire</button>
 			<div>
 				<p>Vous avez déjà un compte ? <router-link to="/login" class="link">Se connecter</router-link></p>
@@ -48,10 +49,8 @@ export default {
 			lastName:'',
 			firstName:'',
 			email:'',
-			emailRules: [
-				v => /.+@.+\..+/.test(v) || 'Votre E-mail doit être valide',
-                ],
 			password:'',
+			msg:''
 		}
 	},
 	components: {
@@ -60,27 +59,22 @@ export default {
 	},
 	methods:{
 		createAccount: function() {
-			this.$refs.form.validate();
 			let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
 			if ((passwordRegex.test(this.password)) == false){
-				console.log("faux")
+				this.msg = `Le mot de passe doit inclure : minimum 8 caractères, 1 Majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.`
 			}
 			else {
 				const user = { lastName: this.lastName, firstName : this.firstName, email: this.email, password: this.password };
-				console.log(user)
 				axios.post("http://localhost:3000/api/auth/signup", user)
 				.then(response => {
-					if(response.status === 201) {
-						console.log(response.status)
-						const router = this.$router;
-						router.push('/article' );
-					}
-					else {
-						console.log(response.status)
+					localStorage.setItem("token", response.data.token);
+					this.$router.push('/article' );
+				})
+				.catch(error => { 
+					if (error.response.status == 401) {
+						this.msg = 'Utilisateur déjà existant!'
 					}
 				})
-				.catch(error => error )
 			}
 		}
 	}
@@ -88,4 +82,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 </style>
