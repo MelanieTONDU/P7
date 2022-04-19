@@ -5,15 +5,16 @@ import PostView from '../views/PostView.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'Inscription',
-    component: SignupView
-  },
-  {
     path: '/login',
     name: 'Connexion',
     component: LoginView
   },
+  {
+    path: '/',
+    name: 'Inscription',
+    component: SignupView
+  },
+  
   {
     path: '/article',
     name: 'post',

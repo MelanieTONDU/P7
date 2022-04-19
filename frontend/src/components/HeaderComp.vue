@@ -2,8 +2,8 @@
   <div class="fond">
     <img class="logo" src="../assets/icon-left-font.png"/>
     <nav>
-      <router-link to="/">Inscription</router-link>
       <router-link to="/login">Connexion</router-link>
+      <router-link to="/">Inscription</router-link>
     </nav>
   </div>
 </template>

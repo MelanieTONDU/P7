@@ -13,7 +13,7 @@
           </div>
           <div class="form-group">
             <label>
-              <input v-model="password" id="password" placeholder="Mot de passe" type="text" required />
+              <input v-model="password" id="password" placeholder="Mot de passe" type="password" required />
             </label>
           </div>
           <button @click="connectAccount()" type="button">Connexion</button>
@@ -35,7 +35,7 @@ export default {
     HeaderComp,
     BannerComp
   },
-  data : function (){
+  data (){
     return {
       email:'',
       password:'',
@@ -44,12 +44,15 @@ export default {
 	methods:{
 		connectAccount: function() {
       const user = { email: this.email, password: this.password };
-		axios.post("http://localhost:3000/api/auth/login", user)
-			.then(response => response.data);
-        const router = this.$router;
-        router.push("/article").catch(()=>{});
-        },
-  }
+      axios.post("http://localhost:3000/api/auth/login", user)
+        .then(response => {
+          if(response.status === 200) {
+            localStorage.setItem("token", response.data.token);
+            this.$router.push('/article' );
+					}
+      })
+    },
+}
 }
 </script>
 
