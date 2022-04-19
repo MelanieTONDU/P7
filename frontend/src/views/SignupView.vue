@@ -5,7 +5,7 @@
 		<BannerComp />
 	</div>
 	<div>
-		<v-form ref="form" v-model="valid">
+		<form>
 			<h1>Créer un compte</h1>
 			<div class="form-group">
 				<label>
@@ -31,7 +31,7 @@
 			<div>
 				<p>Vous avez déjà un compte ? <router-link to="/login" class="link">Se connecter</router-link></p>
 			</div>
-		</v-form>
+		</form>
 	</div>
 </div>
 </template>
