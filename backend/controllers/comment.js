@@ -48,3 +48,9 @@ exports.deleteComment = (req, res, next) => {
   })
   .catch(error => res.status(500).json({ error }));
 };
+
+exports.getAllComment = (req, res, next) => {
+    Comment.findAll()
+        .then((comments) => res.status(200).json(comments))
+        .catch((error) => res.status(400).json({ error }));
+    };

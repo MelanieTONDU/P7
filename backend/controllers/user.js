@@ -12,10 +12,6 @@ exports.signup = (req, res, next) => {
           email: req.body.email,
           password: hash,
       });
-
-      console.log(user)
-      console.log()
-    
       user.save()
         .then(() => res.status(201).json({user}))
         .catch(error => res.status(401).json({ error }));
@@ -48,7 +44,7 @@ exports.login = async (req, res, next) => {
 };
 
 exports.getOneAccount = (req, res, next) => {
-  User.findOne({ id: req.params.id })
+  User.findOne({ where: {id: req.params.id} })
     .then((user) => res.status(200).json(user))
     .catch((error) => res.status(404).json({ error }));
   };

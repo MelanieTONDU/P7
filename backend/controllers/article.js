@@ -1,26 +1,29 @@
 const Article = require('../models/articleSchema');
 const User = require('../models/userSchema');
+const Op = require("sequelize").Op;
 
 const fs = require('fs');
 
 exports.createArticle = (req, res, next) => {
-  const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-  const content =  req.body.content;
   const articleObject = req.body;
   const users_id = req.auth.userId;
-  const article = new Article({
-          ...articleObject,imageUrl, users_id})
+  const article = req.file ? {
+     ...articleObject,imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`, users_id} : { ...req.body, users_id};
+     const post = new Article({
+      ...article})
 
-  if((content == null || content == "") && (imageUrl == null || imageUrl == "")){
-      return res.status(400).json({'error': "Veuillez remplir le champ 'texte' ou 'image' pour créer un article"});
-  }
-  else if (content != null && imageUrl != null) {
-    return res.status(400).json({'error': "Veuillez ne remplir qu'un seul des champs 'texte' ou 'image' pour créer un article"});
-  }
-  article.save()
-      .then(() => res.status(201).json(article))
-      .catch(error => res.status(400).json({ error }));
-}
+      if((post.content == null || post.content == "") && (post.imageUrl == null || post.imageUrl == "")){
+        return res.status(400).json({'error': "Veuillez remplir le champ 'texte' ou 'image' pour créer un article"});
+      }
+      else if (post.content != null && post.imageUrl != null) {
+        return res.status(400).json({'error': "Veuillez ne remplir qu'un seul des champs 'texte' ou 'image' pour créer un article"});
+      }
+  
+      post.save()
+          .then(() => res.status(201).json(article))
+          .catch(error => res.status(400).json({ error }));
+    }
+    
 
 exports.getOneArticle = (req, res, next) => {
     Article.findOne({ 
@@ -38,7 +41,26 @@ exports.getOneArticle = (req, res, next) => {
     };
   
   exports.getAllArticles = (req, res, next) => {
-      Article.findAll()
+    where = {};
+    if(req.query.type == "text"){
+      where = {
+        where: {
+          content: {
+            [Op.not]: null
+          }
+        }
+      }
+    }
+    if(req.query.type == "image"){
+      where = {
+        where: {
+          imageUrl: {
+            [Op.not]: ""
+          }
+        }
+      }
+    }
+      Article.findAll(where)
           .then((articles) => res.status(200).json(articles))
           .catch((error) => res.status(400).json({ error }));
       };

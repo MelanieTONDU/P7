@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
     <router-view/>
-  </div>
 </template>
 
 <style lang="scss">
@@ -20,19 +18,23 @@ body{
 }
 
 #post {
-  border : 2px solid rgb(116, 116, 116);
+  box-shadow: #c4c4c4 1px 1px 3px;
   border-radius: 10px;
-  margin: 0px 20% 20px 20%;
+  margin: 20px 20% 20px 20%;
   text-decoration: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: black;
+  background-color: white;
   img {
     width: 50%;
   }
 }
-
+#article {
+  background-color: rgba(250, 251, 252, 1);
+  padding: 20px;
+}
 form{
   position: absolute;
   top: 35%;
@@ -60,14 +62,6 @@ form{
     padding: 5px 15px 5px 15px;
     margin: 15px 0 20px 0;
     border-radius: 10px;
-  }
-  .link{
-    text-decoration: none;
-    color: $primary;
-    font-weight: bold;
-    &:hover{
-      text-decoration: underline;
-    }
   }
 }
 </style>
