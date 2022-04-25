@@ -1,67 +1,47 @@
 <template>
-  <div id="article">
+  <div id="discussion">
     <HeaderPost/>
+    <div id="container">
+      <div id="publication">
+        <PostContent />
+        <CommentList/>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import HeaderPost from '@/components/HeaderPost.vue'
+import HeaderPost from '@/components/HeaderPost.vue';
+import PostContent from '@/components/PostContent.vue';
+import CommentList from '@/components/CommentList.vue';
 
 export default {
-  name: 'PostView',
   components : {
-    HeaderPost
+    HeaderPost,
+    PostContent,
+    CommentList
   },
   data() {
     return {
       token : localStorage.getItem("token"),
     }
   },
-  created() { 
-    const id = window.location.href.split("/")[4];
-    axios.get("http://localhost:3000/api/article/" + id, {
-        headers: {Authorization: "Bearer " + this.token}})
-      .then(response => {
-        let article = response.data;
-          let posts = document.getElementById('article');
-          let title = document.createElement('h2');
-          let post = document.createElement('div');
-          post.href = "./article/" + article.id ;
-          post.setAttribute("id", "post");
-          posts.appendChild(post);
-          post.appendChild(title);
-          title.textContent= "Titre : " + article.title;
-          let content = document.createElement('p');
-          post.appendChild(content);
-          content.textContent= article.content;
-                    console.log(article.imageUrl)
-          if(article.imageUrl != null){
-            let img = document.createElement('img');
-            post.appendChild(img);
-            img.src = article.imageUrl;
-          }
-        })
-    axios.get("http://localhost:3000/api/article/" + id + "/comment/",{
-            headers: {Authorization: "Bearer " + this.token}})
-      .then(response => {
-        const data = response.data;
-        const comments = data.filter(p => p.articles_id == id);
-          comments.forEach(comment =>{
-            let posts = document.getElementById('article');
-            let post = document.createElement('p');
-            posts.appendChild(post);
-            post.textContent = "Commentaires : " + comment.text;
-          })
-        })
-      },
-    methods: {
-        deco: function(){
-          localStorage.clear();
-        }
-    }
-  }
+}
 </script>
 
 <style scoped lang="scss">
+#container {
+  background-color:rgb(248, 248, 248);
+  padding: 20px 30px 20px 30px;
+  min-height: 100vh;}
+#publication {
+  box-shadow: #c4c4c4 1px 1px 3px;
+  border-radius: 10px;
+  margin: 20px 20% 20px 20%;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  background-color: white;
+}
 </style>

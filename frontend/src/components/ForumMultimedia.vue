@@ -1,5 +1,5 @@
 <template>
-  <div id="article">
+  <div id="articleList">
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
       .then(response => {
         let articles = response.data;
         articles.forEach(article => {
-          let posts = document.getElementById('article');
+          let posts = document.getElementById('articleList');
           let title = document.createElement('h2');
           let post = document.createElement('a');
           post.href = "./" + article.id ;

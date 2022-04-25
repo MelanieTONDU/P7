@@ -48,7 +48,12 @@ exports.getOneArticle = (req, res, next) => {
           content: {
             [Op.not]: null
           }
-        }
+        },
+        include:[
+          {
+            model: User
+          }
+        ]
       }
     }
     if(req.query.type == "image"){
@@ -57,7 +62,12 @@ exports.getOneArticle = (req, res, next) => {
           imageUrl: {
             [Op.not]: ""
           }
-        }
+        },
+        include:[
+          {
+            model: User
+          }
+        ]
       }
     }
       Article.findAll(where)

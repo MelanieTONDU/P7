@@ -1,4 +1,5 @@
 const Comment = require('../models/commentSchema');
+const User = require('../models/userSchema');
 
 exports.createComment = (req, res, next) => {
     const commentObject = req.body;
@@ -50,7 +51,11 @@ exports.deleteComment = (req, res, next) => {
 };
 
 exports.getAllComment = (req, res, next) => {
-    Comment.findAll()
+    Comment.findAll({include:[
+      {
+        model: User
+      }
+    ]})
         .then((comments) => res.status(200).json(comments))
         .catch((error) => res.status(400).json({ error }));
     };

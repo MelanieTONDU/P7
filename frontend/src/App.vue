@@ -4,7 +4,10 @@
 
 <style lang="scss">
 $primary : #ff00009d;
+*{
+    box-sizing: border-box; 
 
+}
 body{
   margin: 0;
 }
@@ -18,20 +21,14 @@ body{
 }
 
 #post {
+  width: 50%;
   box-shadow: #c4c4c4 1px 1px 3px;
   border-radius: 10px;
-  margin: 20px 20% 20px 20%;
   text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   color: black;
   background-color: white;
-  img {
-    width: 50%;
-  }
 }
-#article {
+#articleList {
   background-color: rgba(250, 251, 252, 1);
   padding: 20px;
 }
@@ -64,4 +61,9 @@ form{
     border-radius: 10px;
   }
 }
+#avatar {
+  width: 60px;
+  object-fit :contain;
+}
+
 </style>
