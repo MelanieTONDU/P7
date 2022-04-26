@@ -1,5 +1,7 @@
 const Article = require('../models/articleSchema');
 const User = require('../models/userSchema');
+const Comments = require('../models/commentSchema');
+
 const Op = require("sequelize").Op;
 
 const fs = require('fs');
@@ -52,6 +54,9 @@ exports.getOneArticle = (req, res, next) => {
         include:[
           {
             model: User
+          },
+          {
+            model: Comments
           }
         ]
       }
@@ -66,6 +71,9 @@ exports.getOneArticle = (req, res, next) => {
         include:[
           {
             model: User
+          },
+          {
+            model: Comments
           }
         ]
       }

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import SignupView from '../views/SignupView.vue'
 import LoginView from '../views/LoginView.vue'
 import AccueilView from '../views/AccueilView.vue'
-import ArticleView from '../views/ArticleView.vue'
+import OneArticle from '../views/OneArticle.vue'
 import ForumDiscussion from '../views/ForumDiscussion.vue'
 import ForumMultimedia from '../views/ForumMultimedia.vue'
 
@@ -35,7 +35,7 @@ const routes = [
   {
     path: '/article/:id',
     name: 'article',
-    component: ArticleView
+    component: OneArticle
   },
 ]
 

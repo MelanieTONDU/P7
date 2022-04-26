@@ -8,11 +8,18 @@ exports.createComment = (req, res, next) => {
     const articles_id = url.split('/')[3];
     const comment = new Comment({
             ...commentObject, users_id, articles_id})
-    comment.save()
-        .then(() => res.status(201).json(comment))
-        .catch(error => res.status(400).json({ error }));
+    Comment.findAll({include:[
+      {
+        model: User
       }
-      
+    ]})
+        .then((comments) => 
+        comment.save()
+          .then(() => res.status(201).json(comments))
+          .catch(error => res.status(400).json({ error })))
+        .catch((error) => res.status(400).json({ error }));
+    };
+    
 exports.modifyComment = (req, res, next) => {
     const commentObject = req.body;
   Comment.findOne({ where: {id: req.params.id} })

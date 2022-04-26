@@ -29,7 +29,6 @@ export default {
 <style scoped lang="scss">
 #header{
     display: flex;
-    
     .logo{
         width: 70%;
     }
@@ -48,6 +47,9 @@ export default {
         &.router-link-exact-active {
             color: #ff00009d;
         }
+    }
+    .link:hover{
+        text-decoration: underline;
     }
 }
 </style>

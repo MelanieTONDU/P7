@@ -1,10 +1,14 @@
 <template>
-  <div id="discussion">
+  <div>
     <HeaderPost/>
-    <div id="container">
-      <div id="publication">
-        <PostContent />
-        <CommentList/>
+    <div id="forum">
+      <div id="bandeau">
+        <div id="test">
+        <div id="publication">
+          <PostContent />
+          <CommentList/>
+        </div>
+        </div>
       </div>
     </div>
   </div>
@@ -33,15 +37,20 @@ export default {
 #container {
   background-color:rgb(248, 248, 248);
   padding: 20px 30px 20px 30px;
-  min-height: 100vh;}
+  height: 100vh;
+}
 #publication {
   box-shadow: #c4c4c4 1px 1px 3px;
   border-radius: 10px;
-  margin: 20px 20% 20px 20%;
+  width: 95%;
   text-decoration: none;
   display: flex;
   flex-direction: column;
   color: black;
   background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 </style>

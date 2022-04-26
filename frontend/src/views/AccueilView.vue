@@ -1,7 +1,9 @@
 <template>
   <div id="article">
     <HeaderPost/>
-    <h1>Bienvenue</h1>
+    <div class="container">
+      <h1>Bienvenue</h1>
+    </div>
   </div>
 </template>
 
@@ -22,4 +24,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container {
+  background : url("../assets/article_fond.jpg");
+  height: 100vh;
+}
 </style>

@@ -20,18 +20,7 @@ body{
   color: #2c3e50;
 }
 
-#post {
-  width: 50%;
-  box-shadow: #c4c4c4 1px 1px 3px;
-  border-radius: 10px;
-  text-decoration: none;
-  color: black;
-  background-color: white;
-}
-#articleList {
-  background-color: rgba(250, 251, 252, 1);
-  padding: 20px;
-}
+// css signup et login //
 form{
   position: absolute;
   top: 35%;
@@ -61,9 +50,70 @@ form{
     border-radius: 10px;
   }
 }
-#avatar {
-  width: 60px;
-  object-fit :contain;
-}
 
+//css Forum text et multimedia //
+#forum{
+  background: linear-gradient(to top, rgba(235, 22, 36, 0.87), rgba(1, 17, 86, 0.911));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 90vh;
+}
+#bandeau {
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.178);
+  min-height: 90vh;
+}
+#articleList, #test{
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 40px 0;
+}
+#link {
+  width: 95%;
+  box-shadow: #4e4e4e 1px 1px 5px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+}
+.avatar_post {
+  width: 90px;
+  object-fit: contain;
+  padding: 0 15px 0 15px;
+}
+.infoUser {
+  display: flex;
+  padding: 10px;
+}
+#name {
+  font-weight: bold;
+  font-size: 1em;
+  margin: 0;
+}
+#title {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-top: 0;
+}
+.date{
+  font-size: 0.9em;
+  margin: 0;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.commentLength {
+  text-align: right;
+  padding: 15px 15px 0 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.171);
+
+}
+.content {
+  text-align: left;
+  font-size: 1.2em;
+  padding: 0 7% 20px 7%;
+}
 </style>
