@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import SignupView from '../views/SignupView.vue'
 import LoginView from '../views/LoginView.vue'
-import AccueilView from '../views/AccueilView.vue'
 import OneArticle from '../views/OneArticle.vue'
 import ForumDiscussion from '../views/ForumDiscussion.vue'
 import ForumMultimedia from '../views/ForumMultimedia.vue'
@@ -16,11 +15,6 @@ const routes = [
     path: '/',
     name: 'Inscription',
     component: SignupView
-  },
-  {
-    path: '/article',
-    name: 'post',
-    component: AccueilView
   },
   {
     path: '/article/text',

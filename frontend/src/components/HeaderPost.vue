@@ -1,6 +1,6 @@
 <template>
     <div id="header">
-        <router-link to="/article"><LogoHeader/></router-link>
+        <router-link to="/article/text"><LogoHeader/></router-link>
       <nav>
         <router-link to="/article/text" class="link">Forum Discussion</router-link>
         <router-link to="/article/image" class="link">Forum Multimédia</router-link>

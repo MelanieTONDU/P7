@@ -9,4 +9,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.logo{
+    width: 25%;
+}
 </style>

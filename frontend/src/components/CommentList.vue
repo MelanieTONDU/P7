@@ -13,6 +13,15 @@
             <div id="commentaire" >
                 <p id="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
                 <p class="comment">{{comment.text}}</p>
+            <div v-if="this.userId == comment.User.id "> 
+                <button id="delete" @click="deleteComment(comment.id)" type="button">Supprimer</button>
+                <button id="modify" @click="modifyComment(comment.id)" type="button">Modifier</button>
+                <div v-if=" (commentId == comment.id) && (this.modify == true)">
+                    <input v-model="newText" type="text"/>
+                    <button @click="changeComment(comment.id)" type="button">Publier</button>
+                </div>
+
+            </div>
             </div>
         </div>
     </div>
@@ -27,31 +36,58 @@ export default {
             token : localStorage.getItem("token"),
             article_id : "",
             users : "",
-            comments : "",
+            userId : localStorage.getItem("userId"),
+            comments : [],
             comment : "",
-            text : ""
+            commentId : "",
+            text : "",
+            newText : "",
+            modify : false,
         }
     },
     created() { 
-        this.article_id = window.location.href.split("/")[4];
-        axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment/",{
-        headers: {Authorization: "Bearer " + this.token}})
-            .then(response => {
-                this.comments = response.data.filter(p => p.articles_id == this.article_id);
-            })
-        },
-    updated(){
-        axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment/",{
-        headers: {Authorization: "Bearer " + this.token}})
-            .then(response => {
-                this.comments = response.data.filter(p => p.articles_id == this.article_id);
-            })
+        this.getComments()
     },
     methods : { 
+        getComments : function () {
+            this.article_id = window.location.href.split("/")[4];
+            axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment/",{
+            headers: {Authorization: "Bearer " + this.token}})
+                .then(response => {
+                    this.comments = response.data.filter(p => p.articles_id == this.article_id);
+                })
+        },
         addComment: function() {
             const comment = { text: this.text};
             axios.post("http://localhost:3000/api/article/"  + this.article_id + "/comment", comment,{
                 headers: {Authorization: "Bearer " + this.token}})
+                .then((response => {
+                    this.getComments();
+                    this.commentId = response.data;
+                }))
+        },
+        deleteComment : function(id) {
+            const commentId = id;
+                axios.delete("http://localhost:3000/api/article/"  + this.article_id + "/comment/" + commentId,{
+                headers: {Authorization: "Bearer " + this.token}})
+                .then((response => {
+                    this.getComments();
+                    console.log(response)
+                }))
+        },
+        modifyComment: function(id) {
+            this.commentId = id;
+            this.modify = true;},
+        changeComment: function(id) {
+            const commentId = id;
+            const newComment = {text: this.newText}
+            axios.put("http://localhost:3000/api/article/"  + this.article_id + "/comment/" + commentId, newComment, {
+                headers: {Authorization: "Bearer " + this.token}})
+                .then((response => {
+                    this.modify = false;
+                    this.getComments();
+                    console.log(response)
+                }))
         }
     }
 }
@@ -90,6 +126,5 @@ export default {
       background-color: white;
   width: 30%;
   border-radius: 26px;
-
 }
 </style>

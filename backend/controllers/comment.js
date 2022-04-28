@@ -15,13 +15,14 @@ exports.createComment = (req, res, next) => {
     ]})
         .then((comments) => 
         comment.save()
-          .then(() => res.status(201).json(comments))
+          .then(() => res.status(201).json(comment.id))
           .catch(error => res.status(400).json({ error })))
         .catch((error) => res.status(400).json({ error }));
     };
     
 exports.modifyComment = (req, res, next) => {
     const commentObject = req.body;
+    console.log(req.params.id)
   Comment.findOne({ where: {id: req.params.id} })
     .then(comment => {
       if (!comment) {
@@ -43,7 +44,7 @@ exports.deleteComment = (req, res, next) => {
   Comment.findOne({ where: {id: req.params.id} })
   .then(comment => {
     if (!comment) {
-      res.status(404).json({error: new Error('No such Thing!')});
+      res.status(400).json({error: new Error('No such Thing!')});
     }
     else if (comment.users_id !== req.auth.userId) {
       res.status(403).json({
@@ -51,7 +52,7 @@ exports.deleteComment = (req, res, next) => {
       })
     }
     Comment.destroy({ where: {id: req.params.id} })
-    .then(() => res.status(204))
+    .then((comment) => res.status(204).json(comment.id))
     .catch(error => res.status(400).json({ error }));
   })
   .catch(error => res.status(500).json({ error }));

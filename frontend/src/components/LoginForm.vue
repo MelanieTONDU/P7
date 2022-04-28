@@ -39,7 +39,7 @@ export default {
       axios.post("http://localhost:3000/api/auth/login", user)
         .then(response => {
             localStorage.setItem("token", response.data.token);
-            this.$router.push('/article' );})
+            localStorage.setItem('userId', response.data.userId);            this.$router.push('/article/text' );})
         .catch(error => { 
           if (error.response.status == 404) {
              this.msg = 'Utilisateur inconnu !'
