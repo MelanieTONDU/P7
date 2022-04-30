@@ -22,7 +22,6 @@ exports.createComment = (req, res, next) => {
     
 exports.modifyComment = (req, res, next) => {
     const commentObject = req.body;
-    console.log(req.params.id)
   Comment.findOne({ where: {id: req.params.id} })
     .then(comment => {
       if (!comment) {

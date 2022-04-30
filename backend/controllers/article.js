@@ -7,24 +7,28 @@ const Op = require("sequelize").Op;
 const fs = require('fs');
 
 exports.createArticle = (req, res, next) => {
-  const articleObject = req.body;
+  const content = req.body.content;
+  const imageUrl = req.file.filename;
   const users_id = req.auth.userId;
-  const article = req.file ? {
-     ...articleObject,imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`, users_id} : { ...req.body, users_id};
-     const post = new Article({
-      ...article})
-
-      if((post.content == null || post.content == "") && (post.imageUrl == null || post.imageUrl == "")){
-        return res.status(400).json({'error': "Veuillez remplir le champ 'texte' ou 'image' pour créer un article"});
-      }
-      else if (post.content != null && post.imageUrl != null) {
-        return res.status(400).json({'error': "Veuillez ne remplir qu'un seul des champs 'texte' ou 'image' pour créer un article"});
-      }
-  
+  const articleObject = req.body;
+  console.log(imageUrl)
+    if(imageUrl == null) {
+      const article = { ...articleObject, users_id};
+      const post = new Article({
+        ...article})
       post.save()
-          .then(() => res.status(201).json(article))
+        .then(() => res.status(201).json(article))
+        .catch(error => res.status(400).json({ error }));
+    }
+    else {
+        const article = {...articleObject, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`, users_id};
+      const post = new Article({
+        ...article})
+        post.save(({ where: {id: req.params.id}}))
+          .then((article) => res.status(201).json(article))
           .catch(error => res.status(400).json({ error }));
     }
+}
     
 
 exports.getOneArticle = (req, res, next) => {
@@ -89,7 +93,7 @@ exports.modifyArticle = (req, res, next) => {
     ...JSON.parse(req.body.article),
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : { ...req.body };
-  Article.findOne({ where: {id: req.params.id} })
+  Article.findOne({ where: {id: req.params.id}})
     .then(article => {
       if (!article) {
         res.status(404).json({error: new Error('No such Thing!')});
@@ -97,20 +101,17 @@ exports.modifyArticle = (req, res, next) => {
       else if (article.users_id !== req.auth.userId) {
         res.status(403).json({
           error: new Error('Unauthorized request !')
-        })
+        });
       }
-    const filename = article.imageUrl.split('/images/')[1];
-    fs.unlink(`images/${filename}`, () => {
-      Article.update({ ...articleObject, id:  req.params.id}, { where: {id: req.params.id} })
-        .then(() => res.status(200).json({ message: 'Article modifié !'}))
-        .catch(error => res.status(400).json({ error }));
+        Article.update({ ...articleObject, id:  req.params.id},{where: {id: req.params.id}})
+          .then(() => res.status(200).json({ message: 'Article modifié !'}))
+          .catch(error => res.status(400).json({ error }));
       })
-    })
     .catch(error => res.status(500).json({ error }));
   };
 
 exports.deleteArticle = (req, res, next) => {
-  Article.findOne({ where: {id: req.params.id} })
+  Article.findOne({ where: {id: req.params.id}})
   .then(article => {
     if (!article) {
       res.status(404).json({error: new Error('No such Thing!')});
@@ -120,12 +121,9 @@ exports.deleteArticle = (req, res, next) => {
         error: new Error('Unauthorized request !')
       })
     }
-    const filename = article.imageUrl.split('/images/')[1];
-    fs.unlink(`images/${filename}`, () => {
-      Article.destroy({ where: {id: req.params.id} })
-      .then(() => res.status(204))
+    Article.destroy({ where: {id: req.params.id} })
+    .then((article) => res.status(204).json(article))
       .catch(error => res.status(400).json({ error }));
     })
-  })
   .catch(error => res.status(500).json({ error }));
 };

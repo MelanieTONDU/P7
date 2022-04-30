@@ -13,15 +13,14 @@
             <div id="commentaire" >
                 <p id="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
                 <p class="comment">{{comment.text}}</p>
-            <div v-if="this.userId == comment.User.id "> 
-                <button id="delete" @click="deleteComment(comment.id)" type="button">Supprimer</button>
-                <button id="modify" @click="modifyComment(comment.id)" type="button">Modifier</button>
-                <div v-if=" (commentId == comment.id) && (this.modify == true)">
-                    <input v-model="newText" type="text"/>
-                    <button @click="changeComment(comment.id)" type="button">Publier</button>
+                <div v-if="this.userId == comment.User.id "> 
+                    <button id="delete" @click="deleteComment(comment.id)" type="button">Supprimer</button>
+                    <button id="modify" @click="modifyComment(comment.id)" type="button">Modifier</button>
+                    <div v-if=" (commentId == comment.id) && (this.modify == true)">
+                        <input v-model="newText" type="text"/>
+                        <button @click="changeComment(comment.id)" type="button">Publier</button>
+                    </div>
                 </div>
-
-            </div>
             </div>
         </div>
     </div>
