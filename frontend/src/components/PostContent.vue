@@ -11,12 +11,19 @@
         <button id="modify" @click="modifyPost()" type="button">Modifier</button>
       </div>
     </div>
-    <input v-if=" (this.modify == true)" v-model="newTitle" type="text" id="title" placeholder="Titre"/>
-    <h2 v-else id="title">{{this.article.title}}</h2>
-    <div >
-      <p v-if="this.article.imageUrl != null " class="image"><img  id="image" :src=" this.article.imageUrl " /></p>
-      <input v-if=" (this.modify == true)" v-model="newText" type="text" class="content"/>
-      <p class="content" v-else>{{this.article.content}}</p>
+    <div id="title">
+      <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" />
+      <h2 v-else id="title">{{this.article.title}}</h2>
+    </div>
+    <div id="content">
+      <div  v-if="this.article.imageUrl != null " class="contentImg">
+        <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" id="image" ref="image" />
+        <p v-else class="image"><img  id="image" :src=" this.article.imageUrl " /></p>
+      </div>
+      <div v-else class="contentText">
+        <input  v-if="(this.modify == true)  && (this.content != null) " v-model="content" type="text" class="content" placeholder="Ecrivez quelque chose..."/>
+        <p v-else class="content" >{{this.article.content}}</p>
+      </div>
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button">Publier</button>
     </div>
   </div>
@@ -34,11 +41,11 @@ export default {
       userId : localStorage.getItem("userId"),
       user : "",
       title : "",
-      newTitle : "",
       content : "",
-      newText: "",
+      image : "",
       article: "",
       article_id : "",
+      forData : "",
       modify : false,
       dayjs
     }
@@ -54,7 +61,16 @@ export default {
       .then(response => {
         this.article = response.data;
         this.user = this.article.User.firstName + this.article.User.lastName;
-      });
+      })
+      .catch(error => { 
+        if (error.response.status == 401) {
+          this.$router.push('/login' );
+          localStorage.clear();
+        }
+      })
+    },
+    selectFile() {
+      this.image = this.$refs.image.files[0];
     },
     deletePost: function() {
         axios.delete("http://localhost:3000/api/article/"  + this.article_id,{
@@ -65,10 +81,14 @@ export default {
         })
     },
     modifyPost: function() {
-        this.modify = true;},
+      this.modify = true;
+    },
     changePost: function() {
-        const newArticle = {title: this.newTitle, content: this.newText}
-        axios.put("http://localhost:3000/api/article/"  + this.article_id, newArticle, {
+        const formData = new FormData();
+          formData.append("title", this.title);
+          formData.append("content", this.content);
+          formData.append("image", this.image);
+        axios.put("http://localhost:3000/api/article/"  + this.article_id, formData, {
             headers: {Authorization: "Bearer " + this.token}})
             .then((response => {
                 this.modify = false;
@@ -76,7 +96,7 @@ export default {
                 console.log(response)
             }))
         }
-  }
+    }
   }
 </script>
 
@@ -85,7 +105,6 @@ export default {
   margin-top : 20px;
   width: 100%;
 }
-
 #image{
   width: 80%;
 }

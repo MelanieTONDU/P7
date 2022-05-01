@@ -4,6 +4,8 @@ import LoginView from '../views/LoginView.vue'
 import OneArticle from '../views/OneArticle.vue'
 import ForumDiscussion from '../views/ForumDiscussion.vue'
 import ForumMultimedia from '../views/ForumMultimedia.vue'
+import ProfilView from '../views/ProfilView.vue'
+
 
 const routes = [
   {
@@ -30,6 +32,11 @@ const routes = [
     path: '/article/:id',
     name: 'article',
     component: OneArticle
+  },
+  {
+    path: '/profil',
+    name: 'Profil',
+    component: ProfilView
   },
 ]
 

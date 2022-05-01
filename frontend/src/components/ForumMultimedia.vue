@@ -1,17 +1,15 @@
 <template>
   <div id="forum">
     <div id="bandeau">
-      <div id="link">
-        <div class="infoUser">
-            <img class="avatar_post" src="../assets/avatar.png"/>
-            <div class="info">
-                <p id="name">{{user.firstName}} {{user.lastName}}</p>
-            </div>
-        </div>
-        <div>
-          <input id="addPost" v-model="title" type="text" placeholder="Titre"/>
-          <input name="image" type="file" @change="selectFile()" id="image" ref="image" />
-          <button @click="addPost()" type="button">Publier</button>
+      <div id="articleList">
+        <div id="link">
+          <InfoUser/>
+          <div>
+            <input id="addPost" v-model="title" type="text" placeholder="Titre de la publication"/>
+            <input name="image" type="file" @change="selectFile()" id="image" ref="image" />
+            <button @click="addPost()" type="button">Publier</button>
+            <p>{{msg}}</p>
+          </div>
         </div>
       </div>
       <div v-for="article in articles" :key="article.id" id="articleList">
@@ -36,26 +34,25 @@
 import axios from "axios";
 import dayjs from "dayjs"
 import "dayjs/locale/fr"
+import InfoUser from '@/components/InfoUser.vue'
 
 export default {
   data() {
     return {
       token : localStorage.getItem("token"),
-      userId : localStorage.getItem("userId"),
-      user : "",
       articles : [],
       article_id : "",
       title : "",
       image: "",
-      file : "",
-      url : "",
-      imageUrl : "",
+      msg : "",
       dayjs
     }
   },
+  components : {
+    InfoUser
+  },
   created() { 
     this.getPosts();
-    this.getUser();
   },
   methods : {
     getPosts(){
@@ -64,13 +61,12 @@ export default {
         .then(response => {
           this.articles = response.data;
         })
-    },
-    getUser() {
-      axios.get("http://localhost:3000/api/auth/" + this.userId,{
-      headers: {Authorization: "Bearer " + this.token}})
-      .then(response => {
-        this.user = response.data;
-      })
+        .catch(error => { 
+					if (error.response.status == 401) {
+					this.$router.push('/login' );
+          localStorage.clear();
+					}
+				})
     },
     selectFile() {
       this.image = this.$refs.image.files[0];
@@ -79,14 +75,21 @@ export default {
       const formData = new FormData();
         formData.append("title", this.title);
         formData.append("image", this.image);
-        formData.append("content", this.content);
+      if(this.title == null || this.title == "") {
+        this.msg = 'Titre vide'
+      }
       axios.post("http://localhost:3000/api/article", formData,{
         headers: {Authorization: "Bearer " + this.token}})
         .then(response => {
           this.getPosts();
-            console.log("response" + response)
-        })        
-    },
+          console.log("response" + response);
+        })  
+				.catch(error => { 
+					if (error.response.status == 400) {
+						this.msg = 'Image vide !'
+					}
+				})
+      },
   }
 }
 </script>

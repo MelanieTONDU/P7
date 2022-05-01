@@ -55,6 +55,12 @@ export default {
                 .then(response => {
                     this.comments = response.data.filter(p => p.articles_id == this.article_id);
                 })
+                .catch(error => { 
+					if (error.response.status == 401) {
+                        this.$router.push('/login' );
+                        localStorage.clear();
+					}
+				})
         },
         addComment: function() {
             const comment = { text: this.text};
