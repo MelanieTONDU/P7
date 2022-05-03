@@ -1,16 +1,45 @@
 <template>
-    <div class="infoUser">
-        <img class="avatar_post" src="../assets/avatar.png"/>
-        <div class="info">
-            <p id="name">Prénom : {{user.firstName}}</p>
-            <p id="name">Nom : {{user.lastName}}</p>
-            <p>Email : {{user.email}}</p>
-            <p>Poste occupé : {{user.job}}</p>
-            <p>Date de création du compte : {{dayjs(user.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</p>
-        </div>
-        <div> 
-            <button @click="deleteUser()" type="button">Supprimer</button>
-            <button id="modify" @click="modifyUser()" type="button">Modifier</button>
+    <div class="forum profil">
+        <div class="user">
+            <h2 class="titlePage">Information sur le compte</h2>
+            <h3 class="titleModify" v-if="(this.modify == true)">Veuillez compléter les champs que vous souhaitez modifier : </h3>
+            <div class="avatarProfil">
+                <img class="avatarProfilImg" src="../assets/avatar.png"/>
+                <button @click="changeAvatar()" type="button" id="changeAvatar">Modifier sa photo de profil</button>
+            </div>
+            <div class="infoProfil">
+                <div class="name">
+                    <p class="nameClass">Prénom : </p>
+                    <p v-if="(this.modify == false)">{{user.firstName}}</p>
+                    <input v-else v-model="userEdit.firstName" type="text" id="firstName" placeholder="Nouveau prénom"/>
+                </div>
+                <div class="name">
+                    <p class="nameClass">Nom : </p>
+                    <p v-if="(this.modify == false)">{{user.lastName}}</p>
+                    <input v-else v-model="userEdit.lastName" type="text" id="lastName" placeholder="Nouveau nom"/>
+                </div>
+                <div class="name">
+                    <p class="nameClass">Email : </p>
+                    <p v-if="(this.modify == false)">{{user.email}}</p>
+                    <input v-else v-model="userEdit.email" type="email" id="email" placeholder="Nouveau email"/>
+                </div>
+                <div class="name">
+                    <p class="nameClass">Poste occupé : </p>
+                    <p v-if="(this.modify == false)">{{user.job}}</p>
+                    <input v-else v-model="userEdit.job" type="text" id="job" placeholder="Nouveau poste occupé"/>
+                </div>
+                <div class="name">
+                    <p class="nameClass">Date de création du compte :</p>
+                    <p> {{dayjs(user.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</p>
+                </div>
+            </div>
+            <p>{{this.msg}}</p>
+            <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="button buttonSave red"> Enregistrer les modifications</button>
+            <button v-if=" (this.modify == true)" @click="cancel()" type="button" class="button buttonCancel grey">Annuler</button>
+            <div v-else class="bouton"> 
+                <button class="button buttonModify grey" @click="modifyUser()" type="button">Modifier mes informations</button>
+                <button @click="deleteUser()" type="button" class="button buttonDelete red">Supprimer le compte</button>
+            </div>
         </div>
     </div>
 </template>
@@ -26,6 +55,14 @@ export default {
             token : localStorage.getItem("token"),
             userId : localStorage.getItem("userId"),
             user : "",
+            firstName:"",
+            lastName : "",
+            email : "",
+            job : "",
+            formData : "",
+            modify : false,
+            msg : "",
+            userEdit: new Object(),
             dayjs
         }
     },
@@ -33,22 +70,44 @@ export default {
         this.getUser()
     },
     methods : {
-        getUser: function() {
+        getUser() {
             axios.get("http://localhost:3000/api/auth/" + this.userId,{
             headers: {Authorization: "Bearer " + this.token}})
             .then(response => {
                 this.user = response.data;
+                this.firstName = this.user.firstName;
             })
         },
-        deleteUser: function() {
+        deleteUser() {
             axios.delete("http://localhost:3000/api/auth/"  + this.userId,{
             headers: {Authorization: "Bearer " + this.token}});
             this.$router.push('/' );
-
         },
+        modifyUser() {
+            this.modify = true;
+        },
+        changeUser() {
+            const formData = {firstName: this.userEdit.firstName, lastName : this.userEdit.lastName, email : this.userEdit.email, job : this.userEdit.job}
+            axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
+                headers: {Authorization: "Bearer " + this.token}})
+                .then(response => {
+                    this.modify = false;
+                    this.getUser();
+                    console.log(response)
+                })
+                .catch(error => { 
+                    if (error.response.status == 400) {
+                        this.msg = "Cet email est déjà utilisé !"
+                    }
+                })
+        },
+        cancel() {
+            location.reload();
+        }
     }
 }
 </script>
 
 <style>
+
 </style>

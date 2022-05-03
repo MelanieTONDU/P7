@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderPost/>
-    <div id="forum">
+    <div class="forum">
       <div id="bandeau">
         <div id="test">
         <div id="publication">

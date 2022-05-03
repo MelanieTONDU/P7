@@ -1,14 +1,19 @@
 <template>
-  <div id="forum">
+  <div class="forum">
     <div id="bandeau">
       <div id="articleList">
         <div id="link">
+          <div class="topAddPost center">
+            <h2>Créer une publication</h2>
+          </div>
           <InfoUser/>
-          <div>
-            <input id="addPost" v-model="title" type="text" placeholder="Titre de la publication"/>
-            <input name="image" type="file" @change="selectFile()" id="image" ref="image" />
-            <button @click="addPost()" type="button">Publier</button>
-            <p>{{msg}}</p>
+          <div class="addPost center">
+            <form id="addPostContent">
+              <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
+              <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" />
+              <button id="buttonPublier" @click="addPost()" type="submit">Publier</button>
+              <p>{{msg}}</p>
+            </form>
           </div>
         </div>
       </div>

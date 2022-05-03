@@ -13,7 +13,11 @@ exports.signup = (req, res, next) => {
           password: hash,
       });
       user.save()
-        .then(() => res.status(201).json({user}))
+        .then(() => res.status(201).json({'userId': user.id,
+        'token': jwt.sign(
+          { userId: user.id },
+          'RANDOM_TOKEN_SECRET',
+          { expiresIn: '24h' })}))
         .catch(error => res.status(401).json({ error }));
       })
     .catch(error => res.status(500).json({ error }));
@@ -57,6 +61,7 @@ exports.getAllAccounts = (req, res, next) => {
 
 exports.modifyAccount = (req, res, next) => {
   const userObject = req.body;
+  console.log(req.body)
   User.findOne({ where: {id: req.params.id} })
     .then(user => {
       if (!user) {

@@ -51,4 +51,10 @@ nav {
     }
   }
 }
+.fond img {
+  width: 100%;
+  float: left;
+  height: 86vh;
+  object-fit: cover;
+}
 </style>

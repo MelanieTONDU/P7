@@ -1,14 +1,19 @@
 <template>
-  <div id="forum">
+  <div class="forum">
     <div id="bandeau">
       <div id="articleList">
         <div id="link">
+          <div class="topAddPost center">
+            <h2>Créer une publication</h2>
+          </div>
           <InfoUser/>
-          <div>
-            <input id="addPost" v-model="title" type="text" placeholder="Titre de la publication"/>
-            <input v-model="text" type="text" placeholder="Ecrivez quelque chose..."/>
-            <button @click="addPost()" type="button">Publier</button>
-            <p>{{msg}}</p>
+          <div class="center addPost ">
+            <form id="addPostContent">
+              <textarea id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
+              <textarea id="addPostText" v-model="text" type="text" placeholder="Ecrivez quelque chose..." required/>
+              <p class="message">{{msg}}</p>
+              <button id="buttonPublier" @click="addPost()" type="submit">Publier</button>
+            </form>
           </div>
         </div>
       </div>
@@ -74,20 +79,21 @@ export default {
         formData.append("title", this.title);
         formData.append("content", this.text);
         if(this.title == null || this.title == "") {
-						this.msg = 'Titre vide'
+						this.msg = 'Vous avez oublié de donner un titre à votre publication !'
         }
         else if (this.text == null || this.text == "") {
-          this.msg = 'article vide'
+          this.msg = 'Votre publication est incomplète !'
         }
         else {
       axios.post("http://localhost:3000/api/article", formData,{
         headers: {Authorization: "Bearer " + this.token}})
         .then(response => {
           this.getPosts();
-            console.log("response" + response)
-        })  }      
-    },
-  }
+          console.log("response" + response)
+        })
+      }      
+     }
+   },
 }
 </script>
 

@@ -7,13 +7,13 @@
         <p class="date"><time >{{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
       </div>
       <div v-if="this.userId == this.article.users_id "> 
-        <button @click="deletePost()" type="button">Supprimer</button>
+        <button @click="deletePost()" type="button" id="delete">Supprimer</button>
         <button id="modify" @click="modifyPost()" type="button">Modifier</button>
       </div>
     </div>
     <div id="title">
       <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" />
-      <h2 v-else id="title">{{this.article.title}}</h2>
+      <h3 v-else id="title">{{this.article.title}}</h3>
     </div>
     <div id="content">
       <div  v-if="this.article.imageUrl != null " class="contentImg">

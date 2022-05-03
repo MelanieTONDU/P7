@@ -1,6 +1,6 @@
 <template>
     <div>
-		<form>
+		<form id="formulaire">
 			<h1>Créer un compte</h1>
 			<div class="form-group">
 				<label>
@@ -55,8 +55,10 @@ export default {
 				const user = { lastName: this.lastName, firstName : this.firstName, email: this.email, password: this.password };
 				axios.post("http://localhost:3000/api/auth/signup", user)
 				.then(response => {
+					console.log(response)
 					localStorage.setItem("token", response.data.token);
-					this.$router.push('/article' );
+					localStorage.setItem('userId', response.data.userId);
+					this.$router.push('/article/text' );
 				})
 				.catch(error => { 
 					if (error.response.status == 401) {

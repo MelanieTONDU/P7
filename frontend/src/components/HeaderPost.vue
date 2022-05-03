@@ -4,7 +4,7 @@
       <nav>
         <router-link to="/article/text" class="link">Forum Discussion</router-link>
         <router-link to="/article/image" class="link">Forum Multimédia</router-link>
-        <router-link to="/profil" class="link">Profil</router-link>
+        <router-link to="/profil" class="link">Mon compte</router-link>
         <router-link to="/login" @click="deco()" class="link">Se déconnecter</router-link>
       </nav>
     </div>

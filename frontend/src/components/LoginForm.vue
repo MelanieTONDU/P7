@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form >
+    <form id="formulaire">
         <h1>Se connecter</h1>
         <div class="form-group">
         <label>
@@ -39,7 +39,8 @@ export default {
       axios.post("http://localhost:3000/api/auth/login", user)
         .then(response => {
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem('userId', response.data.userId);            this.$router.push('/article/text' );})
+            localStorage.setItem('userId', response.data.userId);
+            this.$router.push('/article/text' );})
         .catch(error => { 
           if (error.response.status == 404) {
              this.msg = 'Utilisateur inconnu !'
