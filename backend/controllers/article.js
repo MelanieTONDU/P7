@@ -49,7 +49,8 @@ exports.getAllArticles = (req, res, next) => {
       include:[
         {model: User},
         {model: Comments}
-      ]
+      ],
+      order: [["createdAt" , "DESC"]]
     }
   }
   if(req.query.type == "image"){
@@ -60,7 +61,8 @@ exports.getAllArticles = (req, res, next) => {
       include:[
         {model: User},
         {model: Comments}
-      ]
+      ],
+      order: [["createdAt" , "DESC"]]
     }
   }
   Article.findAll(where)
@@ -69,11 +71,13 @@ exports.getAllArticles = (req, res, next) => {
 }
 
 exports.modifyArticle = (req, res, next) => {
+  console.log(req.body)
   const articleObject = req.file ?
   {
     ...req.body,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : { ...req.body };
+
   Article.findOne({ where: {id: req.params.id}})
     .then(article => {
       if (!article) {

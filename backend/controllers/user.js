@@ -49,7 +49,14 @@ exports.login = async (req, res, next) => {
 
 exports.getOneAccount = (req, res, next) => {
   User.findOne({ where: {id: req.params.id} })
-    .then((user) => res.status(200).json(user))
+    .then((user) => res.status(200).json({
+      firstName : user.firstName,
+      lastName : user.lastName,
+      email : user.email,
+      job : user.job,
+      avatar : user.avatar,
+      createdAt : user.createdAt
+    }))
     .catch((error) => res.status(404).json({ error }));
   };
 
@@ -61,8 +68,7 @@ exports.getAllAccounts = (req, res, next) => {
 
 exports.modifyAccount = (req, res, next) => {
   const userObject = req.body;
-  console.log(req.body)
-  User.findOne({ where: {id: req.params.id} })
+    User.findOne({ where: {id: req.params.id} })
     .then(user => {
       if (!user) {
         res.status(404).json({error: new Error('No such Thing!')});
@@ -72,10 +78,27 @@ exports.modifyAccount = (req, res, next) => {
           error: new Error('Unauthorized request !')
         });
       }
-      User.update({ ...userObject, id:  req.params.id}, { where: {id: req.params.id} })
-        .then(() => res.status(200).json({ message: 'Utilisateur modifié !'}))
+      if (req.body.password){
+        bcrypt.hash(req.body.password, 10)
+        .then(hash => {
+          const user = {
+              firstName : req.body.firstName,
+              lastName : req.body.lastName,
+              email: req.body.email,
+              job : req.body.job,
+              password: hash,
+          };
+          User.update({...user, id:  req.params.id}, { where: {id: req.params.id} })
+          .then(() => res.status(200).json({user}))
+          .catch(error => res.status(400).json({ error }));
+        })
+      }
+      else {
+        User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
+        .then(() => res.status(200).json({user}))
         .catch(error => res.status(400).json({ error }));
-      })
+      }
+      })  
     .catch(error => res.status(500).json({ error }));
   };
 

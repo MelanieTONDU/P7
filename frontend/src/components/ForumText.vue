@@ -89,7 +89,7 @@ export default {
         headers: {Authorization: "Bearer " + this.token}})
         .then(response => {
           this.getPosts();
-          console.log("response" + response)
+          console.log(response)
         })
       }      
      }

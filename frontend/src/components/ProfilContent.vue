@@ -5,34 +5,43 @@
             <h3 class="titleModify" v-if="(this.modify == true)">Veuillez compléter les champs que vous souhaitez modifier : </h3>
             <div class="avatarProfil">
                 <img class="avatarProfilImg" src="../assets/avatar.png"/>
-                <button @click="changeAvatar()" type="button" id="changeAvatar">Modifier sa photo de profil</button>
+                <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" id="changeAvatar">Modifier sa photo de profil</button>
+                <div v-else>
+                    <input type="file" >
+                    <button  @click="changeUser()" type="button" class="button buttonSave red"> Enregistrer</button>
+                </div>
             </div>
             <div class="infoProfil">
                 <div class="name">
                     <p class="nameClass">Prénom : </p>
                     <p v-if="(this.modify == false)">{{user.firstName}}</p>
-                    <input v-else v-model="userEdit.firstName" type="text" id="firstName" placeholder="Nouveau prénom"/>
+                    <input v-else v-model="userEdit.firstName" type="text" id="firstName" :placeholder= user.firstName />
                 </div>
                 <div class="name">
                     <p class="nameClass">Nom : </p>
                     <p v-if="(this.modify == false)">{{user.lastName}}</p>
-                    <input v-else v-model="userEdit.lastName" type="text" id="lastName" placeholder="Nouveau nom"/>
+                    <input v-else v-model="userEdit.lastName" type="text" id="lastName" :placeholder= user.lastName />
                 </div>
                 <div class="name">
                     <p class="nameClass">Email : </p>
                     <p v-if="(this.modify == false)">{{user.email}}</p>
-                    <input v-else v-model="userEdit.email" type="email" id="email" placeholder="Nouveau email"/>
+                    <input v-else v-model="userEdit.email" type="email" id="email" :placeholder= user.email />
+                </div>
+                <div v-if="(this.modify == true)" class="name">
+                    <p class="nameClass">Nouveau mot de passe : </p>
+                    <input v-model="userEdit.password" type="password" id="password" :placeholder= user.password />
                 </div>
                 <div class="name">
                     <p class="nameClass">Poste occupé : </p>
                     <p v-if="(this.modify == false)">{{user.job}}</p>
-                    <input v-else v-model="userEdit.job" type="text" id="job" placeholder="Nouveau poste occupé"/>
+                    <input v-else v-model="userEdit.job" type="text" id="job" :placeholder= user.job />
                 </div>
                 <div class="name">
                     <p class="nameClass">Date de création du compte :</p>
                     <p> {{dayjs(user.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</p>
                 </div>
             </div>
+
             <p>{{this.msg}}</p>
             <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="button buttonSave red"> Enregistrer les modifications</button>
             <button v-if=" (this.modify == true)" @click="cancel()" type="button" class="button buttonCancel grey">Annuler</button>
@@ -58,9 +67,12 @@ export default {
             firstName:"",
             lastName : "",
             email : "",
+            password : "",
             job : "",
+            avatar: "",
             formData : "",
             modify : false,
+            change : false,
             msg : "",
             userEdit: new Object(),
             dayjs
@@ -75,19 +87,27 @@ export default {
             headers: {Authorization: "Bearer " + this.token}})
             .then(response => {
                 this.user = response.data;
-                this.firstName = this.user.firstName;
+            })
+        .catch(error => { 
+            if (error.response.status == 401) {
+                this.$router.push('/login' );
+                localStorage.clear();
+                }
             })
         },
         deleteUser() {
             axios.delete("http://localhost:3000/api/auth/"  + this.userId,{
             headers: {Authorization: "Bearer " + this.token}});
-            this.$router.push('/' );
+                this.$router.push('/' );
         },
         modifyUser() {
             this.modify = true;
         },
+        modifyAvatar(){
+            this.change = true;
+        },
         changeUser() {
-            const formData = {firstName: this.userEdit.firstName, lastName : this.userEdit.lastName, email : this.userEdit.email, job : this.userEdit.job}
+            const formData = {firstName: this.userEdit.firstName, lastName : this.userEdit.lastName, email : this.userEdit.email, password: this.userEdit.password, job : this.userEdit.job}
             axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
                 headers: {Authorization: "Bearer " + this.token}})
                 .then(response => {

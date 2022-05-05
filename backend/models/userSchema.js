@@ -29,6 +29,11 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+
+  imageUrl :{
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 User.hasMany(Article, {foreignKey: 'users_id', onDelete:'CASCADE'});
