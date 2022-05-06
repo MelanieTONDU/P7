@@ -71,7 +71,6 @@ exports.getAllArticles = (req, res, next) => {
 }
 
 exports.modifyArticle = (req, res, next) => {
-  console.log(req.body)
   const articleObject = req.file ?
   {
     ...req.body,
@@ -134,3 +133,164 @@ exports.deleteArticle = (req, res, next) => {
     })
   .catch(error => res.status(500).json({ error }));
 };
+
+exports.likeArticle = (req, res, next) => {
+  Article.findOne({ where: {id: req.params.id} })
+  .then((article) => {
+    let likes = article.likes;
+    let usersLiked = article.usersLiked;
+    let userId = req.body.userId;
+    let usersDisliked = article.usersDisliked;
+    let dislikes = article.dislikes;
+    
+    if (usersLiked) {
+      console.log("test")
+      const found = usersLiked.find(p => p == userId);
+      if (found) {
+        likes--;
+        let userKey = usersLiked.indexOf(userId);
+        usersLiked.splice(userKey, 1);
+        articleObject = {...article, likes, usersLiked}
+      }
+      else{
+        console.log("test2")
+        if(usersDisliked) {
+          const foundDislike = usersDisliked.find(p => p == userId);
+          if(foundDislike) {
+            console.log("test3")
+            let userKey = usersDisliked.indexOf(userId);
+            usersDisliked.splice(userKey, 1);
+            dislikes--;
+            likes++;
+            usersLiked.push(req.body.userId);
+            articleObject = {...article, dislikes, usersDisliked, likes, usersDisliked}
+          }
+          else {
+            likes++;
+            usersLiked.push(req.body.userId);
+            articleObject = {...article, likes, usersLiked}
+          }
+        }
+          else {
+            console.log("test4")
+            likes++;
+            usersLiked.push(req.body.userId);
+            articleObject = {...article, likes, usersLiked}
+          }
+      }
+    }
+    else {
+      console.log("test5")
+      usersLiked = [];
+      if(usersDisliked){
+        const foundDislike = usersDisliked.find(p => p == userId);
+        console.log("test6")
+        if(foundDislike) {
+          let userKey = usersDisliked.indexOf(userId);
+          usersDisliked.splice(userKey, 1);
+          dislikes--;
+          likes++;
+          usersLiked.push(req.body.userId);
+          articleObject = {...article, dislikes, usersDisliked, likes, usersLiked};
+        }
+        else {
+          console.log("test6")
+          likes++;
+          usersLiked.push(req.body.userId);
+          articleObject = {...article, likes, usersLiked}
+        }
+      }
+      else {
+        console.log("test6")
+        likes++;
+        usersLiked.push(req.body.userId);
+        articleObject = {...article, likes, usersLiked}
+      }
+  }
+    Article.update({ ...articleObject, id: req.params.id},{where: {id: req.params.id}})
+      .then(() => {res.status(200).json({likes})})
+      .catch((error) => {res.status(400).json({ error })});
+})
+  .catch((error) => {res.status(404).json({ error })});
+}
+
+exports.dislikeArticle = (req, res, next) => {
+  Article.findOne({ where: {id: req.params.id} })
+  .then((article) => {
+    let likes = article.likes;
+    let usersLiked = article.usersLiked;
+    let userId = req.body.userId;
+    let usersDisliked = article.usersDisliked;
+    let dislikes = article.dislikes;
+
+    if (usersDisliked) {
+      console.log("test")
+      const found = usersDisliked.find(p => p == userId);
+      if (found) {
+        dislikes--;
+        let userKey = usersDisliked.indexOf(userId);
+        usersDisliked.splice(userKey, 1);
+        articleObject = {...article, dislikes, usersDisliked}
+      }
+      else{
+        console.log("test2")
+        if(usersLiked) {
+          const foundLike = usersLiked.find(p => p == userId);
+          if(foundLike) {
+            console.log("test3")
+            let userKey = usersLiked.indexOf(userId);
+            usersLiked.splice(userKey, 1);
+            likes--;
+            dislikes++;
+            usersDisliked.push(req.body.userId);
+            articleObject = {...article, dislikes, usersDisliked, likes, usersLiked}
+          }
+          else {
+            console.log("test7");
+            dislikes++;
+            usersDisliked.push(req.body.userId);
+            articleObject = {...article, dislikes, usersDisliked, likes}
+          }
+        }
+          else {
+            console.log("test4")
+            dislikes++;
+            usersDisliked.push(req.body.userId);
+            articleObject = {...article, dislikes, usersDisliked}
+          }
+      }
+    }
+    else {
+      console.log("test5")
+      usersDisliked = [];
+      if(usersLiked){
+        const foundLike = usersLiked.find(p => p == userId);
+        console.log("test6")
+        if(foundLike) {
+          let userKey = usersLiked.indexOf(userId);
+          usersLiked.splice(userKey, 1);
+          likes--;
+          dislikes++;
+          usersDisliked.push(req.body.userId);
+          articleObject = {...article, dislikes, usersLiked, likes, usersDisliked}
+        }
+        else {
+          console.log("test6")
+          dislikes++;
+          usersDisliked.push(req.body.userId);
+          articleObject = {...article, dislikes, usersDisliked}
+        }
+      }
+      else {
+        console.log("test6")
+        dislikes++;
+        usersDisliked.push(req.body.userId);
+        articleObject = {...article, dislikes, usersDisliked}
+    }
+  }
+    Article.update({ ...articleObject, id: req.params.id},{where: {id: req.params.id}})
+      .then(() => {res.status(200).json({dislikes})})
+      .catch((error) => {res.status(400).json({ error })});
+})
+  .catch((error) => {res.status(404).json({ error })});
+}

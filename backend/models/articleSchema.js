@@ -17,6 +17,24 @@ const Article = sequelize.define('Article', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  likes:{ 
+    type: DataTypes.NUMBER, 
+    default:0 ,
+    allowNull: true,
+  },
+  dislikes :{ 
+    type: DataTypes.NUMBER, 
+    default:0 ,
+    allowNull: true,
+  },
+  usersLiked : {
+    type : DataTypes.JSON,
+    allowNull: true,
+  },
+  usersDisliked : {
+    type : DataTypes.JSON,
+    allowNull: true,
+  },
 });
 
 Article.hasMany(Comment, { foreignKey: 'articles_id', onDelete:'CASCADE'});

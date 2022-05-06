@@ -26,6 +26,8 @@
       </div>
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button">Publier</button>
     </div>
+    <p>{{this.like}}</p><button @click="addLike()">J'aime</button>
+    <p>{{this.dislike}}</p><button @click="addDislike()">Je n'aime pas</button>
   </div>
 </template>
 
@@ -46,6 +48,8 @@ export default {
       article: "",
       article_id : "",
       forData : "",
+      dislike : "",
+      like : "",
       modify : false,
       dayjs
     }
@@ -60,6 +64,8 @@ export default {
       headers: {Authorization: "Bearer " + this.token}})
       .then(response => {
         this.article = response.data;
+        this.dislike = this.article.dislikes;
+        this.like = this.article.likes;
         this.user = this.article.User.firstName + this.article.User.lastName;
       })
       .catch(error => { 
@@ -95,7 +101,27 @@ export default {
                 this.getPost();
                 console.log(response)
             }))
-        }
+        },
+        addLike(){
+            this.like = 1;
+            const formData = {like : this.like, userId : this.userId}
+            axios.post("http://localhost:3000/api/article/"  + this.article_id + "/like", formData, {
+                headers: {Authorization: "Bearer " + this.token}})
+                .then(response => {
+                  console.log("like" + response);
+                  this.getPost();
+        })
+        },
+        addDislike(){
+            this.dislike = 1;
+            const formData = {dislike : this.dislike, userId : this.userId}
+            axios.post("http://localhost:3000/api/article/"  + this.article_id + "/dislike", formData, {
+              headers: {Authorization: "Bearer " + this.token}})
+              .then(response => {
+                this.getPost();
+                  console.log("dislike" + response);
+              })
+        },
     }
   }
 </script>

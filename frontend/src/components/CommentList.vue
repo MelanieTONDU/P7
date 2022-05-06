@@ -93,7 +93,7 @@ export default {
                     this.getComments();
                     console.log(response)
                 }))
-        }
+        },
     }
 }
 </script>
