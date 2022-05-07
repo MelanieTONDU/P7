@@ -1,6 +1,7 @@
 <template>
     <div class="infoUser">
-      <img  id="avatar_post" :src=" this.user.imageUrl " />
+      <img  v-if="(this.user.imageUrl != null)" id="avatar_post" :src=" this.user.imageUrl " />
+      <img v-else  id="avatar_post" src="../assets/avatar.png" />
         <div class="info">
             <p id="name">{{user.firstName}} {{user.lastName}}</p>
         </div>
@@ -27,6 +28,7 @@ export default {
             headers: {Authorization: "Bearer " + this.token}})
             .then(response => {
                 this.user = response.data;
+                console.log(this.user.imageUrl)
             })
         },
     }

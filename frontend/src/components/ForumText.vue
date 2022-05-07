@@ -20,7 +20,8 @@
       <div v-for="article in articles" :key="article.id" id="articleList">
         <a :href = "article.id"  id="link">
           <div class="infoUser">
-            <img  id="avatar_post" :src=" article.User.imageUrl " />
+            <img  v-if="(article.User.imageUrl != null)" id="avatar_post" :src=" article.User.imageUrl " />
+            <img v-else  id="avatar_post" src="../assets/avatar.png" />
             <div class="info">
               <p id="name">{{article.User.firstName}} {{article.User.lastName}}</p>
               <p class="date"><time >{{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>

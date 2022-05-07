@@ -4,7 +4,8 @@
             <h2 class="titlePage">Information sur le compte</h2>
             <h3 class="titleModify" v-if="(this.modify == true)">Veuillez compléter les champs que vous souhaitez modifier : </h3>
             <div class="avatarProfil">
-                <img  id="imageProfil" :src=" this.user.imageUrl " />
+                <img  v-if="(this.user.imageUrl != null)" id="imageProfil" :src=" this.user.imageUrl " />
+                <img v-else  id="imageProfil" src="../assets/avatar.png" />
                 <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" id="changeAvatar">Modifier sa photo de profil</button>
                 <div v-else>
                     <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" />

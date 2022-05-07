@@ -1,7 +1,8 @@
 <template>
   <div id="article">
     <div class="infoUser">
-      <img  id="avatar_post" :src=" this.user.imageUrl " />
+      <img  v-if="(this.user.imageUrl  != null)" id="avatar_post" :src=" this.user.imageUrl  " />
+      <img v-else  id="avatar_post" src="../assets/avatar.png" />
       <div class="info">
         <p id="name">{{this.user.firstName}} {{this.user.lastName}}</p>
         <p class="date"><time >{{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
