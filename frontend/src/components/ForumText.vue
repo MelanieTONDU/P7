@@ -20,7 +20,7 @@
       <div v-for="article in articles" :key="article.id" id="articleList">
         <a :href = "article.id"  id="link">
           <div class="infoUser">
-            <img class="avatar_post" src="../assets/avatar.png"/>
+            <img  id="avatar_post" :src=" article.User.imageUrl " />
             <div class="info">
               <p id="name">{{article.User.firstName}} {{article.User.lastName}}</p>
               <p class="date"><time >{{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
@@ -28,7 +28,11 @@
           </div>
           <p id="title">{{article.title}}</p>
           <p class="content">{{article.content}}</p>
-          <p class="commentLength">{{article.Comments.length}} commentaire(s)</p>
+          <div class="likeComment">
+            <p class="likeLength">{{article.likes}} j'aime</p>
+            <p class="likeLength">{{article.dislikes}} je n'aime pas</p>
+            <p class="commentLength">{{article.Comments.length}} Commentaire(s)</p>
+          </div>
         </a>
       </div>
     </div>
@@ -85,12 +89,11 @@ export default {
           this.msg = 'Votre publication est incomplète !'
         }
         else {
-      axios.post("http://localhost:3000/api/article", formData,{
-        headers: {Authorization: "Bearer " + this.token}})
-        .then(response => {
-          this.getPosts();
-          console.log(response)
-        })
+          axios.post("http://localhost:3000/api/article", formData,{
+          headers: {Authorization: "Bearer " + this.token}})
+            .then(() => {
+              this.getPosts();
+          })
       }      
      }
    },

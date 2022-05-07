@@ -54,7 +54,7 @@ exports.getOneAccount = (req, res, next) => {
       lastName : user.lastName,
       email : user.email,
       job : user.job,
-      avatar : user.avatar,
+      imageUrl : user.imageUrl,
       createdAt : user.createdAt
     }))
     .catch((error) => res.status(404).json({ error }));
@@ -67,6 +67,7 @@ exports.getAllAccounts = (req, res, next) => {
     };
 
 exports.modifyAccount = (req, res, next) => {
+  console.log(req.file)
   const userObject = req.body;
     User.findOne({ where: {id: req.params.id} })
     .then(user => {
@@ -89,14 +90,43 @@ exports.modifyAccount = (req, res, next) => {
               password: hash,
           };
           User.update({...user, id:  req.params.id}, { where: {id: req.params.id} })
-          .then(() => res.status(200).json({user}))
+          .then((user) => res.status(200).json({
+            firstName : user.firstName,
+            lastName : user.lastName,
+            email : user.email,
+            job : user.job,
+            imageUrl : user.imageUrl,
+            createdAt : user.createdAt
+          }))
           .catch(error => res.status(400).json({ error }));
         })
       }
-      else {
+      else if(req.file){
+        console.log("test")
+        const userObject = {...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`};
         User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
-        .then(() => res.status(200).json({user}))
+          .then((userObject) => res.status(200).json({
+            firstName : userObject.firstName,
+            lastName : userObject.lastName,
+            email : userObject.email,
+            imageUrl : userObject.imageUrl,
+            createdAt : userObject.createdAt
+          }))
         .catch(error => res.status(400).json({ error }));
+        }
+      else {
+        console.log("test1")
+
+        User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
+        .then((userObject) => res.status(200).json({
+          firstName : userObject.firstName,
+          lastName : userObject.lastName,
+          email : userObject.email,
+          job : userObject.job,
+          imageUrl : userObject.imageUrl,
+          createdAt : userObject.createdAt
+        }))
+      .catch(error => res.status(400).json({ error }));
       }
       })  
     .catch(error => res.status(500).json({ error }));

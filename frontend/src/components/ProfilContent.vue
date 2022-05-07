@@ -4,11 +4,11 @@
             <h2 class="titlePage">Information sur le compte</h2>
             <h3 class="titleModify" v-if="(this.modify == true)">Veuillez compléter les champs que vous souhaitez modifier : </h3>
             <div class="avatarProfil">
-                <img class="avatarProfilImg" src="../assets/avatar.png"/>
+                <img  id="imageProfil" :src=" this.user.imageUrl " />
                 <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" id="changeAvatar">Modifier sa photo de profil</button>
                 <div v-else>
-                    <input type="file" >
-                    <button  @click="changeUser()" type="button" class="button buttonSave red"> Enregistrer</button>
+                    <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" />
+                    <button  @click="addAvatar()" type="submit" class="button buttonSave red"> Enregistrer</button>
                 </div>
             </div>
             <div class="infoProfil">
@@ -69,7 +69,7 @@ export default {
             email : "",
             password : "",
             job : "",
-            avatar: "",
+            image: "",
             formData : "",
             modify : false,
             change : false,
@@ -103,17 +103,37 @@ export default {
         modifyUser() {
             this.modify = true;
         },
-        modifyAvatar(){
-            this.change = true;
-        },
         changeUser() {
             const formData = {firstName: this.userEdit.firstName, lastName : this.userEdit.lastName, email : this.userEdit.email, password: this.userEdit.password, job : this.userEdit.job}
             axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
                 headers: {Authorization: "Bearer " + this.token}})
-                .then(response => {
+                .then(() => {
                     this.modify = false;
                     this.getUser();
+                    console.log(this.user)
+                })
+                .catch(error => { 
+                    if (error.response.status == 400) {
+                        this.msg = "Cet email est déjà utilisé !"
+                    }
+                })
+        },
+        modifyAvatar(){
+            this.change = true;
+        },
+        selectFile() {
+            this.image = this.$refs.image.files[0];
+        },
+        addAvatar(){
+            const formData = new FormData();
+                formData.append("image", this.image);
+                console.log(formData)
+            axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
+                headers: {Authorization: "Bearer " + this.token}})
+                .then((response) => {
                     console.log(response)
+                    this.getUser();
+                    this.change = false;
                 })
                 .catch(error => { 
                     if (error.response.status == 400) {

@@ -1,9 +1,9 @@
 <template>
   <div id="article">
     <div class="infoUser">
-      <img class="avatar_post" src="../assets/avatar.png"/>
+      <img  id="avatar_post" :src=" this.user.imageUrl " />
       <div class="info">
-        <p id="name">{{this.user}}</p>
+        <p id="name">{{this.user.firstName}} {{this.user.lastName}}</p>
         <p class="date"><time >{{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
       </div>
       <div v-if="this.userId == this.article.users_id "> 
@@ -26,8 +26,8 @@
       </div>
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button">Publier</button>
     </div>
-    <p>{{this.like}}</p><button @click="addLike()">J'aime</button>
-    <p>{{this.dislike}}</p><button @click="addDislike()">Je n'aime pas</button>
+    <p>{{this.article.likes}}</p><button @click="addLike()">J'aime</button>
+    <p>{{this.article.dislikes}}</p><button @click="addDislike()">Je n'aime pas</button>
   </div>
 </template>
 
@@ -48,8 +48,6 @@ export default {
       article: "",
       article_id : "",
       forData : "",
-      dislike : "",
-      like : "",
       modify : false,
       dayjs
     }
@@ -64,9 +62,7 @@ export default {
       headers: {Authorization: "Bearer " + this.token}})
       .then(response => {
         this.article = response.data;
-        this.dislike = this.article.dislikes;
-        this.like = this.article.likes;
-        this.user = this.article.User.firstName + this.article.User.lastName;
+        this.user = this.article.User;
       })
       .catch(error => { 
         if (error.response.status == 401) {
@@ -81,9 +77,8 @@ export default {
     deletePost: function() {
         axios.delete("http://localhost:3000/api/article/"  + this.article_id,{
         headers: {Authorization: "Bearer " + this.token}})
-        .then(response => {
+        .then(() => {
 					this.$router.push('/article/text' );
-        console.log(response)
         })
     },
     modifyPost: function() {
@@ -96,30 +91,27 @@ export default {
           formData.append("image", this.image);
         axios.put("http://localhost:3000/api/article/"  + this.article_id, formData, {
             headers: {Authorization: "Bearer " + this.token}})
-            .then((response => {
+              .then(() => {
                 this.modify = false;
                 this.getPost();
-                console.log(response)
-            }))
+              })
         },
         addLike(){
             this.like = 1;
             const formData = {like : this.like, userId : this.userId}
             axios.post("http://localhost:3000/api/article/"  + this.article_id + "/like", formData, {
                 headers: {Authorization: "Bearer " + this.token}})
-                .then(response => {
-                  console.log("like" + response);
+              .then(() => {
                   this.getPost();
-        })
+              })
         },
         addDislike(){
             this.dislike = 1;
             const formData = {dislike : this.dislike, userId : this.userId}
             axios.post("http://localhost:3000/api/article/"  + this.article_id + "/dislike", formData, {
               headers: {Authorization: "Bearer " + this.token}})
-              .then(response => {
+              .then(() => {
                 this.getPost();
-                  console.log("dislike" + response);
               })
         },
     }

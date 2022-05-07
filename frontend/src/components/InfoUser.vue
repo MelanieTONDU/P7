@@ -1,6 +1,6 @@
 <template>
     <div class="infoUser">
-        <img class="avatar_post" src="../assets/avatar.png"/>
+      <img  id="avatar_post" :src=" this.user.imageUrl " />
         <div class="info">
             <p id="name">{{user.firstName}} {{user.lastName}}</p>
         </div>

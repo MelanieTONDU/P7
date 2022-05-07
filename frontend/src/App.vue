@@ -81,6 +81,14 @@ body{
   object-fit: contain;
   padding: 0 15px 0 15px;
 }
+#avatar_post {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 40px;
+  margin: 0 15px 0 15px;
+}
+
 .infoUser {
   display: flex;
   padding: 10px 10px 0 10px;
@@ -104,10 +112,18 @@ body{
   flex-direction: column;
   justify-content: center;
 }
+.likeComment {
+  border-top: 1px solid rgba(0, 0, 0, 0.171);
+  display: flex;
+  justify-content: flex-end;
+}
+.likeLength {
+  text-align: right;
+  padding: 15px 15px 0 15px;
+}
 .commentLength {
   text-align: right;
   padding: 15px 15px 0 15px;
-  border-top: 1px solid rgba(0, 0, 0, 0.171);
 }
 .content {
   text-align: left;
@@ -242,6 +258,13 @@ p span {
     padding: 0 5px 0 10px;
     font-size: 0.9em;
   }
+}
+#imageProfil {
+  width: 170px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 85px;
+  margin: 0 0 15px 0;
 }
 .nameClass {
   font-weight: bold;

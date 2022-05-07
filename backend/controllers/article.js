@@ -33,7 +33,7 @@ exports.createArticle = (req, res, next) => {
 exports.getOneArticle = (req, res, next) => {
   Article.findOne({ 
     where:{id: req.params.id},
-    include:[{model: User}]
+    include:[{model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']}]
   })
     .then((article) => res.status(200).json(article))
     .catch((error) => res.status(404).json({ error }));
@@ -47,7 +47,7 @@ exports.getAllArticles = (req, res, next) => {
         content: {[Op.not]: null || ""}
       },
       include:[
-        {model: User},
+        {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
         {model: Comments}
       ],
       order: [["createdAt" , "DESC"]]
@@ -59,7 +59,7 @@ exports.getAllArticles = (req, res, next) => {
         imageUrl: {[Op.not]: ""}
       },
       include:[
-        {model: User},
+        {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
         {model: Comments}
       ],
       order: [["createdAt" , "DESC"]]
@@ -88,18 +88,18 @@ exports.modifyArticle = (req, res, next) => {
         });
       }
       if(article.imageUrl != null){
-        console.log(req.file)
+        console.log("test2")
         const filename = article.imageUrl.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
           Article.update({ ...articleObject, id:  req.params.id},{where: {id: req.params.id}})
-            .then(() => res.status(200).json({ message: 'Article modifié !'}))
+            .then((article) => res.status(200).json({ article}))
             .catch(error => res.status(400).json({ error }));
         })
       }
       else {
-        console.log(req.body.content)
+        console.log("test3")
         Article.update({ ...articleObject, id:  req.params.id},{where: {id: req.params.id}})
-          .then(() => res.status(200).json({ message: 'Article modifié !'}))
+          .then((article) => res.status(200).json({article}))
           .catch(error => res.status(400).json({ error }));
       }
     })
@@ -163,7 +163,7 @@ exports.likeArticle = (req, res, next) => {
             dislikes--;
             likes++;
             usersLiked.push(req.body.userId);
-            articleObject = {...article, dislikes, usersDisliked, likes, usersDisliked}
+            articleObject = {...article, dislikes, usersDisliked, likes, usersLiked}
           }
           else {
             likes++;
@@ -249,7 +249,7 @@ exports.dislikeArticle = (req, res, next) => {
             console.log("test7");
             dislikes++;
             usersDisliked.push(req.body.userId);
-            articleObject = {...article, dislikes, usersDisliked, likes}
+            articleObject = {...article, dislikes, usersDisliked}
           }
         }
           else {

@@ -55,7 +55,6 @@ export default {
 				const user = { lastName: this.lastName, firstName : this.firstName, email: this.email, password: this.password };
 				axios.post("http://localhost:3000/api/auth/signup", user)
 				.then(response => {
-					console.log(response)
 					localStorage.setItem("token", response.data.token);
 					localStorage.setItem('userId', response.data.userId);
 					this.$router.push('/article/text' );

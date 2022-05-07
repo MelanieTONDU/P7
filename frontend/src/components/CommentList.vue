@@ -9,7 +9,7 @@
             <button @click="addComment()" type="button">Publier</button>
         </div>
         <div v-for="comment in comments" :key="comment.id" id="discussion">
-            <img id="avatarComment" src="../assets/avatar.png"/>
+            <img  id="avatar_post" :src=" comment.User.imageUrl " />
             <div id="commentaire" >
                 <p id="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
                 <p class="comment">{{comment.text}}</p>
@@ -75,10 +75,9 @@ export default {
             const commentId = id;
                 axios.delete("http://localhost:3000/api/article/"  + this.article_id + "/comment/" + commentId,{
                 headers: {Authorization: "Bearer " + this.token}})
-                .then((response => {
+                .then(() => {
                     this.getComments();
-                    console.log(response)
-                }))
+                })
         },
         modifyComment: function(id) {
             this.commentId = id;
@@ -88,11 +87,10 @@ export default {
             const newComment = {text: this.newText}
             axios.put("http://localhost:3000/api/article/"  + this.article_id + "/comment/" + commentId, newComment, {
                 headers: {Authorization: "Bearer " + this.token}})
-                .then((response => {
+                .then(() => {
                     this.modify = false;
                     this.getComments();
-                    console.log(response)
-                }))
+                })
         },
     }
 }
