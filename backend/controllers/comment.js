@@ -6,18 +6,10 @@ exports.createComment = (req, res, next) => {
     const users_id = req.auth.userId;
     const url = req.originalUrl;
     const articles_id = url.split('/')[3];
-    const comment = new Comment({
-            ...commentObject, users_id, articles_id})
-    Comment.findAll({include:[
-      {
-        model: User
-      }
-    ]})
-        .then((comments) => 
-        comment.save()
-          .then(() => res.status(201).json(comment.id))
-          .catch(error => res.status(400).json({ error })))
-        .catch((error) => res.status(400).json({ error }));
+    const comment = new Comment({...commentObject, users_id, articles_id})
+    comment.save()
+      .then(() => res.status(201).json(comment))
+      .catch(error => res.status(400).json({ error }))
     };
     
 exports.modifyComment = (req, res, next) => {
@@ -26,11 +18,6 @@ exports.modifyComment = (req, res, next) => {
     .then(comment => {
       if (!comment) {
         res.status(404).json({error: new Error('No such Thing!')});
-      }
-      else if (comment.users_id !== req.auth.userId) {
-        res.status(403).json({
-          error: new Error('Unauthorized request !')
-        })
       }
       Comment.update({ ...commentObject, id:  req.params.id}, { where: {id: req.params.id} })
         .then(() => res.status(200).json({ message: 'Commentaire modifié !'}))
@@ -44,11 +31,6 @@ exports.deleteComment = (req, res, next) => {
   .then(comment => {
     if (!comment) {
       res.status(400).json({error: new Error('No such Thing!')});
-    }
-    else if (comment.users_id !== req.auth.userId) {
-      res.status(403).json({
-        error: new Error('Unauthorized request !')
-      })
     }
     Comment.destroy({ where: {id: req.params.id} })
     .then((comment) => res.status(204).json(comment.id))

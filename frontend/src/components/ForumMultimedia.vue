@@ -30,8 +30,8 @@
           <p id="title">{{article.title}}</p>
           <img class="image" :src = " article.imageUrl "/>
           <div class="likeComment">
-            <p class="likeLength">{{article.likes}} j'aime</p>
-            <p class="likeLength">{{article.dislikes}} je n'aime pas</p>
+            <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p>
+            <p class="likeLength">{{article.dislikes}} <fa icon="thumbs-down" class="thumbsPost down"/></p>
             <p class="commentLength">{{article.Comments.length}} Commentaire(s)</p>
           </div>
         </a>

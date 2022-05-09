@@ -53,28 +53,28 @@ body{
 
 //css Forum text et multimedia //
 .forum{
-  background: linear-gradient(to top, rgba(235, 22, 36, 0.87), rgba(1, 17, 86, 0.911));
+  background:url("./assets/architecture.jpg") fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 #bandeau {
   width: 50%;
-  background-color: rgba(255, 255, 255, 0.178);
+  background-color: #122c668f;
   min-height: 90vh;
 }
 #articleList, #test{
   display: flex;
   justify-content: center;
-  margin: 20px 0 40px 0;
+  margin: 20px 0 30px 0;
 }
 #link {
-  width: 95%;
-  box-shadow: #4e4e4e 1px 1px 5px;
-  border-radius: 20px;
+  width: 97%;
+  border-radius: 10px;
   text-decoration: none;
   color: black;
   background-color: white;
+  cursor: pointer;
 }
 .avatar_post {
   width: 90px;
@@ -97,6 +97,7 @@ body{
   font-weight: bold;
   font-size: 1em;
   margin: 0;
+  text-align: left;
 }
 #title {
   font-weight: bold;
@@ -119,15 +120,18 @@ body{
 }
 .likeLength {
   text-align: right;
-  padding: 15px 15px 0 15px;
+  font-size: 1.2em;
+  margin: 12px;
 }
 .commentLength {
   text-align: right;
-  padding: 15px 15px 0 15px;
+  margin: 12px;
+  padding: 0 15px  0 15px;
+
 }
 .content {
   text-align: left;
-  font-size: 1.2em;
+  font-size: 1em;
   padding: 0 7% 20px 7%;
 }
 .user {
@@ -138,6 +142,28 @@ body{
     margin: 20px 0 20px 0;
     padding: 20px 40px 40px 40px;
 }
+.contentText textarea {
+    height: 30px;
+    margin-top : 16px;
+    border: none;
+    border-radius: 15px;
+    box-shadow: #bebebe 1px 1px 5px;
+    width: 70%;
+    padding: 0 5px 0 10px;
+    font-size: 0.9em;
+    min-height: 100px;
+    max-height: auto;
+  }
+  .thumbsPost {
+    padding-left: 10px;
+     font-size: 20px;
+     color: #808080;
+    border: none;
+    cursor: pointer;
+  }
+  .up {
+    padding-bottom : 2px;
+  }
 /* Ajouter un article */
 .center {
   display: flex;
@@ -162,7 +188,7 @@ h2 {
   width: 80%;
   height: 30px;
   margin-bottom: 15px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: solid 1px #d6d6d6;
   padding: 5px 10px 5px 10px;
   font-size: 1em;
@@ -170,14 +196,14 @@ h2 {
 }
 textarea {
   resize: none;
+  font-family: sans-serif;
 }
 #addPostText {
   width: 95%;
   height: 125px;
-  border-radius: 30px;
+  border-radius: 10px;
   border: solid 1px #d6d6d6;
   padding: 15px;
-  font-size: 1.2em;
   font-size: 1em;
   font-family: sans-serif;
 
@@ -193,15 +219,13 @@ textarea {
   border: none;
   padding: 5px 15px 5px 15px;
   margin: 5px 0 10px 0;
-  border-radius: 15px;
+  border-radius: 7px;
   &:hover {
     box-shadow: #888888 1px 1px 5px;
     cursor: pointer;
   }
 }
-#modify {
-  background-color: #7e7e7e;
-}
+
 #delete {
   background-color: #FF0000;
   font-size: 18px;
@@ -243,7 +267,7 @@ p span {
   padding-bottom: 20px;
 }
 .profil {
-  min-height: 88vh;
+  min-height: 89vh;
 }
 .name {
   display: flex;
@@ -295,4 +319,140 @@ p span {
   background-color: #868686;
 }
 
-</style>
+/* Article Content */
+.topPost {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.buttonList {
+  margin-right: 40px;
+  & button {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+  }
+}
+.pen {
+  font-size: 17px;
+  color: #444444;
+  &:hover {
+    color: black;
+  }
+}
+.trash {
+  color: #ff000098;
+  font-size: 17px;
+  &:hover {
+  color: #ff0000;
+  }
+}
+
+/* Commentaires */
+#discussion{
+    display: flex;
+    align-items: center;
+    margin: 0 15px 0 15px;
+    #commentaire{
+        background-color:rgb(240, 240, 240);
+        border-radius: 15px;
+        padding: 10px 20px 10px 20px;
+        margin: 10px 25px 10px 0;
+        display: flex;
+        gap: 20px;
+        .comment{
+            margin: 5px 0 0 0;
+            text-align: left;
+            font-size: 1.1em;
+        }
+        #nameComment{
+          font-weight: bold;
+          font-size: 0.9em;
+          margin: 0;
+          text-align: start;
+        }
+    }
+}
+.top {
+    border-top: 1px solid rgba(0, 0, 0, 0.171);
+}
+.oneComment {
+    width: 100%;
+}
+#addComment {
+    background-color: white;
+    width: 30%;
+    border-radius: 15px;
+}
+#avatar_comment {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin: 0 15px 0 15px;
+  border-radius: 25px;
+}
+
+ .likeandComment {
+  border-top: 1px solid rgba(0, 0, 0, 0.171);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+  display: flex;
+  justify-content: center;
+  & p {
+    margin: 8px 0 8px 0;
+  }
+  & button {
+   background-color: white;
+   border: none;
+   cursor: pointer;
+   margin-right: 13px;
+ }
+}
+.thumbsBlue {
+     font-size: 20px;
+    border: none;
+    cursor: pointer;
+    color: #FF0000;
+   }
+.buttonListComment {
+  & button {
+    border: none;
+    cursor: pointer;
+  }
+}
+.topComment {
+  margin-bottom: 5px;
+}
+
+#addComment {
+  border: none;
+  background-color:rgb(240, 240, 240);
+  margin: 10px;
+  width: 70%;
+  min-height: 10px;
+  padding: 10px 15px 0 15px;
+  font-size: 1.2em;
+  &:focus-visible {
+    outline: none;
+  }
+
+}
+.addComment{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px ;
+  }
+.penComment {
+  font-size: 14px;
+  color: #444444;
+  &:hover {
+    color: black;
+  }
+}
+.trashComment {
+  color: #ff000098;
+  font-size: 14px;
+  &:hover {
+  color: #ff0000;
+  }
+}</style>

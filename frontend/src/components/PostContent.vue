@@ -1,19 +1,21 @@
 <template>
   <div id="article">
-    <div class="infoUser">
-      <img  v-if="(this.user.imageUrl  != null)" id="avatar_post" :src=" this.user.imageUrl  " />
-      <img v-else  id="avatar_post" src="../assets/avatar.png" />
-      <div class="info">
-        <p id="name">{{this.user.firstName}} {{this.user.lastName}}</p>
-        <p class="date"><time >{{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
+    <div class="topPost">
+      <div class="infoUser">
+        <img  v-if="(this.userArticle.imageUrl  != null)" id="avatar_post" :src=" this.userArticle.imageUrl  " />
+        <img v-else  id="avatar_post" src="../assets/avatar.png" />
+        <div class="info">
+          <p id="name">{{this.userArticle.firstName}} {{this.userArticle.lastName}}</p>
+          <p class="date"><time >{{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
+        </div>
       </div>
-      <div v-if="this.userId == this.article.users_id "> 
-        <button @click="deletePost()" type="button" id="delete">Supprimer</button>
-        <button id="modify" @click="modifyPost()" type="button">Modifier</button>
+      <div v-if="(this.userId == this.article.users_id) || (this.user.isAdmin == true)" class="buttonList"> 
+        <button class="modify" @click="modifyPost()" type="button"><fa icon="pen" class="pen"/></button>
+        <button @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash"/></button>
       </div>
     </div>
     <div id="title">
-      <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" />
+      <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" :placeholder= article.title />
       <h3 v-else id="title">{{this.article.title}}</h3>
     </div>
     <div id="content">
@@ -22,13 +24,11 @@
         <p v-else class="image"><img  id="image" :src=" this.article.imageUrl " /></p>
       </div>
       <div v-else class="contentText">
-        <input  v-if="(this.modify == true)  && (this.content != null) " v-model="content" type="text" class="content" placeholder="Ecrivez quelque chose..."/>
+        <textarea  v-if="(this.modify == true)  && (this.content != null) " v-model="content" type="text" class="content" :placeholder= article.content ></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button">Publier</button>
     </div>
-    <p>{{this.article.likes}}</p><button @click="addLike()">J'aime</button>
-    <p>{{this.article.dislikes}}</p><button @click="addDislike()">Je n'aime pas</button>
   </div>
 </template>
 
@@ -42,19 +42,20 @@ export default {
     return {
       token : localStorage.getItem("token"),
       userId : localStorage.getItem("userId"),
-      user : "",
+      userArticle : "",
+      user: "",
       title : "",
       content : "",
       image : "",
       article: "",
       article_id : "",
-      forData : "",
       modify : false,
       dayjs
     }
   },
   created() { 
     this.getPost();
+    this.getUser();
     },
   methods : { 
     getPost: function (){
@@ -63,13 +64,20 @@ export default {
       headers: {Authorization: "Bearer " + this.token}})
       .then(response => {
         this.article = response.data;
-        this.user = this.article.User;
+        this.userArticle = this.article.User;
       })
       .catch(error => { 
         if (error.response.status == 401) {
           this.$router.push('/login' );
           localStorage.clear();
         }
+      })
+    },
+    getUser(){
+    axios.get("http://localhost:3000/api/auth/" + this.userId, {
+      headers: {Authorization: "Bearer " + this.token}})
+      .then(response => {
+        this.user = response.data;
       })
     },
     selectFile() {
@@ -94,24 +102,6 @@ export default {
             headers: {Authorization: "Bearer " + this.token}})
               .then(() => {
                 this.modify = false;
-                this.getPost();
-              })
-        },
-        addLike(){
-            this.like = 1;
-            const formData = {like : this.like, userId : this.userId}
-            axios.post("http://localhost:3000/api/article/"  + this.article_id + "/like", formData, {
-                headers: {Authorization: "Bearer " + this.token}})
-              .then(() => {
-                  this.getPost();
-              })
-        },
-        addDislike(){
-            this.dislike = 1;
-            const formData = {dislike : this.dislike, userId : this.userId}
-            axios.post("http://localhost:3000/api/article/"  + this.article_id + "/dislike", formData, {
-              headers: {Authorization: "Bearer " + this.token}})
-              .then(() => {
                 this.getPost();
               })
         },

@@ -2,7 +2,7 @@
     <div class="forum profil">
         <div class="user">
             <h2 class="titlePage">Information sur le compte</h2>
-            <h3 class="titleModify" v-if="(this.modify == true)">Veuillez compléter les champs que vous souhaitez modifier : </h3>
+            <h3 class="titleModify" v-if="(this.modify == true )">Veuillez compléter les champs que vous souhaitez modifier : </h3>
             <div class="avatarProfil">
                 <img  v-if="(this.user.imageUrl != null)" id="imageProfil" :src=" this.user.imageUrl " />
                 <img v-else  id="imageProfil" src="../assets/avatar.png" />

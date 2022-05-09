@@ -24,14 +24,14 @@
             <img v-else  id="avatar_post" src="../assets/avatar.png" />
             <div class="info">
               <p id="name">{{article.User.firstName}} {{article.User.lastName}}</p>
-              <p class="date"><time >{{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
+              <p class="date"><time >Le {{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
             </div>
           </div>
           <p id="title">{{article.title}}</p>
           <p class="content">{{article.content}}</p>
           <div class="likeComment">
-            <p class="likeLength">{{article.likes}} j'aime</p>
-            <p class="likeLength">{{article.dislikes}} je n'aime pas</p>
+            <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p>
+            <p class="likeLength">{{article.dislikes}} <fa icon="thumbs-down" class="thumbsPost down"/></p>
             <p class="commentLength">{{article.Comments.length}} Commentaire(s)</p>
           </div>
         </a>

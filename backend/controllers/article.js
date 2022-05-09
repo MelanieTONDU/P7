@@ -82,11 +82,6 @@ exports.modifyArticle = (req, res, next) => {
       if (!article) {
         res.status(404).json({error: new Error('No such Thing!')});
       }
-      else if (article.users_id !== req.auth.userId) {
-        res.status(403).json({
-          error: new Error('Unauthorized request !')
-        });
-      }
       if(article.imageUrl != null){
         console.log("test2")
         const filename = article.imageUrl.split('/images/')[1];
@@ -111,11 +106,6 @@ exports.deleteArticle = (req, res, next) => {
   .then(article => {
     if (!article) {
       res.status(404).json({error: new Error('No such Thing!')});
-    }
-    else if (article.users_id !== req.auth.userId) {
-      res.status(403).json({
-        error: new Error('Unauthorized request !')
-      })
     }
     if(article.imageUrl != null){
     const filename = article.imageUrl.split('/images/')[1];
@@ -208,7 +198,7 @@ exports.likeArticle = (req, res, next) => {
       }
   }
     Article.update({ ...articleObject, id: req.params.id},{where: {id: req.params.id}})
-      .then(() => {res.status(200).json({likes})})
+      .then(() => {res.status(200).json({dislikes, likes, usersDisliked, usersLiked})})
       .catch((error) => {res.status(400).json({ error })});
 })
   .catch((error) => {res.status(404).json({ error })});
@@ -289,7 +279,7 @@ exports.dislikeArticle = (req, res, next) => {
     }
   }
     Article.update({ ...articleObject, id: req.params.id},{where: {id: req.params.id}})
-      .then(() => {res.status(200).json({dislikes})})
+      .then(() => {res.status(200).json({dislikes, likes, usersDisliked, usersLiked})})
       .catch((error) => {res.status(400).json({ error })});
 })
   .catch((error) => {res.status(404).json({ error })});

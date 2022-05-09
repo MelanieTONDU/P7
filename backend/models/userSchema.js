@@ -34,6 +34,10 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  isAdmin:{
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+  }
 });
 
 User.hasMany(Article, {foreignKey: 'users_id', onDelete:'CASCADE'});

@@ -7,8 +7,7 @@
         <router-link to="/">Inscription</router-link>
       </nav>
     </div>
-    <div class="fond">
-      <img src="../assets/fond.jpg"/>
+    <div id="fond">
     </div>
   </div>
 </template>
@@ -28,11 +27,17 @@ export default {
 .header {
   display: flex;
   padding: 10px;
+  background: white;
 }
 .logo{
     width: 25%;
     position: relative;
     left: 35%;
+}
+.page {
+  background:url("../assets/architecture.jpg") no-repeat;
+  width: 100%;
+  height: 100vh;
 }
 nav {
   padding: 50px;

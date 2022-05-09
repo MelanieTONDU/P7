@@ -55,7 +55,8 @@ exports.getOneAccount = (req, res, next) => {
       email : user.email,
       job : user.job,
       imageUrl : user.imageUrl,
-      createdAt : user.createdAt
+      createdAt : user.createdAt,
+      isAdmin : user.isAdmin,
     }))
     .catch((error) => res.status(404).json({ error }));
   };
@@ -74,7 +75,7 @@ exports.modifyAccount = (req, res, next) => {
       if (!user) {
         res.status(404).json({error: new Error('No such Thing!')});
       }
-      else if (user.id !== req.auth.userId) {
+      else if (user.id !== req.auth.userId ) {
         res.status(403).json({
           error: new Error('Unauthorized request !')
         });
