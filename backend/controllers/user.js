@@ -1,7 +1,7 @@
 const User = require("../models/userSchema");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const auth = require("../middleware/auth");
+const fs = require('fs');
 
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
@@ -68,7 +68,6 @@ exports.getAllAccounts = (req, res, next) => {
     };
 
 exports.modifyAccount = (req, res, next) => {
-  console.log(req.file)
   const userObject = req.body;
     User.findOne({ where: {id: req.params.id} })
     .then(user => {
@@ -103,9 +102,22 @@ exports.modifyAccount = (req, res, next) => {
         })
       }
       else if(req.file){
-        console.log("test")
         const userObject = {...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`};
-        User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
+          const filename = user.imageUrl.split('/images/')[1];
+          fs.unlink(`images/${filename}`, () => {
+            User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
+            .then((userObject) => res.status(200).json({
+              firstName : userObject.firstName,
+              lastName : userObject.lastName,
+              email : userObject.email,
+              imageUrl : userObject.imageUrl,
+              createdAt : userObject.createdAt
+            }))
+          .catch(error => res.status(400).json({ error }));
+          })
+        }
+        else {
+          User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
           .then((userObject) => res.status(200).json({
             firstName : userObject.firstName,
             lastName : userObject.lastName,
@@ -115,21 +127,7 @@ exports.modifyAccount = (req, res, next) => {
           }))
         .catch(error => res.status(400).json({ error }));
         }
-      else {
-        console.log("test1")
-
-        User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
-        .then((userObject) => res.status(200).json({
-          firstName : userObject.firstName,
-          lastName : userObject.lastName,
-          email : userObject.email,
-          job : userObject.job,
-          imageUrl : userObject.imageUrl,
-          createdAt : userObject.createdAt
-        }))
-      .catch(error => res.status(400).json({ error }));
-      }
-      })  
+      })
     .catch(error => res.status(500).json({ error }));
   };
 
