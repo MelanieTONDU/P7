@@ -18,16 +18,42 @@
       <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" :placeholder= article.title />
       <h3 v-else id="title">{{this.article.title}}</h3>
     </div>
-    <div id="content">
-      <div  v-if="this.article.imageUrl != null " class="contentImg">
+
+    <form id="content">
+      <div v-if="this.article.imageUrl != null " class="contentImg">
         <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" id="image" ref="image" />
         <p v-else class="image"><img  id="image" :src=" this.article.imageUrl " /></p>
       </div>
-      <div v-else class="contentText">
-        <textarea  v-if="(this.modify == true)  && (this.content != null) " v-model="content" type="text" class="content" :placeholder= article.content ></textarea>
+
+      <div v-else id="contentText">
+        <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" type="text" id="test2" :placeholder= article.content ></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
+
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button">Publier</button>
+    </form>
+
+    <div class="likeandComment">
+        <button @click="addLike()" >
+            <div v-if="((this.userLike == true) && (this.userDislike == false))" class="buttonLike blue">
+                <p >{{this.article.likes}}</p>
+                <fa icon="thumbs-up" class="thumbs"/>
+            </div>
+            <div v-else class="buttonLike ">
+                <p>{{this.article.likes}}</p>
+                <fa icon="thumbs-up" class="thumbsGrey"/>
+            </div>
+        </button>
+        <button @click="addDislike()" >
+            <div v-if="((this.userDislike == true) && (this.userLike == false))" class="buttonLike blue">
+              <p >{{this.article.dislikes}}</p>
+              <fa icon="thumbs-down" class="thumbs"/>
+            </div>
+            <div v-else class="buttonLike">
+              <p >{{this.article.dislikes}}</p>
+              <fa icon="thumbs-down" class="thumbsGrey"/>
+            </div>
+        </button>
     </div>
   </div>
 </template>
@@ -44,6 +70,10 @@ export default {
       userId : localStorage.getItem("userId"),
       userArticle : "",
       user: "",
+      userDislike : false,
+      userLike : false,
+      likes: "0",
+      dislikes: "0",
       title : "",
       content : "",
       image : "",
@@ -65,6 +95,20 @@ export default {
       .then(response => {
         this.article = response.data;
         this.userArticle = this.article.User;
+        this.userLiked = this.article.usersLiked.find(p => p == this.userId);
+        this.userDisliked = this.article.usersDisliked.find(p => p == this.userId);
+        if ((this.userLiked != undefined) && (this.userDisliked == undefined)){
+          this.userLike = true;
+          this.userDislike = false;
+        }
+        else if ((this.userDisliked != undefined) && (this.userLiked == undefined)) {
+          this.userDislike = true;
+          this.userLike = false;
+        }
+        else {
+          this.userDislike = false;
+          this.userLike = false;
+        }
       })
       .catch(error => { 
         if (error.response.status == 401) {
@@ -104,6 +148,24 @@ export default {
                 this.modify = false;
                 this.getPost();
               })
+        },
+        addLike(){
+            this.like = 1;
+            const formData = {like : this.like, userId : this.userId}
+            axios.post("http://localhost:3000/api/article/"  + this.article_id + "/like", formData, {
+                headers: {Authorization: "Bearer " + this.token}})
+                .then(() => {
+                    this.getPost();
+                })
+        },
+        addDislike(){
+            this.dislike = 1;
+            const formData = {dislike : this.dislike, userId : this.userId}
+            axios.post("http://localhost:3000/api/article/"  + this.article_id + "/dislike", formData, {
+                headers: {Authorization: "Bearer " + this.token}})
+                .then(() => {
+                    this.getPost();
+                })
         },
     }
   }

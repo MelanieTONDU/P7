@@ -33,7 +33,7 @@ exports.createArticle = (req, res, next) => {
 exports.getOneArticle = (req, res, next) => {
   Article.findOne({ 
     where:{id: req.params.id},
-    include:[{model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']}]
+    include:[{model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']}, {model: Comments}]
   })
     .then((article) => res.status(200).json(article))
     .catch((error) => res.status(404).json({ error }));

@@ -238,86 +238,12 @@ textarea {
 p span {
   font-weight: bold;
 }
-.avatarProfil {
-  position: absolute;
-  left: 27%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-  }
 
-.avatarProfilImg {
-    width: 150px;
-    margin-bottom: 10px;
-}
 .userContainer {
   display: flex;
   justify-content: center;
 }
-.infoProfil {
-  margin: 110px 0 50px 0;
-  font-size: 1.2em;
-  margin-left: 30%;
-  display: flex;
-  flex-direction: column;
-}
-.titlePage {
-  font-size: 1.7em;
-  padding-bottom: 20px;
-}
-.profil {
-  min-height: 89vh;
-}
-.name {
-  display: flex;
-  padding-left: 5%;
-  & input {
-    height: 30px;
-    margin-top : 16px;
-    border: none;
-    border-radius: 15px;
-    box-shadow: #bebebe 1px 1px 5px;
-    width: 60%;
-    padding: 0 5px 0 10px;
-    font-size: 0.9em;
-  }
-}
-#imageProfil {
-  width: 170px;
-  height: 170px;
-  object-fit: cover;
-  border-radius: 85px;
-  margin: 0 0 15px 0;
-}
-.nameClass {
-  font-weight: bold;
-  padding-right: 10px;
-}
-.titleModify {
-  position: absolute;
-  left: 40%;
-  top: 250px;
-  color: #ff0000b2;
-}
-.button {
-  font-size: 18px;
-  color: white;
-  border: none;
-  padding: 5px 15px 5px 15px;
-  margin: 15px 10px 20px 10px;
-  border-radius: 10px;
-  &:hover {
-    box-shadow: #888888 1px 1px 5px;
-    cursor: pointer;
-  }
-}
-.red {
-  background-color: #FF0000;
-}
-.grey {
-  background-color: #868686;
-}
+
 
 /* Article Content */
 .topPost {
@@ -376,6 +302,9 @@ p span {
 .top {
     border-top: 1px solid rgba(0, 0, 0, 0.171);
 }
+.allComment {
+    width: 100%;
+}
 .oneComment {
     width: 100%;
 }
@@ -387,16 +316,17 @@ p span {
 #avatar_comment {
   width: 50px;
   height: 50px;
-  object-fit: contain;
+  object-fit: cover;
   margin: 0 15px 0 15px;
   border-radius: 25px;
 }
 
  .likeandComment {
-  border-top: 1px solid rgba(0, 0, 0, 0.171);
   border-bottom: 1px solid rgba(0, 0, 0, 0.171);
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10% ;
   & p {
     margin: 8px 0 8px 0;
   }
@@ -407,12 +337,23 @@ p span {
    margin-right: 13px;
  }
 }
-.thumbsBlue {
+.thumbs {
      font-size: 20px;
     border: none;
     cursor: pointer;
-    color: #FF0000;
    }
+.blue {
+    color: #FF0000;
+}
+.thumbsGrey {
+  color: #444444;
+}
+.buttonLike {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 1.4em;
+}
 .buttonListComment {
   & button {
     border: none;
@@ -455,4 +396,111 @@ p span {
   &:hover {
   color: #ff0000;
   }
-}</style>
+}
+
+/*Page de profil */
+.profil {
+  min-height: 89vh;
+}
+.titlePP {
+  font-size: 1.7em;
+  padding-bottom: 20px;
+}
+.titlePPModify {
+  position: absolute;
+  left: 27%;
+  top: 210px;
+  color: #ff0000b2;
+}
+
+#photoProfil {
+  position: absolute;
+  right: 23%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  & .imagePP {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 85px;
+    margin: 0 0 15px 0;
+  }
+  & .modifyPPButton {
+    font-size: 15px;
+    border: none;
+    padding: 5px 15px 5px 15px;
+    margin: 5px 10px 20px 10px;
+    border-radius: 7px;
+    &:hover {
+      box-shadow: #888888 1px 1px 5px;
+      cursor: pointer;
+    }
+  }
+  & .buttonPP {
+    width: 40%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px 5px 15px;
+    margin: 15px 10px 20px 10px;
+    font-size: 15px;
+    &:hover {
+      box-shadow: #888888 1px 1px 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+#infoUser {
+  margin: 60px 0 10px 5%;
+  font-size: 1.2em;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  & .infoProfil {
+    display: flex;
+    padding-left: 5%;
+    justify-content: center;
+    & .infoProfilDetail {
+      font-weight: bold;
+      padding-right: 10px;
+    }
+    & input {
+      height: 30px;
+      margin-top : 16px;
+      border: none;
+      border-radius: 15px;
+      box-shadow: #bebebe 1px 1px 5px;
+      width: 60%;
+      padding: 0 5px 0 10px;
+      font-size: 0.9em;
+    }
+  }
+}
+#profilButton {
+  text-align: start;
+  margin-left: 14%;
+  & .profilButton {
+    font-size: 18px;
+    color: white;
+    border: none;
+    padding: 5px 15px 5px 15px;
+    margin: 15px 10px 20px 10px;
+    border-radius: 10px;
+    &:hover {
+      box-shadow: #888888 1px 1px 5px;
+      cursor: pointer;
+    }
+  }
+}
+.red {
+  background-color: #FF0000;
+}
+.grey {
+  background-color: #a3a3a3;
+}
+
+</style>

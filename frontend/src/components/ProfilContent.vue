@@ -1,54 +1,58 @@
 <template>
     <div class="forum profil">
         <div class="user">
-            <h2 class="titlePage">Information sur le compte</h2>
-            <h3 class="titleModify" v-if="(this.modify == true )">Veuillez compléter les champs que vous souhaitez modifier : </h3>
-            <div class="avatarProfil">
-                <img  v-if="(this.user.imageUrl != null)" id="imageProfil" :src=" this.user.imageUrl " />
-                <img v-else  id="imageProfil" src="../assets/avatar.png" />
-                <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" id="changeAvatar">Modifier sa photo de profil</button>
-                <div v-else>
-                    <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" />
-                    <button  @click="addAvatar()" type="submit" class="button buttonSave red"> Enregistrer</button>
+            <h2 class="titlePP">Information sur le compte</h2>
+            <h3 class="titlePPModify" v-if="(this.modify == true )">Veuillez compléter les champs que vous souhaitez modifier : </h3>
+            <div id="photoProfil">
+                <img  v-if="(this.user.imageUrl != null)" class="imagePP" :src=" this.user.imageUrl " />
+                <img v-else  class="imagePP" src="../assets/avatar.png" />
+                <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" class="modifyPPButton">Modifier sa photo</button>
+                <div v-else class="changePP">
+                    <input name="image" type="file" @change="selectFile()" class="addPP" ref="image" />
+                    <div>
+                        <button  @click="addAvatar()" type="submit" class="buttonPP buttonSave red"> Enregistrer</button>
+                        <button @click="cancel()" type="button" class="buttonPP buttonCancel grey">Annuler</button>
+                    </div>
                 </div>
             </div>
-            <div class="infoProfil">
-                <div class="name">
-                    <p class="nameClass">Prénom : </p>
+            <div id="infoUser">
+                <div class="infoProfil">
+                    <p class="infoProfilDetail">Prénom : </p>
                     <p v-if="(this.modify == false)">{{user.firstName}}</p>
                     <input v-else v-model="userEdit.firstName" type="text" id="firstName" :placeholder= user.firstName />
                 </div>
-                <div class="name">
-                    <p class="nameClass">Nom : </p>
+                <div class="infoProfil">
+                    <p class="infoProfilDetail">Nom : </p>
                     <p v-if="(this.modify == false)">{{user.lastName}}</p>
                     <input v-else v-model="userEdit.lastName" type="text" id="lastName" :placeholder= user.lastName />
                 </div>
-                <div class="name">
-                    <p class="nameClass">Email : </p>
+                <div class="infoProfil">
+                    <p class="infoProfilDetail">Email : </p>
                     <p v-if="(this.modify == false)">{{user.email}}</p>
                     <input v-else v-model="userEdit.email" type="email" id="email" :placeholder= user.email />
                 </div>
-                <div v-if="(this.modify == true)" class="name">
-                    <p class="nameClass">Nouveau mot de passe : </p>
+                <div v-if="(this.modify == true)" class="infoProfil">
+                    <p class="infoProfilDetail">Nouveau mot de passe : </p>
                     <input v-model="userEdit.password" type="password" id="password" :placeholder= user.password />
                 </div>
-                <div class="name">
-                    <p class="nameClass">Poste occupé : </p>
+                <div class="infoProfil">
+                    <p class="infoProfilDetail">Poste occupé : </p>
                     <p v-if="(this.modify == false)">{{user.job}}</p>
                     <input v-else v-model="userEdit.job" type="text" id="job" :placeholder= user.job />
                 </div>
-                <div class="name">
-                    <p class="nameClass">Date de création du compte :</p>
+                <div class="infoProfil">
+                    <p class="infoProfilDetail">Date de création du compte :</p>
                     <p> {{dayjs(user.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</p>
                 </div>
             </div>
-
-            <p>{{this.msg}}</p>
-            <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="button buttonSave red"> Enregistrer les modifications</button>
-            <button v-if=" (this.modify == true)" @click="cancel()" type="button" class="button buttonCancel grey">Annuler</button>
-            <div v-else class="bouton"> 
-                <button class="button buttonModify grey" @click="modifyUser()" type="button">Modifier mes informations</button>
-                <button @click="deleteUser()" type="button" class="button buttonDelete red">Supprimer le compte</button>
+            <div id="profilButton">
+                <p>{{this.msg}}</p>
+                <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="profilButton buttonSave red"> Enregistrer les modifications</button>
+                <button v-if=" (this.modify == true)" @click="cancel()" type="button" class="profilButton buttonCancel grey">Annuler</button>
+                <div v-else > 
+                    <button class="profilButton buttonModify grey" @click="modifyUser()" type="button">Modifier mes informations</button>
+                    <button @click="deleteUser()" type="button" class="profilButton buttonDelete red">Supprimer le compte</button>
+                </div>
             </div>
         </div>
     </div>
@@ -130,7 +134,7 @@ export default {
                 formData.append("image", this.image);
                 console.log(formData)
             axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
-                headers: {Authorization: "Bearer " + this.token}})
+            headers: {Authorization: "Bearer " + this.token}})
                 .then((response) => {
                     console.log(response)
                     this.getUser();
@@ -150,5 +154,4 @@ export default {
 </script>
 
 <style>
-
 </style>

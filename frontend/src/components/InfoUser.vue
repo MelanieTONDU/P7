@@ -28,7 +28,6 @@ export default {
             headers: {Authorization: "Bearer " + this.token}})
             .then(response => {
                 this.user = response.data;
-                console.log(this.user.imageUrl)
             })
         },
     }

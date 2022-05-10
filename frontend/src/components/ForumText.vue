@@ -70,7 +70,6 @@ export default {
       headers: {Authorization: "Bearer " + this.token}})
         .then(response => {
           this.articles = response.data;
-          console.log(this.articles)
         })
         .catch(error => { 
 					if (error.response.status == 401) {
