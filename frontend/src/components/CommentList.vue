@@ -1,34 +1,34 @@
 <template>
     <div class="allComment">
-        <p v-if="comments.length > 1" id="nummberComment">{{comments.length}} Commentaires</p>
-        <p v-else id="nummberComment" >{{comments.length}} Commentaire</p>
-    <div class="oneComment">
-        <div v-for="comment in comments" :key="comment.id" id="discussion">
-            <img  v-if="(comment.User.imageUrl != null)" id="avatar_comment" :src=" comment.User.imageUrl " />
-            <img v-else  id="avatar_comment" src="../assets/avatar.png" />
-            <div id="commentaire" >
-                <div class="commentContainer">
-                    <p id="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
-                    <p class="comment">{{comment.text}}</p>
-                </div>
-                <div v-if="(this.userId == comment.User.id) || (this.user.isAdmin == true) " class="buttonListComment"> 
-                    <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
-                    <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
-                    <div v-if=" (commentId == comment.id) && (this.modify == true)">
-                        <textarea v-model= this.newText type="text" />
-                        <button @click="changeComment(comment.id)" type="button">Publier</button>
+        <p v-if="comments.length > 1" class="nummberComment">{{comments.length}} Commentaires</p>
+        <p v-else class="nummberComment" >{{comments.length}} Commentaire</p>
+        <div class="oneComment">
+            <div v-for="comment in comments" :key="comment.id" id="discussion">
+                <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
+                <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
+                <div id="commentaire" >
+                    <div class="commentContainer">
+                        <p id="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
+                        <p class="comment">{{comment.text}}</p>
+                    </div>
+                    <div v-if="(this.userId == comment.User.id) || (this.user.isAdmin == true) " class="buttonListComment"> 
+                        <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
+                        <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
+                        <div v-if=" (commentId == comment.id) && (this.modify == true)">
+                            <textarea v-model= this.newText type="text"></textarea>
+                            <button @click="changeComment(comment.id)" type="button">Publier</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="addComment">
-            <img  v-if="(this.user.imageUrl != null)" id="avatar_comment" :src=" user.imageUrl " />
-            <img v-else  id="avatar_comment" src="../assets/avatar.png" />
-            <textarea id="addComment" v-model="text" type="text" placeholder="Ajouter un commentaire" required ></textarea>
-            <button @click="addComment()" type="button">Publier</button>
+            <div class="addComment">
+                <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
+                <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
+                <textarea id="addComment" v-model="text" type="text" placeholder="Ajouter un commentaire" required ></textarea>
+                <button @click="addComment()" type="button">Publier</button>
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>

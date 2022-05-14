@@ -25,7 +25,7 @@
 			<p class="message">{{msg}}</p>
 			<button :disabled="email && password && lastName && firstName == ''" @click="createAccount()" type="button">S'inscrire</button>
 			<div>
-				<p>Vous avez déjà un compte ? <router-link to="/login" class="link">Se connecter</router-link></p>
+				<p class="textUnderButton">Vous avez déjà un compte ? <router-link to="/login" class="link">Se connecter</router-link></p>
 			</div>
 		</form>
 	</div>

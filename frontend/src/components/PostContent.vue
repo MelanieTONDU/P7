@@ -2,8 +2,8 @@
   <div id="article">
     <div class="topPost">
       <div class="infoUser">
-        <img  v-if="(this.userArticle.imageUrl  != null)" id="avatar_post" :src=" this.userArticle.imageUrl  " />
-        <img v-else  id="avatar_post" src="../assets/avatar.png" />
+        <img  v-if="(this.userArticle.imageUrl  != null)" alt="Photo de profil" id="avatar_post" :src=" this.userArticle.imageUrl  " />
+        <img v-else  id="avatar_post" src="../assets/avatar.png" alt="Photo de profil" />
         <div class="info">
           <p id="name">{{this.userArticle.firstName}} {{this.userArticle.lastName}}</p>
           <p class="date"><time >{{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
@@ -22,7 +22,7 @@
     <form id="content">
       <div v-if="this.article.imageUrl != null " class="contentImg">
         <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" id="image" ref="image" />
-        <p v-else class="image"><img  id="image" :src=" this.article.imageUrl " /></p>
+        <p v-else class="image"><img  id="image" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
       </div>
 
       <div v-else id="contentText">

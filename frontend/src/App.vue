@@ -313,7 +313,7 @@ p span {
     width: 30%;
     border-radius: 15px;
 }
-#avatar_comment {
+.avatar_comment {
   width: 50px;
   height: 50px;
   object-fit: cover;
@@ -503,4 +503,36 @@ p span {
   background-color: #a3a3a3;
 }
 
+
+@media screen and (max-width:768px)
+{
+#formulaire{
+  margin: 25% 0 35% 0;
+  top: 8%;
+  left: 10%;
+  width: 80%;
+  border-radius: 20px;
+  input {
+    font-size: 2.5vh;
+  }
+  button {
+    font-size: 3.5vh;
+    margin: 0;
+  }
+}
+.textUnderButton {
+  font-size: 2.9vh;
+  padding: 0 15px 0 15px;
+}
+h1 {
+  font-size: 4vh;
+}
+}
+
+/* Pagination */
+.pagination {
+  margin-bottom: 10vh;
+  display: flex;
+  justify-content: center;
+}
 </style>

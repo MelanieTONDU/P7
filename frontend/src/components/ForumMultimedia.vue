@@ -20,15 +20,15 @@
       <div v-for="article in articles" :key="article.id" id="articleList">
         <a :href = "article.id"  id="link">
           <div class="infoUser">
-            <img  v-if="(article.User.imageUrl != null)" id="avatar_post" :src=" article.User.imageUrl " />
-            <img v-else  id="avatar_post" src="../assets/avatar.png" />
+            <img  v-if="(article.User.imageUrl != null)" id="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
+            <img v-else  id="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
             <div class="info">
               <p id="name">{{article.User.firstName}} {{article.User.lastName}}</p>
               <p class="date"><time >{{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
             </div>
           </div>
           <p id="title">{{article.title}}</p>
-          <img class="image" :src = " article.imageUrl "/>
+          <img class="image" :src = " article.imageUrl " alt="Image de la publication"/>
           <div class="likeComment">
             <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p>
             <p class="likeLength">{{article.dislikes}} <fa icon="thumbs-down" class="thumbsPost down"/></p>
@@ -36,6 +36,17 @@
           </div>
         </a>
       </div>
+        <div class="pagination">
+          <div v-if="(this.page > 0 )">
+            <button @click="getPosts(this.page = 0)">&lt;&lt;</button>
+            <button @click="updateLess()">{{this.page -1}}</button>
+          </div>
+          <button >Page {{this.page}}</button>
+          <div v-if="(this.page < this.totalPages)">
+            <button @click="updateMore()">{{this.page +1}}</button>
+            <button @click="getPosts(this.page = this.totalPages)">&gt;&gt;</button>
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -55,6 +66,8 @@ export default {
       title : "",
       image: "",
       msg : "",
+      totalPages: "",
+      page : 0 ,
       dayjs
     }
   },
@@ -66,10 +79,11 @@ export default {
   },
   methods : {
     getPosts(){
-      axios.get("http://localhost:3000/api/article?type=image ",{
+      axios.get("http://localhost:3000/api/article?type=image&size=5&" + "page=" + this.page ,{
       headers: {Authorization: "Bearer " + this.token}})
         .then(response => {
-          this.articles = response.data;
+          this.articles = response.data.articles.rows;
+          this.totalPages = response.data.totalPages - 1 ;
         })
         .catch(error => { 
 					if (error.response.status == 401) {
@@ -99,7 +113,38 @@ export default {
 					}
 				})
       },
-  }
+    updateMore() {
+      this.page = this.page + 1; 
+      console.log(this.page)
+      axios.get("http://localhost:3000/api/article?type=text&size=5&" + "page=" + this.page ,{
+      headers: {Authorization: "Bearer " + this.token}})
+        .then(response => {
+          this.articles = response.data.articles.rows;
+          this.totalPages = response.data.totalPages - 1;
+        })
+        .catch(error => { 
+					if (error.response.status == 401) {
+            this.$router.push('/login' );
+            localStorage.clear();
+					}
+				})
+    },
+    updateLess() {
+      this.page = this.page - 1; 
+      console.log(this.page)
+      axios.get("http://localhost:3000/api/article?type=text&size=5&" + "page=" + this.page ,{
+      headers: {Authorization: "Bearer " + this.token}})
+        .then(response => {
+          this.articles = response.data.articles.rows;
+          this.totalPages = response.data.totalPages -1;
+        })
+        .catch(error => { 
+					if (error.response.status == 401) {
+            this.$router.push('/login' );
+            localStorage.clear();
+					}
+				})
+    },  }
 }
 </script>
 

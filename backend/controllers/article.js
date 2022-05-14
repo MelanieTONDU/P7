@@ -40,6 +40,9 @@ exports.getOneArticle = (req, res, next) => {
 }
   
 exports.getAllArticles = (req, res, next) => {
+  console.log(req.query)
+  const size = JSON.parse(req.query.size);
+  const page = JSON.parse(req.query.page);
   where = {};
   if(req.query.type == "text"){
     where = {
@@ -50,7 +53,9 @@ exports.getAllArticles = (req, res, next) => {
         {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
         {model: Comments}
       ],
-      order: [["createdAt" , "DESC"]]
+      order: [["createdAt" , "DESC"]],
+      limit : size,
+      offset : page * size,
     }
   }
   if(req.query.type == "image"){
@@ -62,11 +67,14 @@ exports.getAllArticles = (req, res, next) => {
         {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
         {model: Comments}
       ],
-      order: [["createdAt" , "DESC"]]
+      order: [["createdAt" , "DESC"]],
+      limit : size,
+      offset : page * size,
     }
   }
-  Article.findAll(where)
-    .then((articles) => res.status(200).json(articles))
+  console.log("test")
+  Article.findAndCountAll(where)
+    .then((articles) => res.status(200).json({articles, totalPages : Math.ceil(articles.count / 5) }))
     .catch((error) => res.status(400).json({ error }));
 }
 
