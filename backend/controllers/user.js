@@ -40,8 +40,8 @@ exports.login = async (req, res, next) => {
         'token': jwt.sign(
           { userId: user.id },
           'RANDOM_TOKEN_SECRET',
-          { expiresIn: '24h' }
-        )
+          { expiresIn: '24h' }),
+          'isAdmin': user.isAdmin
       });
     } 
   catch (error) {res.status(500).json({ error });}

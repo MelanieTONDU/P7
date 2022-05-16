@@ -40,11 +40,20 @@ exports.deleteComment = (req, res, next) => {
 };
 
 exports.getAllComment = (req, res, next) => {
-    Comment.findAll({include:[
-      {
-        model: User
-      }
-    ]})
-        .then((comments) => res.status(200).json(comments))
+  const size = JSON.parse(req.query.size);
+  const page = JSON.parse(req.query.page);
+  let article_id = req.originalUrl.split("/")[3];
+  where = {
+    where: {articles_id : article_id },
+    include:[
+      {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
+    ],
+    order: [["createdAt" , "DESC"]],
+    limit : size,
+    offset : page * size,
+  }
+  Comment.findAndCountAll(where)
+        .then((comments) => 
+          res.status(200).json({comments}))
         .catch((error) => res.status(400).json({ error }));
     };

@@ -6,15 +6,14 @@
         <img v-else  id="avatar_post" src="../assets/avatar.png" alt="Photo de profil" />
         <div class="info">
           <p id="name">{{this.userArticle.firstName}} {{this.userArticle.lastName}}</p>
-          <p class="date"><time >{{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
+          <p class="date"><time >Le {{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
         </div>
       </div>
       <div v-if="(this.userId == this.article.users_id) || (this.user.isAdmin == true)" class="buttonList"> 
-        <button class="modify" @click="modifyPost()" type="button"><fa icon="pen" class="pen"/></button>
-        <button @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash"/></button>
+        <button class="visible" @click="hidden()" type="button">Masquer la publication</button>
       </div>
     </div>
-    <div id="title">
+    <div id="titleOnePost">
       <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" :placeholder= article.title />
       <h3 v-else id="title">{{this.article.title}}</h3>
     </div>
@@ -24,36 +23,29 @@
         <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" id="image" ref="image" />
         <p v-else class="image"><img  id="image" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
       </div>
-
       <div v-else id="contentText">
         <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" type="text" id="test2" :placeholder= article.content ></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
-
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button">Publier</button>
     </form>
-
     <div class="likeandComment">
-        <button @click="addLike()" >
-            <div v-if="((this.userLike == true) && (this.userDislike == false))" class="buttonLike blue">
-                <p >{{this.article.likes}}</p>
-                <fa icon="thumbs-up" class="thumbs"/>
+        <div>
+            <div v-if="((this.userLike == true) && (this.userDislike == false))" >
+                <button class="buttonLike blue">{{this.article.likes}}<fa @click="addLike()"  icon="thumbs-up" class="thumbs up"/></button>
             </div>
-            <div v-else class="buttonLike ">
-                <p>{{this.article.likes}}</p>
-                <fa icon="thumbs-up" class="thumbsGrey"/>
+            <div v-else >
+                <button class="buttonLike grey">{{this.article.likes}}<fa @click="addLike()" icon="thumbs-up" class="thumbs up"/></button>
             </div>
-        </button>
-        <button @click="addDislike()" >
-            <div v-if="((this.userDislike == true) && (this.userLike == false))" class="buttonLike blue">
-              <p >{{this.article.dislikes}}</p>
-              <fa icon="thumbs-down" class="thumbs"/>
+        </div>
+        <div>
+            <div v-if="((this.userDislike == true) && (this.userLike == false))" >
+              <button class="buttonLike red">{{this.article.dislikes}}<fa @click="addDislike()" icon="thumbs-down" class="thumbs down"/></button>
             </div>
-            <div v-else class="buttonLike">
-              <p >{{this.article.dislikes}}</p>
-              <fa icon="thumbs-down" class="thumbsGrey"/>
+            <div v-else>
+              <button class="buttonLike grey">{{this.article.dislikes}}<fa @click="addDislike()" icon="thumbs-down" class="thumbs down"/></button>
             </div>
-        </button>
+        </div>
     </div>
   </div>
 </template>
@@ -167,16 +159,27 @@ export default {
                     this.getPost();
                 })
         },
-    }
+        hidden(){
+          const formData = {visible : false};
+          axios.put("http://localhost:3000/api/article/" + this.article_id, formData, {
+            headers: {Authorization: "Bearer " + this.token}})
+            .then(response => {
+              this.article = response.data;
+              this.$router.push('/article/text' );
+        })
+    }}
   }
 </script>
 
 <style scoped lang="scss">
 #article {
-  margin-top : 20px;
+  margin-top : 10px;
   width: 100%;
 }
 #image{
   width: 80%;
+}
+.image {
+  margin-bottom : 5px;
 }
 </style>

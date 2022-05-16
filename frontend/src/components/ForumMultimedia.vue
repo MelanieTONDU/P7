@@ -38,16 +38,16 @@
       </div>
         <div class="pagination">
           <div v-if="(this.page > 0 )">
-            <button @click="getPosts(this.page = 0)">&lt;&lt;</button>
-            <button @click="updateLess()">{{this.page -1}}</button>
+            <button @click="getPosts(this.page = 0)" class="buttonPagination">&lt;&lt;</button>
+            <button @click="updateLess()" class="buttonPagination">&lt;</button>
           </div>
-          <button >Page {{this.page}}</button>
+          <p class="textPagination">Page {{this.page +1}} sur {{totalPages + 1}}</p>
           <div v-if="(this.page < this.totalPages)">
-            <button @click="updateMore()">{{this.page +1}}</button>
-            <button @click="getPosts(this.page = this.totalPages)">&gt;&gt;</button>
+            <button @click="updateMore()" class="buttonPagination">&gt;</button>
+            <button @click="getPosts(this.page = this.totalPages)" class="buttonPagination">&gt;&gt;</button>
           </div>
         </div>
-    </div>
+      </div>
   </div>
 </template>
 
@@ -115,8 +115,7 @@ export default {
       },
     updateMore() {
       this.page = this.page + 1; 
-      console.log(this.page)
-      axios.get("http://localhost:3000/api/article?type=text&size=5&" + "page=" + this.page ,{
+      axios.get("http://localhost:3000/api/article?type=image&size=5&" + "page=" + this.page ,{
       headers: {Authorization: "Bearer " + this.token}})
         .then(response => {
           this.articles = response.data.articles.rows;
@@ -131,8 +130,7 @@ export default {
     },
     updateLess() {
       this.page = this.page - 1; 
-      console.log(this.page)
-      axios.get("http://localhost:3000/api/article?type=text&size=5&" + "page=" + this.page ,{
+      axios.get("http://localhost:3000/api/article?type=image&size=5&" + "page=" + this.page ,{
       headers: {Authorization: "Bearer " + this.token}})
         .then(response => {
           this.articles = response.data.articles.rows;

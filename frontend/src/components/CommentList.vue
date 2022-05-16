@@ -1,7 +1,14 @@
 <template>
     <div class="allComment">
-        <p v-if="comments.length > 1" class="nummberComment">{{comments.length}} Commentaires</p>
-        <p v-else class="nummberComment" >{{comments.length}} Commentaire</p>
+        <p v-if=" this.totalComment > 1" class="numberComment">{{this.totalComment}} Commentaires</p>
+        <p v-else class="numberComment" >{{comments.length}} Commentaire</p>
+            <form class="addComment">
+                <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
+                <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
+                <textarea id="addComment" v-model="text" type="text" placeholder="Ajouter un commentaire..."  wrap="hard" required ></textarea>
+                <button id="buttonPublier" @click="addComment()" type="submit">Publier</button>
+            </form>
+        
         <div class="oneComment">
             <div v-for="comment in comments" :key="comment.id" id="discussion">
                 <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
@@ -21,11 +28,10 @@
                     </div>
                 </div>
             </div>
-            <div class="addComment">
-                <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
-                <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
-                <textarea id="addComment" v-model="text" type="text" placeholder="Ajouter un commentaire" required ></textarea>
-                <button @click="addComment()" type="button">Publier</button>
+            <div class="paginationContainer">
+                <div v-if="(this.comments.length < this.totalComment)" class="paginationComment">
+                    <button @click="updateMore()" class="buttonPaginationComment">Affichez plus de commentaires</button>
+                </div>
             </div>
         </div>
     </div>
@@ -45,9 +51,13 @@ export default {
             comments : [],
             comment : "",
             commentId : "",
+            totalComment:"",
             text : "",
             newText : "",
             modify : false,
+            totalPages: "",
+            size : "",
+            page : 0 ,
         }
     },
     created() { 
@@ -56,11 +66,14 @@ export default {
     },
     methods : { 
         getComments : function () {
+            this.size = 3;
             this.article_id = window.location.href.split("/")[4];
-            axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment/",{
+            axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment?size=3&" + "page=" + this.page ,{
             headers: {Authorization: "Bearer " + this.token}})
                 .then(response => {
-                    this.comments = response.data.filter(p => p.articles_id == this.article_id);
+                    this.comments = response.data.comments.rows;
+                    this.totalComment = response.data.comments.count;
+                    console.log(this.comments.length)
                 })
                 .catch(error => { 
 					if (error.response.status == 401) {
@@ -100,7 +113,6 @@ export default {
         changeComment: function(id) {
             const commentId = id;
             const newComment = {text: this.newText}
-            console.log(newComment)
             axios.put("http://localhost:3000/api/article/"  + this.article_id + "/comment/" + commentId, newComment, {
                 headers: {Authorization: "Bearer " + this.token}})
                 .then(() => {
@@ -108,6 +120,20 @@ export default {
                     this.getComments();
                 })
         },
+    updateMore() {
+      this.size = this.size + 3; 
+      axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment?" + "size=" + this.size + "&" + "page=" + this.page ,{
+      headers: {Authorization: "Bearer " + this.token}})
+        .then(response => {
+            this.comments = response.data.comments.rows;
+        })
+        .catch(error => { 
+					if (error.response.status == 401) {
+            this.$router.push('/login' );
+            localStorage.clear();
+					}
+				})
+    },
     }
 }
 </script>

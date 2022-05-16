@@ -35,6 +35,10 @@ const Article = sequelize.define('Article', {
     type : DataTypes.JSON,
     allowNull: true,
   },
+  visible : {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  }
 });
 
 Article.hasMany(Comment, { foreignKey: 'articles_id', onDelete:'CASCADE'});

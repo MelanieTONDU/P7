@@ -54,6 +54,7 @@ body{
 //css Forum text et multimedia //
 .forum{
   background:url("./assets/architecture.jpg") fixed;
+  min-height: 89vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,6 +104,13 @@ body{
   font-weight: bold;
   font-size: 1.5em;
   margin-top: 0;
+  margin-bottom : 10px
+}
+#titleOnePost {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-top: 0;
+  margin-bottom : 10px
 }
 .date{
   font-size: 0.9em;
@@ -197,6 +205,7 @@ h2 {
 textarea {
   resize: none;
   font-family: sans-serif;
+  height: auto;
 }
 #addPostText {
   width: 95%;
@@ -308,11 +317,6 @@ p span {
 .oneComment {
     width: 100%;
 }
-#addComment {
-    background-color: white;
-    width: 30%;
-    border-radius: 15px;
-}
 .avatar_comment {
   width: 50px;
   height: 50px;
@@ -338,22 +342,35 @@ p span {
  }
 }
 .thumbs {
-     font-size: 20px;
+    height: 20px;
+    width: 25px;
     border: none;
     cursor: pointer;
    }
-.blue {
+.red {
     color: #FF0000;
+
 }
-.thumbsGrey {
+.blue {
+  color: rgb(36, 36, 230);
+}
+.grey {
   color: #444444;
+}
+.up {
+  padding-bottom : 6px
+}
+.down {
+  padding-top: 4px;
 }
 .buttonLike {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 7px;
-  font-size: 1.4em;
+  font-size: 1.1em;
 }
+
 .buttonListComment {
   & button {
     border: none;
@@ -369,19 +386,15 @@ p span {
   background-color:rgb(240, 240, 240);
   margin: 10px;
   width: 70%;
-  min-height: 10px;
   padding: 10px 15px 0 15px;
   font-size: 1.2em;
-  &:focus-visible {
-    outline: none;
-  }
-
+  border-radius: 30px;
 }
 .addComment{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 15px ;
+  margin: 0 15px 15px 15px ;
   }
 .penComment {
   font-size: 14px;
@@ -397,7 +410,10 @@ p span {
   color: #ff0000;
   }
 }
-
+.numberComment {
+  margin: 10px 0 5px 0;
+  font-weight: bolder;
+}
 /*Page de profil */
 .profil {
   min-height: 89vh;
@@ -531,8 +547,123 @@ h1 {
 
 /* Pagination */
 .pagination {
-  margin-bottom: 10vh;
+  margin-bottom: 30px;
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+  & .textPagination {
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    margin: 0;
+  }
+  & .buttonPagination {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 20px;
+    &:hover {
+      cursor: pointer;
+      background: #80808054;
+      border-radius: 15px;
+    }
+  }
+}
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+}
+.paginationComment {
+  width: 60%;
+  border-top : 1px solid rgba(226, 226, 226, 0.658)
+}
+.textPaginationComment {
+  color: black;
+}
+.buttonPaginationComment {
+  color: rgb(71, 71, 71);
+  background: none;
+  border: none;
+  font-size: 1em;
+  font-weight: bolder;
+  padding:  10px;
+  &:hover {
+    cursor: pointer;
+    background-color: #eeeeee5d;
+  }
+}
+
+/* Admin */
+#bandeauAdmin {
+  width: 70%;
+  background-color: #122c668f;
+  min-height: 89vh;
+}
+.listPublicationAdmin {
+  width: 100%;
+  margin-top: 15px;
+}
+.list {
+  display: flex;
+  align-items: center;
+  color: black;
+  font-size: 2em;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  margin: 0 10px 0 10px;
+  border-top: 1px solid rgb(238, 238, 238);
+  & p {
+    margin: 0;
+    font-size: 0.5em;
+    height: 40px;
+    padding: 0 10px 0 10px;
+  }
+  & .contentAdmin {
+    overflow: hidden ;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+.listTitle {
+  margin: 25px 10px 25px 10px;
+  display: flex;
+  align-items: center;
+  color: black;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  & p {
+    border-right: 1px solid black;
+  }
+}
+.visibleAdmin, .visible {
+  width: 5%;
+}
+.nameAdmin {
+  width : 14%;
+}
+.titleAdmin {
+  width: 20%;
+}
+.dateAdmin {
+  width: 9%;
+}
+.contentAdmin, .imageAdmin {
+  width: 45%;
+}
+#buttonAdmin {
+  height: 25px;
+}
+.IconCross {
+  color: red;
+}
+.IconCheck {
+  color: green;
+}
+.visible {
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 </style>

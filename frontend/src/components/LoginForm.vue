@@ -30,7 +30,7 @@ export default {
     return {
       email:'',
       password:'',
-      msg:''
+      msg:'',
     }
   },
 	methods:{
@@ -40,7 +40,11 @@ export default {
         .then(response => {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem('userId', response.data.userId);
-            this.$router.push('/article/text' );})
+            if (response.data.isAdmin == true){
+              this.$router.push('/article');            }
+            else {
+            this.$router.push('/article/text' );}
+            })
         .catch(error => { 
           if (error.response.status == 404) {
              this.msg = 'Utilisateur inconnu !'

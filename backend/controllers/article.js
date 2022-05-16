@@ -40,14 +40,25 @@ exports.getOneArticle = (req, res, next) => {
 }
   
 exports.getAllArticles = (req, res, next) => {
-  console.log(req.query)
+
+  if(req.query.isAdmin){
+    where = {
+      include:[
+        {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
+        {model: Comments}
+      ],
+      order: [["createdAt" , "DESC"]],
+    }
+  }
+else {
   const size = JSON.parse(req.query.size);
   const page = JSON.parse(req.query.page);
+
   where = {};
   if(req.query.type == "text"){
     where = {
       where: {
-        content: {[Op.not]: null || ""}
+        content: {[Op.not]: null || ""}, visible: true
       },
       include:[
         {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
@@ -61,7 +72,7 @@ exports.getAllArticles = (req, res, next) => {
   if(req.query.type == "image"){
     where = {
       where: {
-        imageUrl: {[Op.not]: ""}
+        imageUrl: {[Op.not]: ""}, visible: true
       },
       include:[
         {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
@@ -72,7 +83,7 @@ exports.getAllArticles = (req, res, next) => {
       offset : page * size,
     }
   }
-  console.log("test")
+}
   Article.findAndCountAll(where)
     .then((articles) => res.status(200).json({articles, totalPages : Math.ceil(articles.count / 5) }))
     .catch((error) => res.status(400).json({ error }));
@@ -142,7 +153,6 @@ exports.likeArticle = (req, res, next) => {
     let dislikes = article.dislikes;
     
     if (usersLiked) {
-      console.log("test")
       const found = usersLiked.find(p => p == userId);
       if (found) {
         likes--;
@@ -151,11 +161,9 @@ exports.likeArticle = (req, res, next) => {
         articleObject = {...article, likes, usersLiked}
       }
       else{
-        console.log("test2")
         if(usersDisliked) {
           const foundDislike = usersDisliked.find(p => p == userId);
           if(foundDislike) {
-            console.log("test3")
             let userKey = usersDisliked.indexOf(userId);
             usersDisliked.splice(userKey, 1);
             dislikes--;
@@ -170,7 +178,6 @@ exports.likeArticle = (req, res, next) => {
           }
         }
           else {
-            console.log("test4")
             likes++;
             usersLiked.push(req.body.userId);
             articleObject = {...article, likes, usersLiked}
@@ -178,11 +185,9 @@ exports.likeArticle = (req, res, next) => {
       }
     }
     else {
-      console.log("test5")
       usersLiked = [];
       if(usersDisliked){
         const foundDislike = usersDisliked.find(p => p == userId);
-        console.log("test6")
         if(foundDislike) {
           let userKey = usersDisliked.indexOf(userId);
           usersDisliked.splice(userKey, 1);
@@ -192,14 +197,12 @@ exports.likeArticle = (req, res, next) => {
           articleObject = {...article, dislikes, usersDisliked, likes, usersLiked};
         }
         else {
-          console.log("test6")
           likes++;
           usersLiked.push(req.body.userId);
           articleObject = {...article, likes, usersLiked}
         }
       }
       else {
-        console.log("test6")
         likes++;
         usersLiked.push(req.body.userId);
         articleObject = {...article, likes, usersLiked}
@@ -222,7 +225,6 @@ exports.dislikeArticle = (req, res, next) => {
     let dislikes = article.dislikes;
 
     if (usersDisliked) {
-      console.log("test")
       const found = usersDisliked.find(p => p == userId);
       if (found) {
         dislikes--;
@@ -231,11 +233,9 @@ exports.dislikeArticle = (req, res, next) => {
         articleObject = {...article, dislikes, usersDisliked}
       }
       else{
-        console.log("test2")
         if(usersLiked) {
           const foundLike = usersLiked.find(p => p == userId);
           if(foundLike) {
-            console.log("test3")
             let userKey = usersLiked.indexOf(userId);
             usersLiked.splice(userKey, 1);
             likes--;
@@ -244,14 +244,12 @@ exports.dislikeArticle = (req, res, next) => {
             articleObject = {...article, dislikes, usersDisliked, likes, usersLiked}
           }
           else {
-            console.log("test7");
             dislikes++;
             usersDisliked.push(req.body.userId);
             articleObject = {...article, dislikes, usersDisliked}
           }
         }
           else {
-            console.log("test4")
             dislikes++;
             usersDisliked.push(req.body.userId);
             articleObject = {...article, dislikes, usersDisliked}
@@ -259,11 +257,9 @@ exports.dislikeArticle = (req, res, next) => {
       }
     }
     else {
-      console.log("test5")
       usersDisliked = [];
       if(usersLiked){
         const foundLike = usersLiked.find(p => p == userId);
-        console.log("test6")
         if(foundLike) {
           let userKey = usersLiked.indexOf(userId);
           usersLiked.splice(userKey, 1);
@@ -273,14 +269,12 @@ exports.dislikeArticle = (req, res, next) => {
           articleObject = {...article, dislikes, usersLiked, likes, usersDisliked}
         }
         else {
-          console.log("test6")
           dislikes++;
           usersDisliked.push(req.body.userId);
           articleObject = {...article, dislikes, usersDisliked}
         }
       }
       else {
-        console.log("test6")
         dislikes++;
         usersDisliked.push(req.body.userId);
         articleObject = {...article, dislikes, usersDisliked}
@@ -292,3 +286,5 @@ exports.dislikeArticle = (req, res, next) => {
 })
   .catch((error) => {res.status(404).json({ error })});
 }
+
+
