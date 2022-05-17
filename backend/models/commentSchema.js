@@ -6,6 +6,10 @@ const Comment = sequelize.define('Comment', {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    visible : {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    }
   });
   
   module.exports = Comment;

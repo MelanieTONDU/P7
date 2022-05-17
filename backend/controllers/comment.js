@@ -40,11 +40,21 @@ exports.deleteComment = (req, res, next) => {
 };
 
 exports.getAllComment = (req, res, next) => {
-  const size = JSON.parse(req.query.size);
-  const page = JSON.parse(req.query.page);
-  let article_id = req.originalUrl.split("/")[3];
+let article_id = req.originalUrl.split("/")[3];
+if(req.query.isAdmin){
   where = {
     where: {articles_id : article_id },
+    include:[
+      {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']}
+    ],
+    order: [["createdAt" , "DESC"]],
+  }
+}
+  else {
+  const size = JSON.parse(req.query.size);
+  const page = JSON.parse(req.query.page);
+  where = {
+    where: {articles_id : article_id ,visible: true},
     include:[
       {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
     ],
@@ -52,6 +62,7 @@ exports.getAllComment = (req, res, next) => {
     limit : size,
     offset : page * size,
   }
+}
   Comment.findAndCountAll(where)
         .then((comments) => 
           res.status(200).json({comments}))

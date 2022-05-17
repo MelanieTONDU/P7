@@ -6,6 +6,8 @@ import ForumDiscussion from '../views/ForumDiscussion.vue'
 import ForumMultimedia from '../views/ForumMultimedia.vue'
 import ProfilView from '../views/ProfilView.vue'
 import ForumAdmin from '../views/ForumAdmin.vue'
+import OneArticleAdmin from '../views/OneArticleAdmin.vue'
+
 
 const routes = [
   {
@@ -32,6 +34,11 @@ const routes = [
     path: '/article/:id',
     name: 'article',
     component: OneArticle
+  },
+  {
+    path: '/article/:id/admin',
+    name: 'articleAdmin',
+    component: OneArticleAdmin
   },
   {
     path: '/profil',

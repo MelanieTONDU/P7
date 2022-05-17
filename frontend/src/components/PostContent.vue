@@ -9,9 +9,10 @@
           <p class="date"><time >Le {{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
         </div>
       </div>
-      <div v-if="(this.userId == this.article.users_id) || (this.user.isAdmin == true)" class="buttonList"> 
-        <button class="visible" @click="hidden()" type="button">Masquer la publication</button>
-      </div>
+    <div v-if="(this.userId == this.article.users_id)" class="buttonList"> 
+      <button class="modify" @click="modifyPost()" type="button"><fa icon="pen" class="pen"/></button>
+      <button @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash"/></button>
+    </div>
     </div>
     <div id="titleOnePost">
       <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" :placeholder= article.title />

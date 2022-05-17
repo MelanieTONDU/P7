@@ -37,7 +37,7 @@ const Article = sequelize.define('Article', {
   },
   visible : {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
   }
 });
 

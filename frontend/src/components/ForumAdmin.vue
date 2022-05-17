@@ -6,20 +6,21 @@
         <p class="visibleAdmin">Visible</p>
         <p class="nameAdmin">Utilisateur</p>
         <p class="dateAdmin">Date de publication</p>
-        <p class="titleAdmin">Titre</p>
-        <p class="contentAdmin">Publication</p>
+        <p class="postContentAdmin">Aperçu de la publication</p>
       </div>
       <div v-for="article in articles" :key="article.id" class="list">
         <p v-if="(article.visible == true)" class="visible"><fa icon="check" class="IconCheck"/></p>
         <p v-else class="visible"><fa icon="xmark" class="IconCross"/></p>
         <p class="nameAdmin">{{article.User.firstName}} {{article.User.lastName}}</p>
-        <p class="dateAdmin"><time>Le {{dayjs(article.createdAt).locale("fr").format("DD/MM/YY")}}</time></p>
-        <p class="titleAdmin">{{article.title}}</p>
-        <div class="imageAdmin" v-if="(article.imageUrl)">
-          <img class="image" :src = " article.imageUrl " alt="Image de la publication"/>
+        <p class="dateAdmin"><time>{{dayjs(article.createdAt).locale("fr").format("DD/MM/YY")}}</time></p>
+        <div class="postContentAdmin">
+          <p class="titleAdmin">{{article.title}}</p>
+          <div class="imageAdmin" v-if="(article.imageUrl)">
+            <img class="image" :src = " article.imageUrl " alt="Image de la publication"/>
+          </div>
+          <p v-else class="contentAdmin">{{article.content}}</p>
         </div>
-        <p v-else class="contentAdmin">{{article.content}}</p>
-        <button  id="buttonAdmin" @click="getDetail(id = article.id)">Détails</button>
+        <button  id="buttonAdmin" @click="getDetail(id = article.id)">Voir</button>
       </div>
     </div>
     </div>
@@ -64,7 +65,7 @@ export default {
 				})
     },
     getDetail(id){
-      this.$router.push('/article/' + id );
+      this.$router.push('/article/' + id + "/admin");
     },
     coche(){
       console("test")

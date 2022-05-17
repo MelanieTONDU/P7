@@ -84,9 +84,7 @@ export default {
       headers: {Authorization: "Bearer " + this.token}})
         .then(response => {
           this.articles = response.data.articles.rows;
-          let found = this.articles.filter(p => p.visible = 1);
-          console.log(this.articles.id);
-          console.log(found)
+          console.log(this.articles);
           this.totalPages = response.data.totalPages - 1 ;
         })
         .catch(error => { 
@@ -137,10 +135,11 @@ export default {
           this.msg = 'Votre publication est incomplète !'
         }
         else {
+          console.log("test")
           axios.post("http://localhost:3000/api/article", formData,{
           headers: {Authorization: "Bearer " + this.token}})
-            .then(() => {
-              this.getPosts();
+            .then((response) => {
+              console.log(response)
           })
       }      
      }

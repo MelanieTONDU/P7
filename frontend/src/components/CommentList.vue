@@ -18,7 +18,7 @@
                         <p id="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
                         <p class="comment">{{comment.text}}</p>
                     </div>
-                    <div v-if="(this.userId == comment.User.id) || (this.user.isAdmin == true) " class="buttonListComment"> 
+                    <div v-if="(this.userId == comment.User.id)" class="buttonListComment"> 
                         <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
                         <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
                         <div v-if=" (commentId == comment.id) && (this.modify == true)">

@@ -602,7 +602,7 @@ h1 {
 }
 .listPublicationAdmin {
   width: 100%;
-  margin-top: 15px;
+  margin: 15px 0 15px 0;
 }
 .list {
   display: flex;
@@ -616,13 +616,14 @@ h1 {
   & p {
     margin: 0;
     font-size: 0.5em;
-    height: 40px;
     padding: 0 10px 0 10px;
   }
   & .contentAdmin {
     overflow: hidden ;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    height: max-content;
+    text-align: justify;
+    padding-top: 5px;
   }
 }
 .listTitle {
@@ -632,7 +633,7 @@ h1 {
   color: black;
   width: 100%;
   background-color: rgb(255, 255, 255);
-  border-radius: 10px;
+  border-radius: 5px;
   & p {
     border-right: 1px solid black;
   }
@@ -644,13 +645,14 @@ h1 {
   width : 14%;
 }
 .titleAdmin {
-  width: 20%;
+  font-weight: bold;
+}
+.postContentAdmin {
+  width: 66%;
+  padding: 10px;
 }
 .dateAdmin {
   width: 9%;
-}
-.contentAdmin, .imageAdmin {
-  width: 45%;
 }
 #buttonAdmin {
   height: 25px;
@@ -659,11 +661,87 @@ h1 {
   color: red;
 }
 .IconCheck {
-  color: green;
+  color: rgb(2, 179, 49);
 }
 .visible {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+#buttonAdmin {
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(209, 246, 218);
+  }
+}
+// Comment Admin //
+.publicationStatusContainer {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 30px 30px 0 30px;
+}
+.buttonVisible {
+  height: 40px;
+  border: none;
+  font-size: 1em;
+  background-color: white;
+  color: #525252bd;
+  width: 35%;
+  & .IconEye {
+    padding-right: 10px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+.green:hover {
+  color: rgb(2, 179, 49);
+}
+.red:hover {
+  color: #ff0000b2;
+}
+.publicationStatus {
+  display: flex;
+  padding-left: 15px;
+  gap: 20px;
+  background-color: rgba(209, 246, 218, 1);
+  width: 25%;
+  font-weight: bold;
+}
+#article {
+  width: 100%;
+}
+.allCommentAdmin {
+  width: 100%;
+}
+.commentContainerAdmin {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid rgb(245, 245, 245);
+  padding: 0 20px 0 20px;
+
+}
+
+.numberCommentAdmin {
+  padding-top: 10px ;
+  font-weight: bold;
+}
+.commentAdmin {
+  width: 45%;
+}
+.nameAdmin {
+  width : 14%;
+}
+
+.postContentAdmin {
+  width: 66%;
+  padding: 10px;
+} 
 </style>

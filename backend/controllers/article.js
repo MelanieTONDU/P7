@@ -7,6 +7,7 @@ const fs = require('fs');
 
 exports.createArticle = (req, res, next) => {
   const content = req.body.content;
+  console.log(content)
   const users_id = req.auth.userId;
   const articleObject = req.body;
   if((content == null || content == "") && (!req.file)){
@@ -22,8 +23,10 @@ exports.createArticle = (req, res, next) => {
   }
   else {
     const article = { ...articleObject, users_id};
+    console.log(article)
     const post = new Article({
       ...article})
+      console.log(post)
     post.save()
       .then(() => res.status(201).json(article))
       .catch(error => res.status(400).json({ error }));
@@ -40,16 +43,15 @@ exports.getOneArticle = (req, res, next) => {
 }
   
 exports.getAllArticles = (req, res, next) => {
-
-  if(req.query.isAdmin){
-    where = {
-      include:[
-        {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
-        {model: Comments}
-      ],
-      order: [["createdAt" , "DESC"]],
-    }
+if(req.query.isAdmin){
+  where = {
+    include:[
+      {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
+      {model: Comments}
+    ],
+    order: [["createdAt" , "DESC"]],
   }
+}
 else {
   const size = JSON.parse(req.query.size);
   const page = JSON.parse(req.query.page);
@@ -102,7 +104,6 @@ exports.modifyArticle = (req, res, next) => {
         res.status(404).json({error: new Error('No such Thing!')});
       }
       if(article.imageUrl != null){
-        console.log("test2")
         const filename = article.imageUrl.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
           Article.update({ ...articleObject, id:  req.params.id},{where: {id: req.params.id}})
@@ -111,7 +112,6 @@ exports.modifyArticle = (req, res, next) => {
         })
       }
       else {
-        console.log("test3")
         Article.update({ ...articleObject, id:  req.params.id},{where: {id: req.params.id}})
           .then((article) => res.status(200).json({article}))
           .catch(error => res.status(400).json({ error }));
