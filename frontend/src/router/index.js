@@ -46,7 +46,7 @@ const routes = [
     component: ProfilView
   },
   {
-    path: '/article',
+    path: '/admin',
     name: 'forumAdmin',
     component: ForumAdmin,
 },

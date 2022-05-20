@@ -1,8 +1,8 @@
 <template>
   <div class="forum">
-    <div id="bandeau">
-      <div id="articleList">
-        <div id="link">
+    <div class="bandeau">
+      <div class="articleList">
+        <div class="lien">
           <div class="topAddPost center">
             <h2>Créer une publication</h2>
           </div>
@@ -17,21 +17,20 @@
           </div>
         </div>
       </div>
-      <div v-for="article in articles" :key="article.id" id="articleList">
-        <a :href = "article.id"  id="link">
+      <div v-for="article in articles" :key="article.id" class="articleList">
+        <a :href = "article.id"  class="lien">
           <div class="infoUser">
-            <img  v-if="(article.User.imageUrl != null)" id="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
-            <img v-else  id="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
+            <img  v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
+            <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
             <div class="info">
-              <p id="name">{{article.User.firstName}} {{article.User.lastName}}</p>
+              <p class="name">{{article.User.firstName}} {{article.User.lastName}}</p>
               <p class="date"><time >{{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
             </div>
           </div>
-          <p id="title">{{article.title}}</p>
+          <p class="title">{{article.title}}</p>
           <img class="image" :src = " article.imageUrl " alt="Image de la publication"/>
-          <div class="likeComment">
+          <div class="likeComment center">
             <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p>
-            <p class="likeLength">{{article.dislikes}} <fa icon="thumbs-down" class="thumbsPost down"/></p>
             <p class="commentLength">{{article.Comments.length}} Commentaire(s)</p>
           </div>
         </a>
@@ -58,6 +57,7 @@ import "dayjs/locale/fr"
 import InfoUser from '@/components/InfoUser.vue'
 
 export default {
+  name: 'ForumMultimedia',
   data() {
     return {
       token : localStorage.getItem("token"),
@@ -81,16 +81,16 @@ export default {
     getPosts(){
       axios.get("http://localhost:3000/api/article?type=image&size=5&" + "page=" + this.page ,{
       headers: {Authorization: "Bearer " + this.token}})
-        .then(response => {
-          this.articles = response.data.articles.rows;
-          this.totalPages = response.data.totalPages - 1 ;
-        })
-        .catch(error => { 
-					if (error.response.status == 401) {
-					this.$router.push('/login' );
-          localStorage.clear();
-					}
-				})
+      .then(response => {
+        this.articles = response.data.articles.rows;
+        this.totalPages = response.data.totalPages - 1 ;
+      })
+      .catch(error => { 
+        if (error.response.status == 401) {
+        this.$router.push('/login' );
+        localStorage.clear();
+        }
+      })
     },
     selectFile() {
       this.image = this.$refs.image.files[0];
@@ -103,52 +103,47 @@ export default {
         this.msg = 'Titre vide'
       }
       axios.post("http://localhost:3000/api/article", formData,{
-        headers: {Authorization: "Bearer " + this.token}})
-        .then(() => {
-          this.getPosts();
-        })  
-				.catch(error => { 
-					if (error.response.status == 400) {
-						this.msg = 'Image vide !'
-					}
-				})
-      },
+      headers: {Authorization: "Bearer " + this.token}})
+      .then(() => {
+        this.getPosts();
+      })  
+      .catch(error => { 
+        if (error.response.status == 400) {
+          this.msg = 'Image vide !'
+        }
+      })
+    },
     updateMore() {
       this.page = this.page + 1; 
       axios.get("http://localhost:3000/api/article?type=image&size=5&" + "page=" + this.page ,{
       headers: {Authorization: "Bearer " + this.token}})
-        .then(response => {
-          this.articles = response.data.articles.rows;
-          this.totalPages = response.data.totalPages - 1;
-        })
-        .catch(error => { 
-					if (error.response.status == 401) {
-            this.$router.push('/login' );
-            localStorage.clear();
-					}
-				})
+      .then(() => {
+        this.getPosts()
+      })
+      .catch(error => { 
+        if (error.response.status == 401) {
+          this.$router.push('/login' );
+          localStorage.clear();
+        }
+      })
     },
     updateLess() {
       this.page = this.page - 1; 
       axios.get("http://localhost:3000/api/article?type=image&size=5&" + "page=" + this.page ,{
       headers: {Authorization: "Bearer " + this.token}})
-        .then(response => {
-          this.articles = response.data.articles.rows;
-          this.totalPages = response.data.totalPages -1;
-        })
-        .catch(error => { 
-					if (error.response.status == 401) {
-            this.$router.push('/login' );
-            localStorage.clear();
-					}
-				})
-    },  }
+      .then(() => {
+        this.getPosts()
+      })
+      .catch(error => { 
+        if (error.response.status == 401) {
+          this.$router.push('/login' );
+          localStorage.clear();
+        }
+      })
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.image {
-  width: 80%;
-  padding-bottom: 20px;
-}
 </style>

@@ -22,16 +22,7 @@ const Article = sequelize.define('Article', {
     default:0 ,
     allowNull: true,
   },
-  dislikes :{ 
-    type: DataTypes.NUMBER, 
-    default:0 ,
-    allowNull: true,
-  },
   usersLiked : {
-    type : DataTypes.JSON,
-    allowNull: true,
-  },
-  usersDisliked : {
     type : DataTypes.JSON,
     allowNull: true,
   },

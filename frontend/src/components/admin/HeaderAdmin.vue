@@ -2,7 +2,7 @@
     <div id="header">
         <LogoHeader/>
         <nav>
-            <router-link to="/article" class="link">Liste des publications</router-link>
+            <router-link to="/admin" class="link">Liste des publications</router-link>
             <router-link to="/login" @click="deco()" class="link"><fa icon="arrow-right-from-bracket" class="IconDeco"/></router-link>
         </nav>
     </div>
@@ -12,15 +12,20 @@
 import LogoHeader from '@/components/LogoHeader.vue'
 
 export default {
-  name: 'ForumDiscussion',
-  components: {
-    LogoHeader,
-  },
-  data() {
-    return {
-      token : localStorage.getItem("token"),
+    name: 'HeaderAdmin',
+    components: {
+        LogoHeader,
+    },
+    data() {
+        return {
+        token : localStorage.getItem("token"),
+        }
+    },
+    methods: {
+        deco: function(){
+            localStorage.clear();
+        }
     }
-  },
 }
 </script>
 

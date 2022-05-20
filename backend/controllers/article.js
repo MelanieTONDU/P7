@@ -23,10 +23,8 @@ exports.createArticle = (req, res, next) => {
   }
   else {
     const article = { ...articleObject, users_id};
-    console.log(article)
     const post = new Article({
       ...article})
-      console.log(post)
     post.save()
       .then(() => res.status(201).json(article))
       .catch(error => res.status(400).json({ error }));
@@ -47,7 +45,7 @@ if(req.query.isAdmin){
   where = {
     include:[
       {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
-      {model: Comments}
+      {model: Comments, attributes : ['text', 'visible']}
     ],
     order: [["createdAt" , "DESC"]],
   }
@@ -55,7 +53,6 @@ if(req.query.isAdmin){
 else {
   const size = JSON.parse(req.query.size);
   const page = JSON.parse(req.query.page);
-
   where = {};
   if(req.query.type == "text"){
     where = {
@@ -78,7 +75,8 @@ else {
       },
       include:[
         {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
-        {model: Comments}
+        {model: Comments, where: {
+          visible: true} }
       ],
       order: [["createdAt" , "DESC"]],
       limit : size,
@@ -86,9 +84,9 @@ else {
     }
   }
 }
-  Article.findAndCountAll(where)
-    .then((articles) => res.status(200).json({articles, totalPages : Math.ceil(articles.count / 5) }))
-    .catch((error) => res.status(400).json({ error }));
+Article.findAndCountAll(where)
+  .then((articles) => res.status(200).json({articles, totalPages : Math.ceil(articles.count / 5) }))
+  .catch((error) => res.status(400).json({ error }));
 }
 
 exports.modifyArticle = (req, res, next) => {
@@ -149,142 +147,28 @@ exports.likeArticle = (req, res, next) => {
     let likes = article.likes;
     let usersLiked = article.usersLiked;
     let userId = req.body.userId;
-    let usersDisliked = article.usersDisliked;
-    let dislikes = article.dislikes;
-    
     if (usersLiked) {
       const found = usersLiked.find(p => p == userId);
       if (found) {
         likes--;
         let userKey = usersLiked.indexOf(userId);
         usersLiked.splice(userKey, 1);
-        articleObject = {...article, likes, usersLiked}
       }
       else{
-        if(usersDisliked) {
-          const foundDislike = usersDisliked.find(p => p == userId);
-          if(foundDislike) {
-            let userKey = usersDisliked.indexOf(userId);
-            usersDisliked.splice(userKey, 1);
-            dislikes--;
-            likes++;
-            usersLiked.push(req.body.userId);
-            articleObject = {...article, dislikes, usersDisliked, likes, usersLiked}
-          }
-          else {
-            likes++;
-            usersLiked.push(req.body.userId);
-            articleObject = {...article, likes, usersLiked}
-          }
-        }
-          else {
-            likes++;
-            usersLiked.push(req.body.userId);
-            articleObject = {...article, likes, usersLiked}
-          }
+        likes++;
+        usersLiked.push(req.body.userId);
       }
+      articleObject = {...article, likes, usersLiked}
     }
     else {
       usersLiked = [];
-      if(usersDisliked){
-        const foundDislike = usersDisliked.find(p => p == userId);
-        if(foundDislike) {
-          let userKey = usersDisliked.indexOf(userId);
-          usersDisliked.splice(userKey, 1);
-          dislikes--;
-          likes++;
-          usersLiked.push(req.body.userId);
-          articleObject = {...article, dislikes, usersDisliked, likes, usersLiked};
-        }
-        else {
-          likes++;
-          usersLiked.push(req.body.userId);
-          articleObject = {...article, likes, usersLiked}
-        }
-      }
-      else {
-        likes++;
-        usersLiked.push(req.body.userId);
-        articleObject = {...article, likes, usersLiked}
-      }
+      likes++;
+      usersLiked.push(req.body.userId);
+      articleObject = {...article, likes, usersLiked}
   }
     Article.update({ ...articleObject, id: req.params.id},{where: {id: req.params.id}})
-      .then(() => {res.status(200).json({dislikes, likes, usersDisliked, usersLiked})})
+      .then(() => {res.status(200).json({likes, usersLiked})})
       .catch((error) => {res.status(400).json({ error })});
 })
   .catch((error) => {res.status(404).json({ error })});
 }
-
-exports.dislikeArticle = (req, res, next) => {
-  Article.findOne({ where: {id: req.params.id} })
-  .then((article) => {
-    let likes = article.likes;
-    let usersLiked = article.usersLiked;
-    let userId = req.body.userId;
-    let usersDisliked = article.usersDisliked;
-    let dislikes = article.dislikes;
-
-    if (usersDisliked) {
-      const found = usersDisliked.find(p => p == userId);
-      if (found) {
-        dislikes--;
-        let userKey = usersDisliked.indexOf(userId);
-        usersDisliked.splice(userKey, 1);
-        articleObject = {...article, dislikes, usersDisliked}
-      }
-      else{
-        if(usersLiked) {
-          const foundLike = usersLiked.find(p => p == userId);
-          if(foundLike) {
-            let userKey = usersLiked.indexOf(userId);
-            usersLiked.splice(userKey, 1);
-            likes--;
-            dislikes++;
-            usersDisliked.push(req.body.userId);
-            articleObject = {...article, dislikes, usersDisliked, likes, usersLiked}
-          }
-          else {
-            dislikes++;
-            usersDisliked.push(req.body.userId);
-            articleObject = {...article, dislikes, usersDisliked}
-          }
-        }
-          else {
-            dislikes++;
-            usersDisliked.push(req.body.userId);
-            articleObject = {...article, dislikes, usersDisliked}
-          }
-      }
-    }
-    else {
-      usersDisliked = [];
-      if(usersLiked){
-        const foundLike = usersLiked.find(p => p == userId);
-        if(foundLike) {
-          let userKey = usersLiked.indexOf(userId);
-          usersLiked.splice(userKey, 1);
-          likes--;
-          dislikes++;
-          usersDisliked.push(req.body.userId);
-          articleObject = {...article, dislikes, usersLiked, likes, usersDisliked}
-        }
-        else {
-          dislikes++;
-          usersDisliked.push(req.body.userId);
-          articleObject = {...article, dislikes, usersDisliked}
-        }
-      }
-      else {
-        dislikes++;
-        usersDisliked.push(req.body.userId);
-        articleObject = {...article, dislikes, usersDisliked}
-    }
-  }
-    Article.update({ ...articleObject, id: req.params.id},{where: {id: req.params.id}})
-      .then(() => {res.status(200).json({dislikes, likes, usersDisliked, usersLiked})})
-      .catch((error) => {res.status(400).json({ error })});
-})
-  .catch((error) => {res.status(404).json({ error })});
-}
-
-

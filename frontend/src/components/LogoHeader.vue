@@ -3,9 +3,9 @@
 </template>
 
 <script>
-
 export default {
-    name: 'LogoHeader',}
+    name: 'LogoHeader'
+}
 </script>
 
 <style scoped lang="scss">

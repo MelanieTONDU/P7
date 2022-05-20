@@ -2,11 +2,9 @@
   <div>
     <HeaderAdmin/>
     <div class="forum">
-      <div id="bandeau">
-        <div id="test">
-        <div id="publication">
+      <div class="bandeau">
+        <div id="publicationAdmin">
           <PostContentAdmin />
-        </div>
         </div>
       </div>
     </div>
@@ -14,8 +12,8 @@
 </template>
 
 <script>
-import HeaderAdmin from '@/components/HeaderAdmin.vue';
-import PostContentAdmin from '@/components/PostContentAdmin.vue';
+import HeaderAdmin from '@/components/admin/HeaderAdmin.vue';
+import PostContentAdmin from '@/components/admin/PostContentAdmin.vue';
 
 export default {
   components : {

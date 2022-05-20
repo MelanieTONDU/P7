@@ -64,6 +64,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/fr";
 
 export default {
+    name : 'ProfilContent',
     data() {
         return {
             token : localStorage.getItem("token"),
@@ -93,17 +94,19 @@ export default {
             .then(response => {
                 this.user = response.data;
             })
-        .catch(error => { 
-            if (error.response.status == 401) {
-                this.$router.push('/login' );
-                localStorage.clear();
+            .catch(error => { 
+                if (error.response.status == 401) {
+                    this.$router.push('/login' );
+                    localStorage.clear();
                 }
             })
         },
         deleteUser() {
             axios.delete("http://localhost:3000/api/auth/"  + this.userId,{
-            headers: {Authorization: "Bearer " + this.token}});
+            headers: {Authorization: "Bearer " + this.token}})
+            .then(()=> {
                 this.$router.push('/' );
+            })
         },
         modifyUser() {
             this.modify = true;
@@ -111,17 +114,16 @@ export default {
         changeUser() {
             const formData = {firstName: this.userEdit.firstName, lastName : this.userEdit.lastName, email : this.userEdit.email, password: this.userEdit.password, job : this.userEdit.job}
             axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
-                headers: {Authorization: "Bearer " + this.token}})
-                .then(() => {
-                    this.modify = false;
-                    this.getUser();
-                    console.log(this.user)
-                })
-                .catch(error => { 
-                    if (error.response.status == 400) {
-                        this.msg = "Cet email est déjà utilisé !"
-                    }
-                })
+            headers: {Authorization: "Bearer " + this.token}})
+            .then(() => {
+                this.modify = false;
+                this.getUser();
+            })
+            .catch(error => { 
+                if (error.response.status == 400) {
+                    this.msg = "Cet email est déjà utilisé !"
+                }
+            })
         },
         modifyAvatar(){
             this.change = true;
@@ -132,19 +134,17 @@ export default {
         addAvatar(){
             const formData = new FormData();
                 formData.append("image", this.image);
-                console.log(formData)
             axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
             headers: {Authorization: "Bearer " + this.token}})
-                .then((response) => {
-                    console.log(response)
-                    this.getUser();
-                    this.change = false;
-                })
-                .catch(error => { 
-                    if (error.response.status == 400) {
-                        this.msg = "Cet email est déjà utilisé !"
-                    }
-                })
+            .then(() => {
+                this.getUser();
+                this.change = false;
+            })
+            .catch(error => { 
+                if (error.response.status == 400) {
+                    this.msg = "Cet email est déjà utilisé !"
+                }
+            })
         },
         cancel() {
             location.reload();

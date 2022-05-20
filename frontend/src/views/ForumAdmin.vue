@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderAdmin from '@/components/HeaderAdmin.vue'
-import ForumAdmin from '@/components/ForumAdmin.vue'
+import HeaderAdmin from '@/components/admin/HeaderAdmin.vue'
+import ForumAdmin from '@/components/admin/ForumAdmin.vue'
 
 export default {
   name: 'ForumDiscussion',

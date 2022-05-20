@@ -1,9 +1,9 @@
 <template>
     <div class="infoUser">
-      <img  v-if="(this.user.imageUrl != null)" id="avatar_post" :src=" this.user.imageUrl " alt="Photo de profil"/>
-      <img v-else  id="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
+      <img  v-if="(this.user.imageUrl != null)" class="avatar_post" :src=" this.user.imageUrl " alt="Photo de profil"/>
+      <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
         <div class="info">
-            <p id="name">{{user.firstName}} {{user.lastName}}</p>
+            <p class="name">{{user.firstName}} {{user.lastName}}</p>
         </div>
     </div>
 </template>
@@ -12,6 +12,7 @@
 import axios from "axios";
 
 export default {
+    name: 'InfoUser',
     data() {
         return {
             token : localStorage.getItem("token"),
@@ -20,17 +21,12 @@ export default {
         }
     },
     created() {
-        this.getUser()
+        axios.get("http://localhost:3000/api/auth/" + this.userId,{
+        headers: {Authorization: "Bearer " + this.token}})
+        .then(response => {
+            this.user = response.data;
+        })
     },
-    methods : {
-        getUser: function() {
-            axios.get("http://localhost:3000/api/auth/" + this.userId,{
-            headers: {Authorization: "Bearer " + this.token}})
-            .then(response => {
-                this.user = response.data;
-            })
-        },
-    }
 }
 </script>
 
