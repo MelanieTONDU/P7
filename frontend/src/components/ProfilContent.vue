@@ -137,13 +137,8 @@ export default {
             axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
             headers: {Authorization: "Bearer " + this.token}})
             .then(() => {
-                this.getUser();
                 this.change = false;
-            })
-            .catch(error => { 
-                if (error.response.status == 400) {
-                    this.msg = "Cet email est déjà utilisé !"
-                }
+                this.getUser();
             })
         },
         cancel() {

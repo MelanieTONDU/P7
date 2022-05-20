@@ -34,7 +34,7 @@
           <button class="buttonLike blue">{{this.article.likes}}<fa @click="addLike()"  icon="thumbs-up" class="thumbs up"/></button>
       </div>
       <div v-else >
-          <button class="buttonLike grey">{{this.article.likes}}<fa @click="addLike()" icon="thumbs-up" class="thumbs up"/></button>
+          <button class="buttonLike">{{this.article.likes}}<fa @click="addLike()" icon="thumbs-up" class="thumbs up"/></button>
       </div>
     </div>
   </div>
@@ -113,6 +113,7 @@ export default {
         formData.append("title", this.title);
         formData.append("content", this.content);
         formData.append("image", this.image);
+        console.log(formData)
       axios.put("http://localhost:3000/api/article/"  + this.article_id, formData, {
       headers: {Authorization: "Bearer " + this.token}})
       .then(() => {

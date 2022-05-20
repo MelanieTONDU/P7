@@ -6,7 +6,7 @@
 $primary : #ff00009d;
 
 *{
-    box-sizing: border-box; 
+  box-sizing: border-box; 
 }
 body{
   margin: 0;
@@ -343,9 +343,6 @@ textarea {
 .blue {
   color: rgb(36, 36, 230);
 }
-.grey {
-  color: #444444;
-}
 .buttonLike {
   display: flex;
   align-items: center;
@@ -486,7 +483,14 @@ textarea {
     }
   }
 }
-
+.user {
+  width: 60%;
+  background-color: white;
+  box-shadow: #4e4e4e 1px 1px 5px;
+  border-radius: 20px;
+  margin: 20px 0 20px 0;
+  padding: 20px 40px 40px 40px;
+}
 #infoUser {
   margin: 60px 0 10px 5%;
   font-size: 1.2em;
@@ -535,9 +539,6 @@ textarea {
 .grey {
   background-color: #a3a3a3;
 }
-
-
-
 
 //----------------------- ADMIN ---------------------------//
 #bandeauAdmin {
@@ -664,7 +665,6 @@ textarea {
   width: 25%;
   font-weight: bold;
 }
-
 .allCommentAdmin {
   width: 100%;
 }
@@ -692,7 +692,6 @@ textarea {
   width: 70%;
 }
 
-
 //---------------- RESPONSIVE ------------------//
 @media screen and (max-width:768px) {
 #formulaire{
@@ -716,42 +715,4 @@ textarea {
 h1 {
   font-size: 4vh;
 }}
-
-
-
-
-.user {
-  width: 60%;
-  background-color: white;
-  box-shadow: #4e4e4e 1px 1px 5px;
-  border-radius: 20px;
-  margin: 20px 0 20px 0;
-  padding: 20px 40px 40px 40px;
-}
-
-#delete {
-  background-color: #FF0000;
-  font-size: 18px;
-  color: white;
-  border: none;
-  padding: 5px 15px 5px 15px;
-  margin: 15px 0 20px 0;
-  border-radius: 10px;
-}
-.userContainer {
-  display: flex;
-  justify-content: center;
-}
-#container {
-  background-color:rgb(248, 248, 248);
-  padding: 20px 30px 20px 30px;
-  height: 100vh;
-}
-  #nameComment{
-    font-weight: bold;
-    font-size: 0.9em;
-    margin: 0;
-    text-align: start;
-  }
-
 </style>

@@ -82,6 +82,7 @@ export default {
       axios.get("http://localhost:3000/api/article?type=image&size=5&" + "page=" + this.page ,{
       headers: {Authorization: "Bearer " + this.token}})
       .then(response => {
+        console.log(response.data)
         this.articles = response.data.articles.rows;
         this.totalPages = response.data.totalPages - 1 ;
       })
@@ -102,16 +103,18 @@ export default {
       if(this.title == null || this.title == "") {
         this.msg = 'Titre vide'
       }
-      axios.post("http://localhost:3000/api/article", formData,{
-      headers: {Authorization: "Bearer " + this.token}})
-      .then(() => {
-        this.getPosts();
-      })  
-      .catch(error => { 
-        if (error.response.status == 400) {
-          this.msg = 'Image vide !'
-        }
-      })
+      else {
+        axios.post("http://localhost:3000/api/article", formData,{
+        headers: {Authorization: "Bearer " + this.token}})
+        .then(() => {
+          this.getPosts();
+        })  
+        .catch(error => { 
+          if (error.response.status == 400) {
+            this.msg = 'Image vide !'
+          }
+        })
+      }
     },
     updateMore() {
       this.page = this.page + 1; 

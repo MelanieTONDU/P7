@@ -69,6 +69,7 @@ exports.getAllAccounts = (req, res, next) => {
 
 exports.modifyAccount = (req, res, next) => {
   const userObject = req.body;
+  console.log(req.file)
     User.findOne({ where: {id: req.params.id} })
     .then(user => {
       if (!user) {
@@ -103,6 +104,7 @@ exports.modifyAccount = (req, res, next) => {
       }
       else if(req.file){
         const userObject = {...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`};
+        if(user.imageUrl != null ) {
           const filename = user.imageUrl.split('/images/')[1];
           fs.unlink(`images/${filename}`, () => {
             User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
@@ -126,10 +128,23 @@ exports.modifyAccount = (req, res, next) => {
             createdAt : userObject.createdAt
           }))
         .catch(error => res.status(400).json({ error }));
+      }
+        }
+        else {
+          User.update({...userObject, id:  req.params.id}, { where: {id: req.params.id} })
+          .then((userObject) => res.status(200).json({
+            firstName : userObject.firstName,
+            lastName : userObject.lastName,
+            email : userObject.email,
+            imageUrl : userObject.imageUrl,
+            createdAt : userObject.createdAt
+          }))
+        .catch(error => res.status(400).json({ error }));
         }
       })
     .catch(error => res.status(500).json({ error }));
   };
+
 
 exports.deleteAccount = (req, res, next) => {
   User.findOne({ where: {id: req.params.id} })

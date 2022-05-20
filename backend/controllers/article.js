@@ -71,12 +71,11 @@ else {
   if(req.query.type == "image"){
     where = {
       where: {
-        imageUrl: {[Op.not]: ""}, visible: true
+        imageUrl: {[Op.not]: null || ""}, visible: true
       },
       include:[
         {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
-        {model: Comments, where: {
-          visible: true} }
+        {model: Comments}
       ],
       order: [["createdAt" , "DESC"]],
       limit : size,
