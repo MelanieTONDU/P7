@@ -7,13 +7,13 @@ Le projet consiste à construire un réseau social interne pour les employés de
 
 
 ### **Contenue du site :**
-• Système d'authentification (création de compte et
+- Système d'authentification (création de compte et
 connexion)
-• Gestion des publications et commentaires (création,
+- Gestion des publications et commentaires (création,
 modification et suppression)
-• Implémentation d'un système de likes
-• Gestion du compte (modification et suppression)
-• Système de modération
+- Implémentation d'un système de likes
+- Gestion du compte (modification et suppression)
+- Système de modération
 
 
 
