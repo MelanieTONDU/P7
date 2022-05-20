@@ -1,0 +1,43 @@
+# PROJET 7 : Créer un réseau social d'entreprise.
+
+### **À propos :**
+
+La réalisation Full Stack de cette application est le 7ième projet et dernier projet pour la formation de développeur web chez OpenClassrooms.
+Le projet consiste à construire un réseau social interne pour les employés de Groupomania.
+
+
+### **Contenue du site :**
+- Système d'authentification (création de compte et
+connexion)
+- Gestion des publications et commentaires (création,
+modification et suppression)
+- Implémentation d'un système de likes
+- Gestion du compte (modification et suppression)
+- Système de modération
+
+
+
+### **Liste des langages et frameworks utilisés pour la création du site :**
+  - HTML
+  - CSS
+  - SASS
+  - JavaScript
+  - Vue 3
+  - NodeJS
+  - Express
+  - MySQL
+  - Sequelize
+
+
+# frontend
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
