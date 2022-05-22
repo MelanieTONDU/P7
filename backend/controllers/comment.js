@@ -50,7 +50,7 @@ if(req.query.isAdmin){
     order: [["createdAt" , "DESC"]],
   }
 }
-  else {
+else {
   const size = JSON.parse(req.query.size);
   const page = JSON.parse(req.query.page);
   where = {
@@ -63,8 +63,14 @@ if(req.query.isAdmin){
     offset : page * size,
   }
 }
-  Comment.findAndCountAll(where)
-        .then((comments) => 
-          res.status(200).json({comments}))
-        .catch((error) => res.status(400).json({ error }));
-    };
+Comment.findAndCountAll(where)
+  .then((comments) => 
+    res.status(200).json({comments}))
+  .catch((error) => res.status(400).json({ error }));
+};
+
+exports.getOneComment = (req, res, next) => {
+  Comment.findOne({ where: {id: req.params.id} })
+    .then((comment) => res.status(200).json(comment))
+    .catch((error) => res.status(400).json({ error }))
+}

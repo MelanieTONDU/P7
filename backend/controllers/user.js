@@ -2,21 +2,26 @@ const User = require("../models/userSchema");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+var ncrypt = require("ncrypt-js");
+var _secretKey = "some-super-secret-key";
+var ncryptObject = new ncrypt(_secretKey);
+
 
 exports.signup = (req, res, next) => {
-  bcrypt.hash(req.body.password, 10)
+  var emailCrypt = ncryptObject.encrypt(req.body.email);
+      bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
           firstName : req.body.firstName,
           lastName : req.body.lastName,
-          email: req.body.email,
+          email: emailCrypt,
           password: hash,
       });
       user.save()
         .then(() => res.status(201).json({'userId': user.id,
         'token': jwt.sign(
           { userId: user.id },
-          'RANDOM_TOKEN_SECRET',
+          `${process.env.JWT_RAND_SECRET}`,
           { expiresIn: '24h' })}))
         .catch(error => res.status(401).json({ error }));
       })
@@ -25,8 +30,9 @@ exports.signup = (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
+    var emailCrypt = ncryptObject.encrypt(req.body.email);
     const user = await User.findOne({
-      where: { email: req.body.email },
+      where: { email: emailCrypt },
     });
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -39,7 +45,7 @@ exports.login = async (req, res, next) => {
         'userId': user.id,
         'token': jwt.sign(
           { userId: user.id },
-          'RANDOM_TOKEN_SECRET',
+          `${process.env.JWT_RAND_SECRET}`,
           { expiresIn: '24h' }),
           'isAdmin': user.isAdmin
       });
@@ -49,15 +55,18 @@ exports.login = async (req, res, next) => {
 
 exports.getOneAccount = (req, res, next) => {
   User.findOne({ where: {id: req.params.id} })
-    .then((user) => res.status(200).json({
-      firstName : user.firstName,
-      lastName : user.lastName,
-      email : user.email,
-      job : user.job,
-      imageUrl : user.imageUrl,
-      createdAt : user.createdAt,
-      isAdmin : user.isAdmin,
-    }))
+    .then((user) => {
+      var emailDecrypt = ncryptObject.decrypt(user.email);
+      res.status(200).json({
+        firstName : user.firstName,
+        lastName : user.lastName,
+        email :emailDecrypt,
+        job : user.job,
+        imageUrl : user.imageUrl,
+        createdAt : user.createdAt,
+        isAdmin : user.isAdmin,
+      })
+    })
     .catch((error) => res.status(404).json({ error }));
   };
 
@@ -69,7 +78,6 @@ exports.getAllAccounts = (req, res, next) => {
 
 exports.modifyAccount = (req, res, next) => {
   const userObject = req.body;
-  console.log(req.file)
     User.findOne({ where: {id: req.params.id} })
     .then(user => {
       if (!user) {
@@ -135,7 +143,7 @@ exports.modifyAccount = (req, res, next) => {
           .then((userObject) => res.status(200).json({
             firstName : userObject.firstName,
             lastName : userObject.lastName,
-            email : userObject.email,
+            email :  emailCrypt,
             imageUrl : userObject.imageUrl,
             createdAt : userObject.createdAt
           }))

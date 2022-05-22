@@ -7,7 +7,6 @@ const fs = require('fs');
 
 exports.createArticle = (req, res, next) => {
   const content = req.body.content;
-  console.log(content)
   const users_id = req.auth.userId;
   const articleObject = req.body;
   if((content == null || content == "") && (!req.file)){

@@ -2,7 +2,7 @@
   <div>
     <HeaderPost/>
     <div class="forum">
-      <div class="bandeau center">
+      <div class="bandeau">
         <div class="publication">
           <PostContent />
           <CommentList/>

@@ -137,9 +137,9 @@ textarea {
   margin: 15px 0 0 0;
   color: #ff0000cb;
 }
-#buttonPublier {
-  background-color: #ed0303;
-  font-size: 20px;
+.buttonPublier {
+  background-color: #f10404;
+  font-size: 18px;
   color: white;
   border: none;
   padding: 5px 15px 5px 15px;
@@ -184,7 +184,9 @@ textarea {
 }
 .image {
   width: 80%;
+  height: 300px;
   padding-bottom: 20px;
+  object-fit: contain;
 }
 .likeComment {
   border-top: 1px solid rgba(0, 0, 0, 0.171);
@@ -269,6 +271,8 @@ textarea {
   color: black;
   background-color: white;
   margin: 20px;
+  padding-bottom: 20px;
+
 }
 #article {
   width: 100%;
@@ -314,15 +318,23 @@ textarea {
   color: #ff0000;
   }
 }
+#titleOnePost input {
+  border: none;
+  border-radius: 10px;
+  box-shadow: #d4d4d4 1px 1px 5px;
+  width: 50%;
+  padding: 0 5px 5px 10px;
+  font-size: 0.8em;
+  min-height: 30px;
+}
 #contentText textarea {
-  height: 30px;
-  margin-top : 16px;
+  margin-top : 10px;
   border: none;
   border-radius: 15px;
-  box-shadow: #bebebe 1px 1px 5px;
+  box-shadow: #d4d4d4 1px 1px 5px;
   width: 70%;
-  padding: 0 5px 0 10px;
-  font-size: 1.2em;
+  padding: 5px 5px 0 10px;
+  font-size: 1.3em;
   min-height: 100px;
 }
 
@@ -383,6 +395,9 @@ textarea {
 .allComment {
   width: 100%;
 }
+.commentsList {
+  margin-top: 15px;
+}
 .oneComment{
   display: flex;
   align-items: center;
@@ -396,26 +411,42 @@ textarea {
   margin: 0 15px 0 15px;
   border-radius: 25px;
 }
+
 .commentaire{
   background-color:rgb(240, 240, 240);
-  border-radius: 15px;
+  border-radius: 10px;
   padding: 10px 20px 10px 20px;
   margin: 10px 25px 10px 0;
+  width: 80%;
+}
+.commentTop {
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
 }
 .comment{
   margin: 5px 0 0 0;
   text-align: left;
-  font-size: 1.1em;
+  font-size: 1em;
+  word-wrap : break-word;
 }
+.contentComment textarea{
+  width: 98%;
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+  padding: 5px;
+  margin: 15px 0 0 0;
+  font-family: sans-serif;
+}
+ textarea:focus {
+   outline: none;
+  }
 
 // Add Comment //
 .addComment{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 15px 15px 15px ;
 }
 .addCommentText {
   border: none;
@@ -423,11 +454,14 @@ textarea {
   margin: 10px;
   width: 70%;
   padding: 10px 15px 0 15px;
-  font-size: 1.2em;
-  border-radius: 30px;
+  font-size: 1.1em;
+  border-radius: 10px;
   font-family: sans-serif;
 }
-
+.messageComment {
+  margin: 0 0 0 15px;
+  color: #ff0000cb;
+}
 // ------------------PAGE DE PROFIL ------------------//
 .profil {
   min-height: 89vh;
@@ -520,7 +554,8 @@ textarea {
 #profilButton {
   text-align: start;
   margin-left: 14%;
-  & .profilButton {
+}
+.profilButton {
     font-size: 18px;
     color: white;
     border: none;
@@ -532,7 +567,6 @@ textarea {
       cursor: pointer;
     }
   }
-}
 .red {
   background-color: #FF0000;
 }

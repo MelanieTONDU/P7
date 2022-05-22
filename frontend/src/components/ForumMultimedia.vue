@@ -11,8 +11,8 @@
             <form id="addPostContent">
               <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
               <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" />
-              <button id="buttonPublier" @click="addPost()" type="submit">Publier</button>
               <p>{{msg}}</p>
+              <button class="buttonPublier" @click="addPost()" type="submit">Publier</button>
             </form>
           </div>
         </div>

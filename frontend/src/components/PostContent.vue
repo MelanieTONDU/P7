@@ -14,11 +14,11 @@
       <button @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash"/></button>
     </div>
     </div>
-    <div id="titleOnePost">
-      <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" :placeholder= article.title />
-      <h3 v-else id="title">{{this.article.title}}</h3>
-    </div>
     <form id="content">
+      <div id="titleOnePost">
+        <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" :placeholder= article.title />
+        <h3 v-else id="title">{{this.article.title}}</h3>
+      </div>
       <div v-if="this.article.imageUrl != null " class="contentImg ">
         <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" class="imageArticle" ref="image" />
         <p v-else class="imageContent justify"><img  class="imageArticle" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
@@ -27,7 +27,7 @@
         <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" type="text" :placeholder= article.content ></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
-      <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button">Publier</button>
+      <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button" class="buttonPublier">Modifier</button>
     </form>
     <div class="like">
       <div v-if="(this.userLike == true)" >
@@ -107,6 +107,8 @@ export default {
     },
     modifyPost() {
       this.modify = true;
+      this.content = this.article.content;
+      this.title = this.article.title;
     },
     changePost() {
       const formData = new FormData();
@@ -130,6 +132,9 @@ export default {
         this.getPost();
       })
     },
+    cancel() {
+        location.reload();
+    }
   }
 }
 </script>

@@ -12,7 +12,7 @@
               <textarea id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
               <textarea id="addPostText" v-model="text" type="text" placeholder="Ecrivez quelque chose..." required/>
               <p class="message">{{msg}}</p>
-              <button id="buttonPublier" @click="addPost()" type="submit">Publier</button>
+              <button class="buttonPublier" @click="addPost()" type="submit">Publier</button>
             </form>
           </div>
         </div>
@@ -23,7 +23,7 @@
             <img  v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
             <div class="info">
-              <p class="name">{{article.User.firstName}} {{article.User.lastName}}</p>
+              <p class="name" >{{article.User.firstName}} {{article.User.lastName}}</p>
               <p class="date"><time >Le {{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
             </div>
           </div>
@@ -79,10 +79,12 @@ export default {
     this.getPosts();
   },
   methods : { 
-    getPosts: function (){
+    getPosts(){
       axios.get("http://localhost:3000/api/article?type=text&size=5&" + "page=" + this.page ,{
       headers: {Authorization: "Bearer " + this.token}})
       .then(response => {
+        console.log(response.data.articles.rows)
+        console.log(this.message)
         this.articles = response.data.articles.rows;
         this.totalPages = response.data.totalPages - 1 ;
       })
@@ -121,7 +123,7 @@ export default {
         }
       })
     },
-    addPost: function() {
+    addPost(){
       const formData = new FormData();
         formData.append("title", this.title);
         formData.append("content", this.text);

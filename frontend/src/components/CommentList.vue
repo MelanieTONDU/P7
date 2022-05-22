@@ -5,25 +5,26 @@
         <form class="addComment">
             <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
-            <textarea class="addCommentText" v-model="text" type="text" placeholder="Ajouter un commentaire..."  wrap="hard" required ></textarea>
-            <button id="buttonPublier" @click="addComment()" type="submit">Publier</button>
+            <textarea class="addCommentText" v-model="text" type="text" placeholder="Ajouter un commentaire..." required></textarea>
+            <button class="buttonPublier" @click="addComment()" type="submit">Publier</button>
         </form>
+        <p class="messageComment">{{msg}}</p>
         <div class="commentsList">
             <div v-for="comment in comments" :key="comment.id" class="oneComment">
                 <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
                 <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
                 <div class="commentaire" >
-                    <div>
+                    <div class="commentTop">
                         <p class="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
-                        <p class="comment">{{comment.text}}</p>
-                    </div>
-                    <div v-if="(this.userId == comment.User.id)" class="buttonListComment"> 
-                        <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
-                        <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
-                        <div v-if=" (commentId == comment.id) && (this.modify == true)">
-                            <textarea v-model= this.newText type="text"></textarea>
-                            <button @click="changeComment(comment.id)" type="button">Publier</button>
+                        <div v-if="(this.userId == comment.User.id)" class="buttonListComment"> 
+                            <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
+                            <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
                         </div>
+                    </div>
+                    <div class="contentComment">
+                        <textarea v-if="(commentId == comment.id) && (this.modify == true)" v-model= this.newText type="text"></textarea>
+                        <p v-else class="comment">{{comment.text}}</p>
+                        <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonPublier">Modifier</button>
                     </div>
                 </div>
             </div>
@@ -51,6 +52,7 @@ export default {
             text : "",
             newText : "",
             modify : false,
+            msg:"",
             totalPages: "",
             size : 3,
             page : 0 ,
@@ -65,7 +67,7 @@ export default {
         })
     },
     methods : { 
-        getComments : function () {
+        getComments() {
             this.article_id = window.location.href.split("/")[4];
             axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment?size=" + this.size + "&page=" + this.page ,{
             headers: {Authorization: "Bearer " + this.token}})
@@ -80,12 +82,18 @@ export default {
                 }
             })
         },
-        addComment: function() {
-            axios.post("http://localhost:3000/api/article/"  + this.article_id + "/comment", {text: this.text},{
-            headers: {Authorization: "Bearer " + this.token}})
-            .then(() => {
-                this.getComments();
-            })
+        addComment(){
+            if(this.text == null || this.text == "") {
+                this.msg = 'Commentaire vide';
+                console.log("test1")
+            }
+            else {
+                axios.post("http://localhost:3000/api/article/"  + this.article_id + "/comment", {"text" : this.text},{
+                headers: {Authorization: "Bearer " + this.token}})
+                .then(() => {
+                    this.getComments();
+                })
+            }
         },
         deleteComment : function(id) {
             axios.delete("http://localhost:3000/api/article/"  + this.article_id + "/comment/" + id,{
@@ -94,11 +102,16 @@ export default {
                 this.getComments();
             })
         },
-        modifyComment: function(id) {
+        modifyComment(id) {
             this.commentId = id;
             this.modify = true;
+            axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment/" + id ,{
+            headers: {Authorization: "Bearer " + this.token}})
+            .then(response => {
+                this.newText = response.data.text;
+            })
         },
-        changeComment: function(id) {
+        changeComment(id) {
             axios.put("http://localhost:3000/api/article/"  + this.article_id + "/comment/" + id, {text: this.newText}, {
             headers: {Authorization: "Bearer " + this.token}})
             .then(() => {
