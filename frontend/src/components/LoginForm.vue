@@ -14,7 +14,7 @@
       </div>
       <p>{{msg}}</p>
       <button @click="connectAccount()" type="button">Connexion</button>
-      <div>
+      <div >
         <p class="textUnderButton">Vous n'avez pas encore de compte ? <router-link to="/" class="link">S'inscrire</router-link></p>
       </div>
     </form>
@@ -61,4 +61,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
 </style>

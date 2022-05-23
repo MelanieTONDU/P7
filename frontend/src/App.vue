@@ -65,16 +65,40 @@ body{
     border-radius: 10px;
   }
 }
+.link {
+  color: #FF0000;
+  text-decoration: none;
+  font-weight: bold;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.textUnderButton {
+  font-size: 18px;
+}
 
 // Info User //
 .infoUser {
   display: flex;
   padding: 10px 10px 0 10px;
 }
-.info {
+.infoUserName {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 10px;
+}
+.infoLeft {
+  display: flex;
+  flex-direction: column;
+align-items: center;
 }
 .avatar_post {
   width: 80px;
@@ -89,11 +113,22 @@ body{
   margin: 0;
   text-align: left;
 }
-.date{
-  font-size: 0.9em;
+.job {
   margin: 0;
+  padding-top: 5px;
+  font-size : 13px;
+  color: rgb(145, 145, 145);
 }
-
+.date{
+  font-size: 1em;
+  margin: 0;
+  color: rgb(112, 112, 112);
+}
+.briefcase {
+  color: rgb(145, 145, 145);
+  margin-right: 5px;
+  font-size: 13px;
+}
 //-------------- Forum text et multimedia --------------//
 
 // Ajouter un article //
@@ -178,7 +213,7 @@ textarea {
   margin-bottom : 10px
 }
 .content {
-  text-align: left;
+  text-align: justify;
   font-size: 1em;
   padding: 0 7% 20px 7%;
 }
@@ -289,6 +324,12 @@ textarea {
   margin-top: 0;
   margin-bottom : 10px
 }
+.dateArticle {
+  font-size: 0.9em;
+  margin: 0;
+  color: rgb(112, 112, 112);
+  padding-bottom: 5px;
+}
 .imageArticle {
   width: 80%;
 }
@@ -398,7 +439,16 @@ textarea {
 .commentsList {
   margin-top: 15px;
 }
-.oneComment{
+.oneComment {
+  text-align: left;
+}
+.dateComment{
+  font-size: 0.9em;
+  margin:  2px 0 10px 0;
+  color: rgb(138, 138, 138);
+  padding-left: 13%;
+}
+.oneCommentTop{
   display: flex;
   align-items: center;
   margin: 0 15px 0 15px;
@@ -416,8 +466,8 @@ textarea {
   background-color:rgb(240, 240, 240);
   border-radius: 10px;
   padding: 10px 20px 10px 20px;
-  margin: 10px 25px 10px 0;
-  width: 80%;
+  margin: 10px 25px 0 0;
+  max-width: 80%;
 }
 .commentTop {
   display: flex;
@@ -688,9 +738,7 @@ textarea {
 .green:hover {
   color: rgb(2, 179, 49);
 }
-.red:hover {
-  color: #ff0000b2;
-}
+
 .publicationStatus {
   display: flex;
   padding-left: 15px;
@@ -714,6 +762,9 @@ textarea {
 }
 .commentAdmin {
   width: 45%;
+  word-break: break-all;
+  white-space: normal;
+  text-align: justify;
 }
 .nameAdmin {
   width : 14%;
@@ -742,10 +793,7 @@ textarea {
     margin: 0;
   }
 }
-.textUnderButton {
-  font-size: 2.9vh;
-  padding: 0 15px 0 15px;
-}
+
 h1 {
   font-size: 4vh;
 }}

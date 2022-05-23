@@ -5,13 +5,16 @@
         <img  v-if="(this.userArticle.imageUrl  != null)" alt="Photo de profil" class="avatar_post" :src=" this.userArticle.imageUrl  " />
         <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil" />
         <div class="info">
-          <p class="name">{{this.userArticle.firstName}} {{this.userArticle.lastName}}</p>
-          <p class="date"><time >Le {{dayjs(this.article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
+          <div class="infoLeft">
+            <p class="name" >{{this.userArticle.firstName}} {{this.userArticle.lastName}}</p>
+            <p class="job"><fa icon="briefcase" class="briefcase"/>{{this.userArticle.job}}</p>
+          </div>
         </div>
       </div>
-    <div v-if="(this.userId == this.article.users_id)" class="buttonList"> 
-      <button class="modify" @click="modifyPost()" type="button"><fa icon="pen" class="pen"/></button>
-      <button @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash"/></button>
+    <div  class="buttonList">
+      <p class="dateArticle"><time >Publié le {{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
+      <button v-if="(this.userId == this.article.users_id)" class="modify" @click="modifyPost()" type="button"><fa icon="pen" class="pen"/></button>
+      <button v-if="(this.userId == this.article.users_id)" @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash"/></button>
     </div>
     </div>
     <form id="content">
@@ -24,7 +27,7 @@
         <p v-else class="imageContent justify"><img  class="imageArticle" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
       </div>
       <div v-else id="contentText">
-        <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" type="text" :placeholder= article.content ></textarea>
+        <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" type="text" ></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button" class="buttonPublier">Modifier</button>
@@ -115,7 +118,6 @@ export default {
         formData.append("title", this.title);
         formData.append("content", this.content);
         formData.append("image", this.image);
-        console.log(formData)
       axios.put("http://localhost:3000/api/article/"  + this.article_id, formData, {
       headers: {Authorization: "Bearer " + this.token}})
       .then(() => {

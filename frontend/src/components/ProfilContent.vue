@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <div id="infoUser">
+            <form id="infoUser">
                 <div class="infoProfil">
                     <p class="infoProfilDetail">Prénom : </p>
                     <p v-if="(this.modify == false)">{{user.firstName}}</p>
@@ -26,10 +26,9 @@
                     <p v-if="(this.modify == false)">{{user.lastName}}</p>
                     <input v-else v-model="userEdit.lastName" type="text" id="lastName" :placeholder= user.lastName />
                 </div>
-                <div class="infoProfil">
+                <div v-if="(this.modify == false)" class="infoProfil">
                     <p class="infoProfilDetail">Email : </p>
-                    <p v-if="(this.modify == false)">{{user.email}}</p>
-                    <input v-else v-model="userEdit.email" type="email" id="email" :placeholder= user.email />
+                    <p >{{user.email}}</p>
                 </div>
                 <div v-if="(this.modify == true)" class="infoProfil">
                     <p class="infoProfilDetail">Nouveau mot de passe : </p>
@@ -44,7 +43,7 @@
                     <p class="infoProfilDetail">Date de création du compte :</p>
                     <p> {{dayjs(user.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</p>
                 </div>
-            </div>
+            </form>
             <div id="profilButton">
                 <p>{{this.msg}}</p>
                 <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="profilButton buttonSave red"> Enregistrer les modifications</button>
@@ -93,7 +92,6 @@ export default {
             headers: {Authorization: "Bearer " + this.token}})
             .then(response => {
                 this.user = response.data;
-                console.log(response.data)
             })
             .catch(error => { 
                 if (error.response.status == 401) {
@@ -113,7 +111,7 @@ export default {
             this.modify = true;
         },
         changeUser() {
-            const formData = {firstName: this.userEdit.firstName, lastName : this.userEdit.lastName, email : this.userEdit.email, password: this.userEdit.password, job : this.userEdit.job}
+            const formData = {firstName: this.userEdit.firstName, lastName : this.userEdit.lastName, password: this.userEdit.password, job : this.userEdit.job}
             axios.put("http://localhost:3000/api/auth/"  + this.userId, formData, {
             headers: {Authorization: "Bearer " + this.token}})
             .then(() => {
