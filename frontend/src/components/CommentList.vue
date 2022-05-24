@@ -79,6 +79,7 @@ export default {
             headers: {Authorization: "Bearer " + this.token}})
             .then(response => {
                 this.comments = response.data.comments.rows;
+                console.log(this.comments)
                 this.totalComment = response.data.comments.count;
             })
             .catch(error => { 

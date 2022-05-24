@@ -37,7 +37,7 @@
           <button class="buttonLike blue">{{this.article.likes}}<fa @click="addLike()"  icon="thumbs-up" class="thumbs up"/></button>
       </div>
       <div v-else >
-          <button class="buttonLike">{{this.article.likes}}<fa @click="addLike()" icon="thumbs-up" class="thumbs up"/></button>
+          <button class="buttonLike thumbsgrey">{{this.article.likes}}<fa @click="addLike()" icon="thumbs-up" class="thumbs up"/></button>
       </div>
     </div>
   </div>

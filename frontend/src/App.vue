@@ -22,7 +22,7 @@ body{
   align-items: center;
 }
 .forum{
-  background:url("./assets/architecture.jpg") fixed;
+  background:url("./assets/architecture.webp") fixed;
   min-height: 89vh;
   display: flex;
   flex-direction: column;
@@ -190,11 +190,11 @@ textarea {
 .articleList{
   display: flex;
   justify-content: center;
-  margin: 20px 0 30px 0;
+  margin: 20px 0 10px 0;
 }
 .lien {
   width: 97%;
-  border-radius: 10px;
+  border-radius: 5px;
   text-decoration: none;
   color: black;
   background-color: white;
@@ -215,12 +215,13 @@ textarea {
 .content {
   text-align: justify;
   font-size: 1em;
-  padding: 0 7% 20px 7%;
+  padding: 0 7% 10px 7%;
+  margin: 10px 7% 0 7%;
 }
 .image {
   width: 80%;
   height: 300px;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   object-fit: contain;
 }
 .likeComment {
@@ -325,7 +326,6 @@ textarea {
   margin-bottom : 10px
 }
 .dateArticle {
-  font-size: 0.9em;
   margin: 0;
   color: rgb(112, 112, 112);
   padding-bottom: 5px;
@@ -394,7 +394,10 @@ textarea {
   cursor: pointer;
 }
 .blue {
-  color: rgb(36, 36, 230);
+  color: rgba(5, 113, 237, 1);
+}
+.thumbsgrey {
+  color: #808080;
 }
 .buttonLike {
   display: flex;
@@ -429,9 +432,10 @@ textarea {
 }
 
 // Commentaires //
-.numberComment {
-  margin: 10px 0 5px 0;
+.commentNumber {
+  padding: 10px 0 10px 0;
   font-weight: bolder;
+  margin: 0;
 }
 .allComment {
   width: 100%;
@@ -466,7 +470,7 @@ textarea {
   background-color:rgb(240, 240, 240);
   border-radius: 10px;
   padding: 10px 20px 10px 20px;
-  margin: 10px 25px 0 0;
+  margin: 0px 25px 0 0;
   max-width: 80%;
 }
 .commentTop {
@@ -781,7 +785,7 @@ textarea {
 @media screen and (max-width:768px) {
 #formulaire{
   margin: 25% 0 35% 0;
-  top: 8%;
+  top: 15%;
   left: 10%;
   width: 80%;
   border-radius: 20px;
@@ -793,7 +797,10 @@ textarea {
     margin: 0;
   }
 }
-
+.textUnderButton{
+  font-size: 20px;
+  padding: 0 15px 0 15px;
+}
 h1 {
   font-size: 4vh;
 }}

@@ -32,9 +32,31 @@
           </div>
           <p class="title">{{article.title}}</p>
           <p class="content">{{article.content}}</p>
-          <div class="likeComment center">
+          <div class="like center">
             <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p>
-            <p class="commentLength">{{article.Comments.length}} Commentaire(s)</p>
+          </div>
+          <div class="recentComment">
+            <div v-if="(article.Comments.length == 0 )">
+              <p class="commentNumber">0 Commentaire</p>
+            </div>
+            <div v-else>
+              <p class="commentNumber">Commentaires récents</p>
+              <div v-for="comment in article.Comments" :key="comment.id" class="oneComment">
+                <div v-if="(comment.visible == true)" class="oneCommentTop">
+                    <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
+                    <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
+                    <div class="commentaire" >
+                        <div class="commentTop">
+                            <p class="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
+                        </div>
+                        <div class="contentComment">
+                            <p class="comment">{{comment.text}}</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="dateComment"><time >Publié le {{dayjs(comment.createdAt).locale("fr").format("DD/MM/YY")}}</time></p>
+              </div>
+            </div>
           </div>
         </a>
       </div>
@@ -66,7 +88,7 @@ export default {
     return {
       token : localStorage.getItem("token"),
       articles : "",
-      articleId : "",
+      article : "",
       title : "",
       text : "",
       msg : "",
@@ -87,6 +109,7 @@ export default {
       headers: {Authorization: "Bearer " + this.token}})
       .then(response => {
         this.articles = response.data.articles.rows;
+        console.log(this.articles)
         this.totalPages = response.data.totalPages - 1 ;
       })
       .catch(error => { 

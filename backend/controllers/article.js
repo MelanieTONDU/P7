@@ -60,8 +60,8 @@ else {
       },
       include:[
         {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
-        {model: Comments}
-      ],
+        {model: Comments, include: [{model: User}], limit : 2, where : {visible : true}, order: [["createdAt" , "DESC"]]}
+    ],
       order: [["createdAt" , "DESC"]],
       limit : size,
       offset : page * size,
@@ -74,7 +74,7 @@ else {
       },
       include:[
         {model: User, attributes: ['firstName', 'lastName', 'id', 'job', 'imageUrl']},
-        {model: Comments}
+        {model: Comments, include: [{model: User}], limit : 2,  where : {visible : true}, order: [["createdAt" , "DESC"]]}
       ],
       order: [["createdAt" , "DESC"]],
       limit : size,
