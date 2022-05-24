@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderAdmin/>
-    <div class="forum">
+    <div class="forum center">
       <div class="bandeau">
         <div id="publicationAdmin">
           <PostContentAdmin />

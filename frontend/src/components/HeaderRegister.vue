@@ -36,7 +36,7 @@ export default {
     object-fit: contain;
 }
 .page {
-  background:url("../assets/architecture.webp") ;
+  background:url("../assets/architecture.webp") no-repeat;
   width: 100%;
   height: 100vh;
 }

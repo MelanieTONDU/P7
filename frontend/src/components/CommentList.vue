@@ -1,38 +1,38 @@
 <template>
     <div class="allComment">
-        <p v-if=" this.totalComment > 1" class="numberComment">{{this.totalComment}} Commentaires</p>
-        <p v-else class="numberComment" >{{comments.length}} Commentaire</p>
-        <form class="addComment">
+        <p v-if=" this.totalComment > 1" class="commentNumber">{{this.totalComment}} Commentaires</p>
+        <p v-else class="commentNumber" >{{comments.length}} Commentaire</p>
+        <form class="addComment center">
             <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
-            <textarea class="addCommentText" v-model="text" type="text" placeholder="Ajouter un commentaire..." required></textarea>
-            <button class="buttonPublier" @click="addComment()" type="submit">Publier</button>
+            <textarea class="addCommentText noBorder" v-model="text" type="text" placeholder="Ajouter un commentaire..." required></textarea>
+            <button class="buttonPublier noBorder" @click="addComment()" type="submit">Publier</button>
         </form>
         <p class="messageComment">{{msg}}</p>
         <div class="commentsList">
             <div v-for="comment in comments" :key="comment.id" class="oneComment">
-                <div class="oneCommentTop">
+                <div class="oneCommentTop center">
                     <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
                     <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
                     <div class="commentaire" >
                         <div class="commentTop">
                             <p class="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
                             <div v-if="(this.userId == comment.User.id)" class="buttonListComment"> 
-                                <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
-                                <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
+                                <button class="modify noBorder" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
+                                <button class="delete noBorder" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
                             </div>
                         </div>
                         <div class="contentComment">
                             <textarea v-if="(commentId == comment.id) && (this.modify == true)" v-model= this.newText type="text"></textarea>
                             <p v-else class="comment">{{comment.text}}</p>
-                            <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonPublier">Modifier</button>
+                            <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonPublier noBorder">Modifier</button>
                         </div>
                     </div>
                 </div>
                 <p class="dateComment"><time >Publié le {{dayjs(comment.createdAt).locale("fr").format("DD/MM/YY")}}</time></p>
             </div>
             <div v-if="(this.comments.length < this.totalComment)" class="paginationContainer">
-                <button @click="updateMore()" class="buttonPaginationComment">Affichez plus de commentaires</button>
+                <button @click="updateMore()" class="buttonPaginationComment noBorder">Affichez plus de commentaires</button>
             </div>
         </div>
     </div>
@@ -79,7 +79,6 @@ export default {
             headers: {Authorization: "Bearer " + this.token}})
             .then(response => {
                 this.comments = response.data.comments.rows;
-                console.log(this.comments)
                 this.totalComment = response.data.comments.count;
             })
             .catch(error => { 
@@ -92,13 +91,12 @@ export default {
         addComment(){
             if(this.text == null || this.text == "") {
                 this.msg = 'Commentaire vide';
-                console.log("test1")
             }
             else {
                 axios.post("http://localhost:3000/api/article/"  + this.article_id + "/comment", {"text" : this.text},{
                 headers: {Authorization: "Bearer " + this.token}})
                 .then(() => {
-                    this.getComments();
+                    location.reload();
                 })
             }
         },
@@ -106,7 +104,7 @@ export default {
             axios.delete("http://localhost:3000/api/article/"  + this.article_id + "/comment/" + id,{
             headers: {Authorization: "Bearer " + this.token}})
             .then(() => {
-                this.getComments();
+                location.reload();
             })
         },
         modifyComment(id) {
@@ -123,7 +121,7 @@ export default {
             headers: {Authorization: "Bearer " + this.token}})
             .then(() => {
                 this.modify = false;
-                this.getComments();
+                location.reload();
             })
         },
         updateMore() {

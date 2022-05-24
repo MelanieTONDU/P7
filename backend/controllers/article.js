@@ -6,6 +6,7 @@ const Op = require("sequelize").Op;
 const fs = require('fs');
 
 exports.createArticle = (req, res, next) => {
+  console.log(req.body)
   const content = req.body.content;
   const users_id = req.auth.userId;
   const articleObject = req.body;
@@ -144,7 +145,7 @@ exports.likeArticle = (req, res, next) => {
   .then((article) => {
     let likes = article.likes;
     let usersLiked = article.usersLiked;
-    let userId = req.body.userId;
+    let userId = req.body.userIdLike;
     if (usersLiked) {
       const found = usersLiked.find(p => p == userId);
       if (found) {
@@ -154,14 +155,14 @@ exports.likeArticle = (req, res, next) => {
       }
       else{
         likes++;
-        usersLiked.push(req.body.userId);
+        usersLiked.push(req.body.userIdLike);
       }
       articleObject = {...article, likes, usersLiked}
     }
     else {
       usersLiked = [];
       likes++;
-      usersLiked.push(req.body.userId);
+      usersLiked.push(req.body.userIdLike);
       articleObject = {...article, likes, usersLiked}
   }
     Article.update({ ...articleObject, id: req.params.id},{where: {id: req.params.id}})

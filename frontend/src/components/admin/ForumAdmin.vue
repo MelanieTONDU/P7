@@ -1,5 +1,5 @@
 <template>
-  <div class="forum">
+  <div class="forum center">
     <div id="bandeauAdmin">
     <div class="listPublicationAdmin center">
       <div class="listTitle center">

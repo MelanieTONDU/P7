@@ -44,9 +44,9 @@ exports.signup = (req, res, next) => {
       }
       User.findOne ({ where: {id: found.id} })
         .then((user) => {
-        const valid = bcrypt.compare(req.body.password, user.password)
-          .then(() => {
-            if (!valid) {
+        bcrypt.compare(req.body.password, user.password)
+          .then((result) => {
+            if (!result) {
               return res.status(401).json({ error: "Incorrect password" });
             }
             res.status(200).json({
@@ -170,8 +170,8 @@ exports.deleteAccount = (req, res, next) => {
         res.status(403).json({error: new Error('Unauthorized request !')});
       }
       User.destroy({ where: {id: req.params.id} })
-        .then(() => res.status(204))
-        .catch((error) => res.status(400).json({ error }));
+      .then(() => res.status(204))
+      .catch((error) => res.status(400).json({ error }));
       })
     .catch(error => res.status(500).json({ error }));
   };

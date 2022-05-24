@@ -1,5 +1,5 @@
 <template>
-  <div class="forum">
+  <div class="forum center">
     <div class="bandeau">
       <div class="articleList">
         <div class="lien">
@@ -8,11 +8,11 @@
           </div>
           <InfoUser/>
           <div class="center addPost ">
-            <form id="addPostContent">
+            <form class="addPostContent center">
               <textarea id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required></textarea>
               <textarea id="addPostText" v-model="text" type="text" placeholder="Ecrivez quelque chose..." required></textarea>
               <p class="message">{{msg}}</p>
-              <button class="buttonPublier" @click="addPost()" type="submit">Publier</button>
+              <button class="buttonPublier noBorder" @click="addPost()" type="submit">Publier</button>
             </form>
           </div>
         </div>
@@ -22,8 +22,8 @@
           <div class="infoUser">
             <img  v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
-            <div class="info">
-              <div class="infoLeft">
+            <div class="info center">
+              <div class="infoLeft center">
                 <p class="name" >{{article.User.firstName}} {{article.User.lastName}}</p>
                 <p class="job"><fa icon="briefcase" class="briefcase"/>{{article.User.job}}</p>
               </div>
@@ -42,7 +42,7 @@
             <div v-else>
               <p class="commentNumber">Commentaires récents</p>
               <div v-for="comment in article.Comments" :key="comment.id" class="oneComment">
-                <div v-if="(comment.visible == true)" class="oneCommentTop">
+                <div v-if="(comment.visible == true)" class="oneCommentTop center">
                     <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
                     <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
                     <div class="commentaire" >
@@ -60,15 +60,15 @@
           </div>
         </a>
       </div>
-      <div class="pagination">
+      <div class="pagination center">
         <div v-if="(this.page > 0 )">
-          <button @click="getPosts(this.page = 0)" class="buttonPagination">&lt;&lt;</button>
-          <button @click="updateLess()" class="buttonPagination">&lt;</button>
+          <button @click="getPosts(this.page = 0)" class="buttonPagination noBorder">&lt;&lt;</button>
+          <button @click="updateLess()" class="buttonPagination noBorder">&lt;</button>
         </div>
         <p class="textPagination">Page {{this.page +1}} sur {{totalPages + 1}}</p>
         <div v-if="(this.page < this.totalPages)">
-          <button @click="updateMore()" class="buttonPagination">&gt;</button>
-          <button @click="getPosts(this.page = this.totalPages)" class="buttonPagination">&gt;&gt;</button>
+          <button @click="updateMore()" class="buttonPagination noBorder">&gt;</button>
+          <button @click="getPosts(this.page = this.totalPages)" class="buttonPagination noBorder">&gt;&gt;</button>
         </div>
       </div>
     </div>
@@ -161,7 +161,7 @@ export default {
         axios.post("http://localhost:3000/api/article", formData,{
         headers: {Authorization: "Bearer " + this.token}})
         .then(() => {
-            this.getPosts()
+          location.reload();
         })
       }      
     }

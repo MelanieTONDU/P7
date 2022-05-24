@@ -3,7 +3,16 @@
 </template>
 
 <style lang="scss">
-$primary : #ff00009d;
+$red : #FF0000;
+$darkRed : #ff000098;
+$bandeauColor : #122c668f;
+$inputColor : #f2f2f2;
+$buttonRed : #FF0000;
+$grey : rgb(145, 145, 145);
+$borderLine : #e0e0e0;
+$shadow : #888888;
+$backgroundPagination : #80808054;
+$blue : rgba(5, 113, 237, 1);
 
 *{
   box-sizing: border-box; 
@@ -21,16 +30,17 @@ body{
   display: flex;
   align-items: center;
 }
+.noBorder {
+  border: none;
+}
 .forum{
   background:url("./assets/architecture.webp") fixed;
   min-height: 89vh;
-  display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .bandeau {
   width: 50%;
-  background-color: #122c668f;
+  background-color: $bandeauColor;
   min-height: 90vh;
   justify-content: center;
 }
@@ -52,22 +62,24 @@ body{
     border-radius: 10px;
     border: none;
     padding-left: 25px;
-    background-color: #f2f2f2;
+    background-color: $inputColor;
     font-size: 16px;
   }
   button {
-    background-color: #FF0000;
+    background-color: $buttonRed;
     font-size: 22px;
     color: white;
-    border: none;
     padding: 5px 15px 5px 15px;
     margin: 15px 0 20px 0;
     border-radius: 10px;
+    &:hover {
+      box-shadow: $shadow 1px 1px 5px;
+      cursor: pointer;
+    }
   }
 }
 .link {
-  color: #FF0000;
-  text-decoration: none;
+  color: $red;
   font-weight: bold;
   &:hover {
     text-decoration: underline;
@@ -83,22 +95,16 @@ body{
   padding: 10px 10px 0 10px;
 }
 .infoUserName {
-  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 .info {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
   padding-right: 10px;
 }
 .infoLeft {
-  display: flex;
   flex-direction: column;
-align-items: center;
 }
 .avatar_post {
   width: 80px;
@@ -117,33 +123,30 @@ align-items: center;
   margin: 0;
   padding-top: 5px;
   font-size : 13px;
-  color: rgb(145, 145, 145);
+  color: $grey;
 }
 .date{
   font-size: 1em;
   margin: 0;
-  color: rgb(112, 112, 112);
+  color: $grey;
 }
 .briefcase {
-  color: rgb(145, 145, 145);
+  color: $grey;
   margin-right: 5px;
   font-size: 13px;
 }
 //-------------- Forum text et multimedia --------------//
-
 // Ajouter un article //
 h2 {
   font-size: 1.5em;
   margin: 10px 0 0 0;
   padding-bottom: 7px;
-  border-bottom: #e0e0e0 solid 1px;
+  border-bottom: $borderLine solid 1px;
   width: 95%;
 }
-#addPostContent {
+.addPostContent {
   flex-direction: column;
-  align-items: center;
   width: 80%;
-  display: flex;
   justify-content: center;
 }
 #addPostTitle {
@@ -151,7 +154,7 @@ h2 {
   height: 30px;
   margin-bottom: 15px;
   border-radius: 8px;
-  border: solid 1px #d6d6d6;
+  border: solid 1px $borderLine;
   padding: 5px 10px 5px 10px;
   font-size: 1em;
   font-family: sans-serif;
@@ -163,25 +166,24 @@ textarea {
   width: 95%;
   height: 125px;
   border-radius: 10px;
-  border: solid 1px #d6d6d6;
+  border: solid 1px $borderLine;
   padding: 15px;
   font-size: 1em;
   font-family: sans-serif;
 }
 .message {
   margin: 15px 0 0 0;
-  color: #ff0000cb;
+  color: $red;
 }
 .buttonPublier {
-  background-color: #f10404;
+  background-color: $red;
   font-size: 18px;
   color: white;
-  border: none;
   padding: 5px 15px 5px 15px;
   margin: 5px 0 10px 0;
   border-radius: 7px;
   &:hover {
-    box-shadow: #888888 1px 1px 5px;
+    box-shadow: $shadow 1px 1px 5px;
     cursor: pointer;
   }
 }
@@ -224,11 +226,6 @@ textarea {
   padding-bottom: 5px;
   object-fit: contain;
 }
-.likeComment {
-  border-top: 1px solid rgba(0, 0, 0, 0.171);
-  display: flex;
-  justify-content: flex-end;
-}
 .likeLength {
   text-align: right;
   font-size: 1.2em;
@@ -242,8 +239,7 @@ textarea {
 .thumbsPost {
   padding-left: 10px;
   font-size: 20px;
-  color: #808080;
-  border: none;
+  color: $grey;
   cursor: pointer;
 }
 .up {
@@ -252,9 +248,7 @@ textarea {
 // Pagination //
 .pagination {
   margin-bottom: 30px;
-  display: flex;
   justify-content: flex-end;
-  align-items: center;
   padding-right: 20px;
   & .textPagination {
     color: white;
@@ -265,11 +259,10 @@ textarea {
   & .buttonPagination {
     background: none;
     color: white;
-    border: none;
     font-size: 20px;
     &:hover {
       cursor: pointer;
-      background: #80808054;
+      background: $backgroundPagination;
       border-radius: 15px;
     }
   }
@@ -282,42 +275,34 @@ textarea {
   color: black;
 }
 .buttonPaginationComment {
-  color: rgb(71, 71, 71);
   background: none;
-  border: none;
   font-size: 1em;
+  color: $grey;
   font-weight: bolder;
   padding:  10px;
   width: 60%;
-  border-top : 1px solid rgba(226, 226, 226, 0.658);
+  border-top : 1px solid $borderLine;
   &:hover {
     cursor: pointer;
-    background-color: #eeeeee5d;
+    color: black;
   }
 }
 
 // ---------------- ONE ARTICLE ------------------//
 /* Article Content */
 .publication {
-  box-shadow: #c4c4c4 1px 1px 3px;
   border-radius: 10px;
   width: 95%;
-  text-decoration: none;
-  flex-direction: column;
-  color: black;
   background-color: white;
   margin: 20px;
   padding-bottom: 20px;
-
 }
 #article {
   width: 100%;
   margin-top : 10px;
 }
 .topPost {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 #titleOnePost {
   font-weight: bold;
@@ -327,7 +312,7 @@ textarea {
 }
 .dateArticle {
   margin: 0;
-  color: rgb(112, 112, 112);
+  color: $grey;
   padding-bottom: 5px;
 }
 .imageArticle {
@@ -341,28 +326,27 @@ textarea {
   margin-right: 40px;
   & button {
     background-color: white;
-    border: none;
     cursor: pointer;
   }
 }
 .pen {
   font-size: 17px;
-  color: #444444;
+  color: $grey;
   &:hover {
     color: black;
   }
 }
 .trash {
-  color: #ff000098;
+  color: $darkRed;
   font-size: 17px;
   &:hover {
-  color: #ff0000;
+  color: $red;
   }
 }
 #titleOnePost input {
   border: none;
   border-radius: 10px;
-  box-shadow: #d4d4d4 1px 1px 5px;
+  box-shadow: $shadow 1px 1px 5px;
   width: 50%;
   padding: 0 5px 5px 10px;
   font-size: 0.8em;
@@ -372,7 +356,7 @@ textarea {
   margin-top : 10px;
   border: none;
   border-radius: 15px;
-  box-shadow: #d4d4d4 1px 1px 5px;
+  box-shadow: $shadow 1px 1px 5px;
   width: 70%;
   padding: 5px 5px 0 10px;
   font-size: 1.3em;
@@ -381,53 +365,46 @@ textarea {
 
 // Like //
 .like {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.171);
-  display: flex;
+  border-bottom: 1px solid $borderLine;
   justify-content: flex-end;
-  align-items: center;
   padding-right: 10% ;
 }
 .thumbs {
   height: 20px;
   width: 25px;
-  border: none;
   cursor: pointer;
 }
 .blue {
-  color: rgba(5, 113, 237, 1);
+  color: $blue;
 }
 .thumbsgrey {
-  color: #808080;
+  color: $grey;
 }
 .buttonLike {
-  display: flex;
-  align-items: center;
   justify-content: center;
   gap: 7px;
   font-size: 1.1em;
   background-color: white;
-  border: none;
   cursor: pointer;
   margin: 0 13px 10px 0;
 }
 .buttonListComment {
   & button {
-    border: none;
     cursor: pointer;
   }
 }
 .penComment {
   font-size: 14px;
-  color: #444444;
+  color: $grey;
   &:hover {
     color: black;
   }
 }
 .trashComment {
-  color: #ff000098;
+  color: $darkRed;
   font-size: 14px;
   &:hover {
-  color: #ff0000;
+  color: $red;
   }
 }
 
@@ -449,12 +426,10 @@ textarea {
 .dateComment{
   font-size: 0.9em;
   margin:  2px 0 10px 0;
-  color: rgb(138, 138, 138);
+  color: $grey;
   padding-left: 13%;
 }
 .oneCommentTop{
-  display: flex;
-  align-items: center;
   margin: 0 15px 0 15px;
   width: 100%;
 }
@@ -465,9 +440,8 @@ textarea {
   margin: 0 15px 0 15px;
   border-radius: 25px;
 }
-
 .commentaire{
-  background-color:rgb(240, 240, 240);
+  background-color: $inputColor;
   border-radius: 10px;
   padding: 10px 20px 10px 20px;
   margin: 0px 25px 0 0;
@@ -498,13 +472,10 @@ textarea {
 
 // Add Comment //
 .addComment{
-  display: flex;
   justify-content: center;
-  align-items: center;
 }
 .addCommentText {
-  border: none;
-  background-color:rgb(240, 240, 240);
+  background-color: $inputColor;
   margin: 10px;
   width: 70%;
   padding: 10px 15px 0 15px;
@@ -514,8 +485,9 @@ textarea {
 }
 .messageComment {
   margin: 0 0 0 15px;
-  color: #ff0000cb;
+  color: $darkRed;
 }
+
 // ------------------PAGE DE PROFIL ------------------//
 .profil {
   min-height: 89vh;
@@ -528,16 +500,13 @@ textarea {
   position: absolute;
   left: 27%;
   top: 210px;
-  color: #ff0000b2;
+  color: $red;
 }
-
-#photoProfil {
+.photoProfil {
   position: absolute;
   right: 23%;
   width: 20%;
-  display: flex;
   flex-direction: column;
-  align-items: center;
   padding-top: 20px;
   & .imagePP {
     width: 170px;
@@ -548,25 +517,23 @@ textarea {
   }
   & .modifyPPButton {
     font-size: 15px;
-    border: none;
     padding: 5px 15px 5px 15px;
     margin: 5px 10px 20px 10px;
     border-radius: 7px;
     &:hover {
-      box-shadow: #888888 1px 1px 5px;
+      box-shadow: $shadow 1px 1px 5px;
       cursor: pointer;
     }
   }
   & .buttonPP {
     width: 40%;
     color: white;
-    border: none;
     border-radius: 5px;
     padding: 5px 15px 5px 15px;
     margin: 15px 10px 20px 10px;
     font-size: 15px;
     &:hover {
-      box-shadow: #888888 1px 1px 5px;
+      box-shadow: $shadow 1px 1px 5px;
       cursor: pointer;
     }
   }
@@ -574,7 +541,6 @@ textarea {
 .user {
   width: 60%;
   background-color: white;
-  box-shadow: #4e4e4e 1px 1px 5px;
   border-radius: 20px;
   margin: 20px 0 20px 0;
   padding: 20px 40px 40px 40px;
@@ -598,7 +564,7 @@ textarea {
       margin-top : 16px;
       border: none;
       border-radius: 15px;
-      box-shadow: #bebebe 1px 1px 5px;
+      box-shadow: #cecece 1px 1px 5px;
       width: 60%;
       padding: 0 5px 0 10px;
       font-size: 0.9em;
@@ -612,20 +578,19 @@ textarea {
 .profilButton {
     font-size: 18px;
     color: white;
-    border: none;
     padding: 5px 15px 5px 15px;
     margin: 15px 10px 20px 10px;
     border-radius: 10px;
     &:hover {
-      box-shadow: #888888 1px 1px 5px;
+      box-shadow: $shadow 1px 1px 5px;
       cursor: pointer;
     }
   }
 .red {
-  background-color: #FF0000;
+  background-color: $red;
 }
 .grey {
-  background-color: #a3a3a3;
+  background-color: $grey;
 }
 
 //----------------------- ADMIN ---------------------------//
@@ -685,7 +650,7 @@ textarea {
   width: 9%;
 }
 .IconCross {
-  color: red;
+  color: $red;
 }
 .IconCheck {
   color: rgb(2, 179, 49);
@@ -742,7 +707,6 @@ textarea {
 .green:hover {
   color: rgb(2, 179, 49);
 }
-
 .publicationStatus {
   display: flex;
   padding-left: 15px;
