@@ -10,8 +10,8 @@
           <div class="addPost center">
             <form id="addPostContent">
               <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
-              <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" />
-              <p>{{msg}}</p>
+              <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" required/>
+              <p class="message">{{msg}}</p>
               <button class="buttonPublier noBorder" @click="addPost()" type="submit">Publier</button>
             </form>
           </div>
@@ -23,7 +23,7 @@
             <img  v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
             <div class="info center">
-              <div class="infoLeft center">
+              <div class="infoLeft">
                 <p class="name" >{{article.User.firstName}} {{article.User.lastName}}</p>
                 <p class="job"><fa icon="briefcase" class="briefcase"/>{{article.User.job}}</p>
               </div>

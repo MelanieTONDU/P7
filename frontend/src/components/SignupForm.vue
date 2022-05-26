@@ -19,11 +19,11 @@
 			</div>
 			<div class="form-group">
 				<label>
-					<input v-model="password" id="password" placeholder="Mot de passe"  type="password" required />
+					<input v-model="password" id="password" placeholder="Mot de passe"  type="password" required autocomplete="off"/>
 				</label>
 			</div>
 			<p class="message">{{msg}}</p>
-			<button :disabled="email && password && lastName && firstName == ''" @click="createAccount()" type="button" class="noBorder">S'inscrire</button>
+			<button :disabled="email && password && lastName && firstName == ''" @click="createAccount()" type="button" class=" inscrire noBorder">S'inscrire</button>
 			<div>
 				<p class="textUnderButton">Vous avez déjà un compte ? <router-link to="/login" class="link noBorder">Se connecter</router-link></p>
 			</div>
@@ -42,16 +42,14 @@ export default {
 			firstName:'',
 			email:'',
 			password:'',
+			valid: "",
 			msg:''
 		}
 	},
 	methods:{
-		createAccount: function() {
-			let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-			if ((passwordRegex.test(this.password)) == false){
-				this.msg = `Le mot de passe doit inclure : minimum 8 caractères, 1 Majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.`
-			}
-			else {
+		createAccount() {
+			this.errorMessage();
+		if (this.valid.every(element => element == true)){
 				const user = { lastName: this.lastName, firstName : this.firstName, email: this.email, password: this.password };
 				axios.post("http://localhost:3000/api/auth/signup", user)
 				.then(response => {
@@ -64,7 +62,30 @@ export default {
 						this.msg = 'Utilisateur déjà existant !'
 					}
 				})
+		}
+			},
+		errorMessage () {
+			let regex = /^[a-zA-Z/s]{2,20}$/;
+			let emailRegex = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/;
+			let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+			if ((passwordRegex.test(this.password)) == false){
+				this.msg = `Le mot de passe doit inclure : minimum 8 caractères, 1 Majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.`
 			}
+			if ((regex.test(this.firstName)) == false){
+				this.msg = "Le prénom ne doit comporter que des lettres."
+			}
+			if ((regex.test(this.lastName)) == false){
+				this.msg = "Le nom ne doit comporter que des lettres."
+			}
+			if ((emailRegex.test(this.email)) == false){
+				this.msg = "Email non valide."
+			}
+			this.valid = [
+				regex.test(this.firstName),
+				regex.test(this.lastName),
+				emailRegex.test(this.email),
+				passwordRegex.test(this.password),
+			]
 		}
 	}
 }

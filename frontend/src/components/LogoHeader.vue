@@ -10,6 +10,6 @@ export default {
 
 <style scoped lang="scss">
 .logo{
-    width: 25%;
+    width: 24%;
 }
 </style>

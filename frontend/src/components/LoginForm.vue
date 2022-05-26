@@ -9,10 +9,10 @@
       </div>
       <div class="form-group">
         <label>
-          <input v-model="password" id="password" placeholder="Mot de passe" type="password" required />
+          <input v-model="password" id="password" placeholder="Mot de passe" type="password" required autocomplete="off"/>
         </label>
       </div>
-      <p>{{msg}}</p>
+      <p class="message">{{msg}}</p>
       <button @click="connectAccount()" type="button" class="noBorder">Connexion</button>
       <div >
         <p class="textUnderButton">Vous n'avez pas encore de compte ? <router-link to="/" class="link noBorder">S'inscrire</router-link></p>
@@ -61,6 +61,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-
 </style>

@@ -2,30 +2,35 @@ const User = require("../models/userSchema");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const userValidationSchema = require('../middleware/validation');
 
 const ncrypt = require("ncrypt-js");
 const _secretKey = "some-super-secret-key";
 const ncryptObject = new ncrypt(_secretKey);
 
 exports.signup = (req, res, next) => {
-  const emailCrypt = ncryptObject.encrypt(req.body.email);
-    bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-      const user = new User({
-          firstName : req.body.firstName,
-          lastName : req.body.lastName,
-          email: emailCrypt,
-          password: hash,
-      });
-      user.save()
-        .then(() => res.status(201).json({'userId': user.id,
-        'token': jwt.sign(
-          { userId: user.id },
-          `${process.env.JWT_RAND_SECRET}`,
-          { expiresIn: '24h' })}))
-        .catch(error => res.status(401).json({ error }));
-      })
-    .catch(error => res.status(500).json({ error }));
+  const {error} = userValidationSchema(req.body);
+  if(error) return res.status(401).json({ message: 'Utilisateur invalide !' });
+  else {
+    const emailCrypt = ncryptObject.encrypt(req.body.email);
+      bcrypt.hash(req.body.password, 10)
+      .then(hash => {
+        const user = new User({
+            firstName : req.body.firstName,
+            lastName : req.body.lastName,
+            email: emailCrypt,
+            password: hash,
+        });
+        user.save()
+          .then(() => res.status(201).json({'userId': user.id,
+          'token': jwt.sign(
+            { userId: user.id },
+            `${process.env.JWT_RAND_SECRET}`,
+            { expiresIn: '24h' })}))
+          .catch(error => res.status(401).json({ error }));
+        })
+      .catch(error => res.status(500).json({ error }));
+    }
   };
 
   exports.login = (req, res, next) => {

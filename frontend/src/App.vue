@@ -3,7 +3,7 @@
 </template>
 
 <style lang="scss">
-$red : #FF0000;
+$red : #FD2D01;
 $darkRed : #ff000098;
 $bandeauColor : #122c668f;
 $inputColor : #f2f2f2;
@@ -11,7 +11,7 @@ $buttonRed : #FF0000;
 $grey : rgb(145, 145, 145);
 $borderLine : #e0e0e0;
 $shadow : #888888;
-$backgroundPagination : #80808054;
+$backgroundPagination : #4E5166;
 $blue : rgba(5, 113, 237, 1);
 
 *{
@@ -21,10 +21,13 @@ body{
   margin: 0;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Lato, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+textarea, input {
+  font-family: Lato, Arial, sans-serif;
 }
 .center {
   display: flex;
@@ -48,7 +51,7 @@ body{
 // css signup et login //
 #formulaire{
   position: absolute;
-  top: 35%;
+  top: 33%;
   left: 35%;
   background-color: white;
   width: 30%;
@@ -114,7 +117,7 @@ body{
   margin: 0 15px 0 15px;
 }
 .name {
-  font-weight: bold;
+  font-weight: 900;
   font-size: 1em;
   margin: 0;
   text-align: left;
@@ -157,7 +160,6 @@ h2 {
   border: solid 1px $borderLine;
   padding: 5px 10px 5px 10px;
   font-size: 1em;
-  font-family: sans-serif;
 }
 textarea {
   resize: none;
@@ -169,7 +171,6 @@ textarea {
   border: solid 1px $borderLine;
   padding: 15px;
   font-size: 1em;
-  font-family: sans-serif;
 }
 .message {
   margin: 15px 0 0 0;
@@ -200,7 +201,7 @@ textarea {
   text-decoration: none;
   color: black;
   background-color: white;
-  cursor: pointer;
+  
   & .topAddPost {
     justify-content: center;
   }
@@ -208,6 +209,9 @@ textarea {
     justify-content: center;
   }
 }
+.shadow:hover {
+  cursor: pointer;
+  }
 .title {
   font-weight: bold;
   font-size: 1.5em;
@@ -216,8 +220,8 @@ textarea {
 }
 .content {
   text-align: justify;
-  font-size: 1em;
-  padding: 0 7% 10px 7%;
+  font-size: 1.05em;
+  padding: 0 6% 10px 6%;
   margin: 10px 7% 0 7%;
 }
 .image {
@@ -413,6 +417,7 @@ textarea {
   padding: 10px 0 10px 0;
   font-weight: bolder;
   margin: 0;
+  font-size: 1.1em;
 }
 .allComment {
   width: 100%;
@@ -464,7 +469,6 @@ textarea {
   font-size: 1em;
   padding: 5px;
   margin: 15px 0 0 0;
-  font-family: sans-serif;
 }
  textarea:focus {
    outline: none;
@@ -481,7 +485,6 @@ textarea {
   padding: 10px 15px 0 15px;
   font-size: 1.1em;
   border-radius: 10px;
-  font-family: sans-serif;
 }
 .messageComment {
   margin: 0 0 0 15px;
@@ -720,22 +723,22 @@ textarea {
 }
 .commentContainerAdmin {
   width: 100%;
-  gap: 20px;
+  gap: 15px;
   border-top: 1px solid rgb(245, 245, 245);
-  padding: 0 20px 0 20px;
+  padding: 0 10px 0 10px;
 }
 .numberCommentAdmin {
   padding-top: 10px ;
   font-weight: bold;
 }
 .commentAdmin {
-  width: 45%;
+  width: 57%;
   word-break: break-all;
   white-space: normal;
   text-align: justify;
 }
 .nameAdmin {
-  width : 14%;
+  width : 16%;
 }
 .postContentAdmin {
   width: 66%;
@@ -762,7 +765,7 @@ textarea {
   }
 }
 .textUnderButton{
-  font-size: 20px;
+  font-size: 14px;
   padding: 0 15px 0 15px;
 }
 h1 {
