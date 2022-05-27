@@ -10,7 +10,7 @@
                 <div v-else class="changePP">
                     <input name="image" type="file" @change="selectFile()" class="addPP" ref="image" />
                     <div>
-                        <button  @click="addAvatar()" type="submit" class="buttonPP buttonSave red"> Enregistrer</button>
+                        <button  @click="addAvatar()" type="submit" class="buttonPP buttonSave red noBorder"> Enregistrer</button>
                         <button @click="cancel()" type="button" class="buttonPP buttonCancel grey noBorder">Annuler</button>
                     </div>
                 </div>

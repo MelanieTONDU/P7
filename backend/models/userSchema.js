@@ -8,28 +8,23 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  
   lastName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-
   email: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
   },
-
   password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-
   job: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-
   imageUrl :{
     type: DataTypes.STRING,
     allowNull: true,

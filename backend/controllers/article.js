@@ -127,13 +127,13 @@ exports.deleteArticle = (req, res, next) => {
     const filename = article.imageUrl.split('/images/')[1];
     fs.unlink(`images/${filename}`, () => {
       Article.destroy({ where: {id: req.params.id} })
-        .then((article) => res.status(204).json(article))
+        .then((article) => res.status(204).json(article.id))
         .catch(error => res.status(400).json({ error }));
       })
     }
     else {
       Article.destroy({ where: {id: req.params.id} })
-        .then((article) => res.status(204).json(article))
+        .then((article) => res.status(204).json(article.id))
         .catch(error => res.status(400).json({ error }));
       }
     })
