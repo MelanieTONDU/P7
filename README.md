@@ -1,12 +1,10 @@
 # PROJET 7 : Créer un réseau social d'entreprise.
 
-### **À propos :**
-
+## **À propos :**
 La réalisation Full Stack de cette application est le 7ième projet et dernier projet pour la formation de développeur web chez OpenClassrooms.
 Le projet consiste à construire un réseau social interne pour les employés de Groupomania.
 
-
-### **Contenue du site :**
+## **Contenue du site :**
 - Système d'authentification (création de compte et
 connexion)
 - Gestion des publications et commentaires (création,
@@ -15,9 +13,7 @@ modification et suppression)
 - Gestion du compte (modification et suppression)
 - Système de modération
 
-
-
-### **Liste des langages et frameworks utilisés pour la création du site :**
+## **Liste des langages et frameworks utilisés pour la création du site :**
   - HTML
   - CSS
   - SASS
@@ -28,26 +24,24 @@ modification et suppression)
   - MySQL
   - Sequelize
 
+## Installation
+### Installation des dépendances :
 
-### Installation
-# backend
+Pour le Frontend, se placer à l'aide du terminal dans le dossier "frontend" et taper la commande : 
 ```
 npm install
 ```
-Lancer le server backend : 
-```
-nodemon server
-```
-
-# frontend
-
-## Project setup
+Pour le backend, se placer à l'aide du terminal dans le dossier "backend" et taper la commande :
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Lancement de l'application :
+Pour le Frontend, se placer à l'aide du terminal dans le dossier "frontend" et taper la commande : 
 ```
 npm run serve
 ```
-
+Pour le backend, se placer à l'aide du terminal dans le dossier "backend" et taper la commande :
+```
+nodemon server
+```
