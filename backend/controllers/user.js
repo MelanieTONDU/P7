@@ -9,28 +9,38 @@ const _secretKey = "some-super-secret-key";
 const ncryptObject = new ncrypt(_secretKey);
 
 exports.signup = (req, res, next) => {
-  const {error} = userValidationSchema(req.body);
-  if(error) return res.status(401).json({ message: 'Utilisateur invalide !' });
-  else {
-    const emailCrypt = ncryptObject.encrypt(req.body.email);
-      bcrypt.hash(req.body.password, 10)
-      .then(hash => {
-        const user = new User({
-            firstName : req.body.firstName,
-            lastName : req.body.lastName,
-            email: emailCrypt,
-            password: hash,
-        });
-        user.save()
-          .then(() => res.status(201).json({'userId': user.id,
-          'token': jwt.sign(
-            { userId: user.id },
-            `${process.env.JWT_RAND_SECRET}`,
-            { expiresIn: '24h' })}))
-          .catch(error => res.status(401).json({ error }));
-        })
-      .catch(error => res.status(500).json({ error }));
-    }
+    let array = [];
+    User.findAll()
+    .then((users) => {
+      users.forEach(user => {
+        const email = (ncryptObject.decrypt(user.email));
+        array.push(email);
+      })
+      let found = array.find(p => p == req.body.email );
+      if(found != undefined){
+        return res.status(401).json({ error: "Incorrect password"})
+      }
+      else {
+        const emailCrypt = ncryptObject.encrypt(req.body.email);
+          bcrypt.hash(req.body.password, 10)
+          .then(hash => {
+            const user = new User({
+                firstName : req.body.firstName,
+                lastName : req.body.lastName,
+                email: emailCrypt,
+                password: hash,
+            });
+            user.save()
+              .then(() => res.status(201).json({'userId': user.id,
+              'token': jwt.sign(
+                { userId: user.id },
+                `${process.env.JWT_RAND_SECRET}`,
+                { expiresIn: '24h' })}))
+              .catch(error => res.status(401).json({ error }));
+            })
+          .catch(error => res.status(500).json({ error }));
+      }
+    })
   };
 
   exports.login = (req, res, next) => {
@@ -39,9 +49,8 @@ exports.signup = (req, res, next) => {
     .then((users) => {
       users.forEach(user => {
         const email = (ncryptObject.decrypt(user.email));
-        const emailCrypt = user.email;
         const id = user.id;
-        array.push(userInfo = {email, emailCrypt, id});
+        array.push(userInfo = {email, id});
       })
       let found = array.find(p => p.email == req.body.email );
       if (!found) {
