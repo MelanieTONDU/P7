@@ -29,6 +29,16 @@ modification et suppression)
   - Sequelize
 
 
+### Installation
+# backend
+```
+npm install
+```
+Lancer le server backend : 
+```
+nodemon server
+```
+
 # frontend
 
 ## Project setup

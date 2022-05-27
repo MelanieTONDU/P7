@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 const path = require('path');
+const helmet = require('helmet');
 
 const db = require('./db/db.js');
 db.authenticate();
 
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 dotenv.config();
 
 const userRoutes = require('./routes/userRoutes');
@@ -25,5 +26,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
 app.use('/api/article', articleRoutes);
 app.use('/api/article/:id/comment', commentRoutes);
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin'}));
 
 module.exports = app;
