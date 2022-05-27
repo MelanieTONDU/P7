@@ -23,9 +23,9 @@
 				</label>
 			</div>
 			<p class="message">{{msg}}</p>
-			<button :disabled="email && password && lastName && firstName == ''" @click="createAccount()" type="button" class=" inscrire noBorder">S'inscrire</button>
+			<button :disabled="email && password && lastName && firstName == ''" @click="createAccount()" type="button" class=" inscrire">S'inscrire</button>
 			<div>
-				<p class="textUnderButton">Vous avez déjà un compte ? <router-link to="/login" class="link noBorder">Se connecter</router-link></p>
+				<p class="textUnderButton">Vous avez déjà un compte ? <router-link to="/login" class="link">Se connecter</router-link></p>
 			</div>
 		</form>
 	</div>

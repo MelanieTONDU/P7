@@ -2,37 +2,37 @@
     <div class="allComment">
         <p v-if=" this.totalComment > 1" class="commentNumber">{{this.totalComment}} Commentaires</p>
         <p v-else class="commentNumber" >{{comments.length}} Commentaire</p>
-        <form class="addComment center">
+        <form class="addComment">
             <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
-            <textarea class="addCommentText noBorder" v-model="text" placeholder="Ajouter un commentaire..." required></textarea>
-            <button class="buttonPublier noBorder" @click="addComment()" type="submit">Publier</button>
+            <textarea class="addCommentText" v-model="text" placeholder="Ajouter un commentaire..." required></textarea>
+            <button class="buttonPublier" @click="addComment()" type="submit">Publier</button>
         </form>
         <p class="messageComment">{{msg}}</p>
         <div class="commentsList">
             <div v-for="comment in comments" :key="comment.id" class="oneComment">
-                <div class="oneCommentTop center">
+                <div class="oneCommentTop">
                     <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
                     <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
                     <div class="commentaire" >
                         <div class="commentTop">
                             <p class="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
                             <div v-if="(this.userId == comment.User.id)" class="buttonListComment"> 
-                                <button class="modify noBorder" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
-                                <button class="delete noBorder" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
+                                <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
+                                <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
                             </div>
                         </div>
                         <div class="contentComment">
                             <textarea v-if="(commentId == comment.id) && (this.modify == true)" v-model= this.newText ></textarea>
                             <p v-else class="comment">{{comment.text}}</p>
-                            <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonPublier noBorder">Modifier</button>
+                            <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonPublier">Modifier</button>
                         </div>
                     </div>
                 </div>
                 <p class="dateComment"><time >Publié le {{dayjs(comment.createdAt).locale("fr").format("DD/MM/YY")}}</time></p>
             </div>
             <div v-if="(this.comments.length < this.totalComment)" class="paginationContainer">
-                <button @click="updateMore()" class="buttonPaginationComment noBorder">Affichez plus de commentaires</button>
+                <button @click="updateMore()" class="buttonPaginationComment">Affichez plus de commentaires</button>
             </div>
         </div>
     </div>

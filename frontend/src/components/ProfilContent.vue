@@ -1,17 +1,17 @@
 <template>
-    <div class="forum profil center">
+    <div class="forum profil">
         <div class="user">
             <h2 class="titlePP">Information sur le compte</h2>
             <h3 class="titlePPModify" v-if="(this.modify == true )">Veuillez compléter les champs que vous souhaitez modifier : </h3>
-            <div class="photoProfil center">
+            <div class="photoProfil">
                 <img  v-if="(this.user.imageUrl != null)" class="imagePP" :src=" this.user.imageUrl " alt="Photo de profil"/>
                 <img v-else  class="imagePP" src="../assets/avatar.png" alt="Photo de profil"/>
-                <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" class="modifyPPButton noBorder">Modifier sa photo</button>
+                <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" class="modifyPPButton">Modifier sa photo</button>
                 <div v-else class="changePP">
                     <input name="image" type="file" @change="selectFile()" class="addPP" ref="image" />
                     <div>
-                        <button  @click="addAvatar()" type="submit" class="buttonPP buttonSave red noBorder"> Enregistrer</button>
-                        <button @click="cancel()" type="button" class="buttonPP buttonCancel grey noBorder">Annuler</button>
+                        <button  @click="addAvatar()" type="submit" class="buttonPP buttonSave red"> Enregistrer</button>
+                        <button @click="cancel()" type="button" class="buttonPP buttonCancel">Annuler</button>
                     </div>
                 </div>
             </div>
@@ -46,11 +46,11 @@
             </form>
             <div id="profilButton">
                 <p>{{this.msg}}</p>
-                <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="profilButton buttonSave red noBorder"> Enregistrer les modifications</button>
-                <button v-if=" (this.modify == true)" @click="cancel()" type="button" class="profilButton buttonCancel grey noBorder">Annuler</button>
+                <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="profilButton buttonSave red"> Enregistrer les modifications</button>
+                <button v-if=" (this.modify == true)" @click="cancel()" type="button" class="profilButton">Annuler</button>
                 <div v-else > 
-                    <button class="profilButton buttonModify grey noBorder" @click="modifyUser()" type="button">Modifier mes informations</button>
-                    <button @click="deleteUser()" type="button" class="profilButton buttonDelete red noBorder">Supprimer le compte</button>
+                    <button class="profilButton buttonModify" @click="modifyUser()" type="button">Modifier mes informations</button>
+                    <button @click="deleteUser()" type="button" class="profilButton buttonDelete red">Supprimer le compte</button>
                 </div>
             </div>
         </div>

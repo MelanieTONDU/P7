@@ -17,35 +17,55 @@ $blue : rgba(5, 113, 237, 1);
 *{
   box-sizing: border-box; 
 }
-body{
-  margin: 0;
-}
 #app {
   font-family: Lato, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
+body, .name, .job, .date, .textPagination, .dateArticle, .commentNumber {
+  margin: 0;
+}
 textarea, input {
   font-family: Lato, Arial, sans-serif;
 }
-.center {
+.addComment, .oneCommentTop, .topAddPost, .addPostContent, .forum, .addPost, .info, .like, .pagination, .infoUserName, .topPost, .infoUser, .infoLeft, .buttonLike, .photoProfil {
   display: flex;
   align-items: center;
 }
-.noBorder {
+.inscrire, .link, .buttonPP, .modifyPPButton, .buttonPagination, .buttonPublier, .modify, .delete, .buttonLike, .thumbs, .addCommentText, .buttonPaginationComment, .profilButton {
   border: none;
 }
+.bandeau, .infoUserName, .addPostContent, .articleList, .topAddPost, .addPost, .paginationContainer, .buttonLike, .addComment, .infoProfil, .visible {
+  justify-content : center;
+}
+.forum, .infoUserName, .infoLeft, .addPostContent, .photoProfil, #infoUser, .listPublicationAdmin, #publicationAdmin {
+  flex-direction: column;
+}
+.link, .message, .titlePPModify, .IconCross, .trash:hover, .trashComment:hover {
+  color: $red;
+}
+.buttonPublier, .textPagination, .buttonPagination, .buttonPP, .profilButton {
+  color: white;
+}
+#formulaire, .lien, .publication, .buttonList button, .buttonLike, .user, #publicationAdmin, .buttonVisible {
+  background-color: white;
+}
+.job, .date, .briefcase, .thumbsPost, .buttonPaginationComment, .dateArticle, .pen, .thumbsgrey, .penComment, .dateComment {
+  color: $grey;
+}
+.buttonPublier:hover, .shadow:hover, .thumbsPost, .buttonPagination:hover, .buttonPaginationComment:hover, .buttonList button, .thumbs, .buttonLike, .buttonListComment button, .modifyPPButton:hover, .profilButton:hover, .buttonAdmin:hover, .IconEye:hover {
+  cursor: pointer;
+}
+
 .forum{
   background:url("./assets/architecture.webp") fixed;
   min-height: 89vh;
-  flex-direction: column;
 }
 .bandeau {
   width: 50%;
   background-color: $bandeauColor;
   min-height: 90vh;
-  justify-content: center;
 }
 
 // css signup et login //
@@ -53,7 +73,6 @@ textarea, input {
   position: absolute;
   top: 33%;
   left: 35%;
-  background-color: white;
   width: 30%;
   border-radius: 26px;
   .form-group{
@@ -82,7 +101,6 @@ textarea, input {
   }
 }
 .link {
-  color: $red;
   font-weight: bold;
   &:hover {
     text-decoration: underline;
@@ -97,17 +115,10 @@ textarea, input {
   display: flex;
   padding: 10px 10px 0 10px;
 }
-.infoUserName {
-  flex-direction: column;
-  justify-content: center;
-}
 .info {
   justify-content: space-between;
   width: 100%;
   padding-right: 10px;
-}
-.infoLeft {
-  flex-direction: column;
 }
 .avatar_post {
   width: 80px;
@@ -119,22 +130,16 @@ textarea, input {
 .name {
   font-weight: 900;
   font-size: 1em;
-  margin: 0;
   text-align: left;
 }
 .job {
-  margin: 0;
   padding-top: 5px;
   font-size : 13px;
-  color: $grey;
 }
 .date{
   font-size: 1em;
-  margin: 0;
-  color: $grey;
 }
 .briefcase {
-  color: $grey;
   margin-right: 5px;
   font-size: 13px;
 }
@@ -148,9 +153,7 @@ h2 {
   width: 95%;
 }
 .addPostContent {
-  flex-direction: column;
   width: 80%;
-  justify-content: center;
 }
 #addPostTitle {
   width: 80%;
@@ -174,25 +177,21 @@ textarea {
 }
 .message {
   margin: 15px 0 0 0;
-  color: $red;
 }
 .buttonPublier {
   background-color: $red;
   font-size: 18px;
-  color: white;
   padding: 5px 15px 5px 15px;
   margin: 5px 0 10px 0;
   border-radius: 7px;
   &:hover {
     box-shadow: $shadow 1px 1px 5px;
-    cursor: pointer;
   }
 }
 
 // Post List //
 .articleList{
   display: flex;
-  justify-content: center;
   margin: 20px 0 10px 0;
 }
 .lien {
@@ -200,18 +199,7 @@ textarea {
   border-radius: 5px;
   text-decoration: none;
   color: black;
-  background-color: white;
-  
-  & .topAddPost {
-    justify-content: center;
-  }
-  & .addPost {
-    justify-content: center;
-  }
 }
-.shadow:hover {
-  cursor: pointer;
-  }
 .title {
   font-weight: bold;
   font-size: 1.5em;
@@ -243,8 +231,6 @@ textarea {
 .thumbsPost {
   padding-left: 10px;
   font-size: 20px;
-  color: $grey;
-  cursor: pointer;
 }
 .up {
   padding-bottom : 2px;
@@ -255,17 +241,13 @@ textarea {
   justify-content: flex-end;
   padding-right: 20px;
   & .textPagination {
-    color: white;
     padding: 10px;
     font-size: 20px;
-    margin: 0;
   }
   & .buttonPagination {
     background: none;
-    color: white;
     font-size: 20px;
     &:hover {
-      cursor: pointer;
       background: $backgroundPagination;
       border-radius: 15px;
     }
@@ -273,7 +255,6 @@ textarea {
 }
 .paginationContainer {
   display: flex;
-  justify-content: center;
 }
 .textPaginationComment {
   color: black;
@@ -281,13 +262,11 @@ textarea {
 .buttonPaginationComment {
   background: none;
   font-size: 1em;
-  color: $grey;
   font-weight: bolder;
   padding:  10px;
   width: 60%;
   border-top : 1px solid $borderLine;
   &:hover {
-    cursor: pointer;
     color: black;
   }
 }
@@ -297,7 +276,6 @@ textarea {
 .publication {
   border-radius: 10px;
   width: 95%;
-  background-color: white;
   margin: 20px;
   padding-bottom: 20px;
 }
@@ -315,8 +293,6 @@ textarea {
   margin-bottom : 10px
 }
 .dateArticle {
-  margin: 0;
-  color: $grey;
   padding-bottom: 5px;
 }
 .imageArticle {
@@ -328,14 +304,9 @@ textarea {
 // Modify and Delete //
 .buttonList {
   margin-right: 40px;
-  & button {
-    background-color: white;
-    cursor: pointer;
-  }
 }
 .pen {
   font-size: 17px;
-  color: $grey;
   &:hover {
     color: black;
   }
@@ -343,9 +314,6 @@ textarea {
 .trash {
   color: $darkRed;
   font-size: 17px;
-  &:hover {
-  color: $red;
-  }
 }
 #titleOnePost input {
   border: none;
@@ -376,30 +344,17 @@ textarea {
 .thumbs {
   height: 20px;
   width: 25px;
-  cursor: pointer;
 }
 .blue {
   color: $blue;
 }
-.thumbsgrey {
-  color: $grey;
-}
 .buttonLike {
-  justify-content: center;
   gap: 7px;
   font-size: 1.1em;
-  background-color: white;
-  cursor: pointer;
   margin: 0 13px 10px 0;
-}
-.buttonListComment {
-  & button {
-    cursor: pointer;
-  }
 }
 .penComment {
   font-size: 14px;
-  color: $grey;
   &:hover {
     color: black;
   }
@@ -407,16 +362,12 @@ textarea {
 .trashComment {
   color: $darkRed;
   font-size: 14px;
-  &:hover {
-  color: $red;
-  }
 }
 
 // Commentaires //
 .commentNumber {
   padding: 10px 0 10px 0;
   font-weight: bolder;
-  margin: 0;
   font-size: 1.1em;
 }
 .allComment {
@@ -431,7 +382,6 @@ textarea {
 .dateComment{
   font-size: 0.9em;
   margin:  2px 0 10px 0;
-  color: $grey;
   padding-left: 13%;
 }
 .oneCommentTop{
@@ -475,9 +425,6 @@ textarea {
   }
 
 // Add Comment //
-.addComment{
-  justify-content: center;
-}
 .addCommentText {
   background-color: $inputColor;
   margin: 10px;
@@ -503,13 +450,11 @@ textarea {
   position: absolute;
   left: 27%;
   top: 210px;
-  color: $red;
 }
 .photoProfil {
   position: absolute;
   right: 23%;
   width: 20%;
-  flex-direction: column;
   padding-top: 20px;
   & .imagePP {
     width: 170px;
@@ -530,20 +475,17 @@ textarea {
   }
   & .buttonPP {
     width: 40%;
-    color: white;
     border-radius: 5px;
     padding: 5px 15px 5px 15px;
     margin: 15px 10px 20px 10px;
     font-size: 15px;
     &:hover {
       box-shadow: $shadow 1px 1px 5px;
-      cursor: pointer;
     }
   }
 }
 .user {
   width: 60%;
-  background-color: white;
   border-radius: 20px;
   margin: 20px 0 20px 0;
   padding: 20px 40px 40px 40px;
@@ -553,11 +495,9 @@ textarea {
   font-size: 1.2em;
   width: 60%;
   display: flex;
-  flex-direction: column;
   & .infoProfil {
     display: flex;
     padding-left: 5%;
-    justify-content: center;
     & .infoProfilDetail {
       font-weight: bold;
       padding-right: 10px;
@@ -580,13 +520,11 @@ textarea {
 }
 .profilButton {
     font-size: 18px;
-    color: white;
     padding: 5px 15px 5px 15px;
     margin: 15px 10px 20px 10px;
     border-radius: 10px;
     &:hover {
       box-shadow: $shadow 1px 1px 5px;
-      cursor: pointer;
     }
   }
 .red {
@@ -602,7 +540,6 @@ textarea {
   background-color: #122c668f;
   min-height: 89vh;
   & .listPublicationAdmin {
-    flex-direction: column;
     margin: 0 0 25px 0;
   }
   & .list {
@@ -652,14 +589,8 @@ textarea {
 .dateAdmin {
   width: 9%;
 }
-.IconCross {
-  color: $red;
-}
 .IconCheck {
   color: rgb(2, 179, 49);
-}
-.visible {
-  justify-content: center;
 }
 .buttonAdmin {
   border: none;
@@ -667,7 +598,6 @@ textarea {
   font-weight: bold;
   height: 25px;
   &:hover {
-    cursor: pointer;
     background-color: rgb(209, 246, 218);
   }
 }
@@ -679,9 +609,7 @@ textarea {
   border-radius: 10px;
   width: 95%;
   text-decoration: none;
-  flex-direction: column;
   color: black;
-  background-color: white;
   margin: 20px;
 }
 
@@ -697,14 +625,10 @@ textarea {
   height: 40px;
   border: none;
   font-size: 1em;
-  background-color: white;
   color: #525252bd;
   width: 35%;
   & .IconEye {
     padding-right: 10px;
-  }
-  &:hover {
-    cursor: pointer;
   }
 }
 .green:hover {

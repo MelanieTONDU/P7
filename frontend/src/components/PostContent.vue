@@ -1,11 +1,11 @@
 <template>
   <div id="article">
-    <div class="topPost center">
-      <div class="infoUser center">
+    <div class="topPost">
+      <div class="infoUser">
         <img  v-if="(this.userArticle.imageUrl  != null)" alt="Photo de profil" class="avatar_post" :src=" this.userArticle.imageUrl  " />
         <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil" />
-        <div class="info center">
-          <div class="infoLeft center">
+        <div class="info">
+          <div class="infoLeft">
             <p class="name" >{{this.userArticle.firstName}} {{this.userArticle.lastName}}</p>
             <p class="job"><fa icon="briefcase" class="briefcase"/>{{this.userArticle.job}}</p>
           </div>
@@ -13,8 +13,8 @@
       </div>
     <div class="buttonList">
       <p class="dateArticle"><time >Publié le {{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
-      <button v-if="(this.userId == this.article.users_id)" class="modify noBorder" @click="modifyPost()" type="button"><fa icon="pen" class="pen"/></button>
-      <button v-if="(this.userId == this.article.users_id)" @click="deletePost()" type="button" class="delete noBorder"><fa icon="trash" class="trash"/></button>
+      <button v-if="(this.userId == this.article.users_id)" class="modify" @click="modifyPost()" type="button"><fa icon="pen" class="pen"/></button>
+      <button v-if="(this.userId == this.article.users_id)" @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash"/></button>
     </div>
     </div>
     <form id="content">
@@ -30,14 +30,14 @@
         <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" ></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
-      <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button" class="buttonPublier noBorder">Modifier</button>
+      <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button" class="buttonPublier">Modifier</button>
     </form>
-    <div class="like center">
+    <div class="like">
       <div v-if="(this.userLike == true)" >
-          <button class="buttonLike center blue noBorder">{{this.article.likes}}<fa @click="addLike()"  icon="thumbs-up" class="thumbs up noBorder"/></button>
+          <button class="buttonLike blue">{{this.article.likes}}<fa @click="addLike()"  icon="thumbs-up" class="thumbs up"/></button>
       </div>
       <div v-else >
-          <button class="buttonLike center thumbsgrey noBorder">{{this.article.likes}}<fa @click="addLike()" icon="thumbs-up" class="thumbs up noBorder"/></button>
+          <button class="buttonLike thumbsgrey">{{this.article.likes}}<fa @click="addLike()" icon="thumbs-up" class="thumbs up"/></button>
       </div>
     </div>
   </div>

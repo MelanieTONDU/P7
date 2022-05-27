@@ -1,18 +1,18 @@
 <template>
-  <div class="forum center">
+  <div class="forum">
     <div class="bandeau">
       <div class="articleList">
         <div class="lien">
-          <div class="topAddPost center">
+          <div class="topAddPost">
             <h2>Créer une publication</h2>
           </div>
           <InfoUser/>
-          <div class="center addPost ">
-            <form class="addPostContent center">
+          <div class="addPost ">
+            <form class="addPostContent">
               <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
               <textarea id="addPostText" v-model="text" placeholder="Ecrivez quelque chose..." required></textarea>
               <p class="message">{{msg}}</p>
-              <button class="buttonPublier noBorder" @click="addPost()" type="submit">Publier</button>
+              <button class="buttonPublier" @click="addPost()" type="submit">Publier</button>
             </form>
           </div>
         </div>
@@ -22,7 +22,7 @@
           <div class="infoUser">
             <img  v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
-            <div class="info center">
+            <div class="info">
               <div class="infoLeft">
                 <p class="name" >{{article.User.firstName}} {{article.User.lastName}}</p>
                 <p class="job"><fa icon="briefcase" class="briefcase"/>{{article.User.job}}</p>
@@ -32,7 +32,7 @@
           </div>
           <p class="title">{{article.title}}</p>
           <p class="content">{{article.content}}</p>
-          <div class="like center">
+          <div class="like">
             <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p>
           </div>
           <div class="recentComment">
@@ -42,7 +42,7 @@
             <div v-else>
               <p class="commentNumber">Commentaires récents</p>
               <div v-for="comment in article.Comments" :key="comment.id" class="oneComment">
-                <div v-if="(comment.visible == true)" class="oneCommentTop center">
+                <div v-if="(comment.visible == true)" class="oneCommentTop">
                     <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
                     <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
                     <div class="commentaire" >
@@ -60,15 +60,15 @@
           </div>
         </a>
       </div>
-      <div class="pagination center">
+      <div class="pagination">
         <div v-if="(this.page > 0 )">
-          <button @click="getPosts(this.page = 0)" class="buttonPagination noBorder">&lt;&lt;</button>
-          <button @click="updateLess()" class="buttonPagination noBorder">&lt;</button>
+          <button @click="getPosts(this.page = 0)" class="buttonPagination">&lt;&lt;</button>
+          <button @click="updateLess()" class="buttonPagination">&lt;</button>
         </div>
         <p class="textPagination">Page {{this.page +1}} sur {{totalPages + 1}}</p>
         <div v-if="(this.page < this.totalPages)">
-          <button @click="updateMore()" class="buttonPagination noBorder">&gt;</button>
-          <button @click="getPosts(this.page = this.totalPages)" class="buttonPagination noBorder">&gt;&gt;</button>
+          <button @click="updateMore()" class="buttonPagination">&gt;</button>
+          <button @click="getPosts(this.page = this.totalPages)" class="buttonPagination">&gt;&gt;</button>
         </div>
       </div>
     </div>
