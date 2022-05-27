@@ -5,7 +5,7 @@
         <form class="addComment center">
             <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
-            <textarea class="addCommentText noBorder" v-model="text" type="text" placeholder="Ajouter un commentaire..." required></textarea>
+            <textarea class="addCommentText noBorder" v-model="text" placeholder="Ajouter un commentaire..." required></textarea>
             <button class="buttonPublier noBorder" @click="addComment()" type="submit">Publier</button>
         </form>
         <p class="messageComment">{{msg}}</p>
@@ -23,7 +23,7 @@
                             </div>
                         </div>
                         <div class="contentComment">
-                            <textarea v-if="(commentId == comment.id) && (this.modify == true)" v-model= this.newText type="text"></textarea>
+                            <textarea v-if="(commentId == comment.id) && (this.modify == true)" v-model= this.newText ></textarea>
                             <p v-else class="comment">{{comment.text}}</p>
                             <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonPublier noBorder">Modifier</button>
                         </div>

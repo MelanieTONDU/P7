@@ -10,7 +10,7 @@
           <div class="center addPost ">
             <form class="addPostContent center">
               <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
-              <textarea id="addPostText" v-model="text" type="text" placeholder="Ecrivez quelque chose..." required></textarea>
+              <textarea id="addPostText" v-model="text" placeholder="Ecrivez quelque chose..." required></textarea>
               <p class="message">{{msg}}</p>
               <button class="buttonPublier noBorder" @click="addPost()" type="submit">Publier</button>
             </form>

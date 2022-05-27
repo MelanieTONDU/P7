@@ -27,7 +27,7 @@
         <p v-else class="imageContent justify"><img  class="imageArticle" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
       </div>
       <div v-else id="contentText">
-        <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" type="text" ></textarea>
+        <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" ></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button" class="buttonPublier noBorder">Modifier</button>
