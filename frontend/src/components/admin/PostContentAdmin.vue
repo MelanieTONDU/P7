@@ -19,7 +19,7 @@
         <div class="allCommentAdmin">
             <p v-if=" this.totalComment > 1" class="numberCommentAdmin">{{this.totalComment}} Commentaires</p>
             <p v-else class="numberCommentAdmin" >{{this.totalComment}} Commentaire</p>
-            <div v-for="comment in comments" :key="comment.id" class="commentContainerAdmin center">
+            <div v-for="comment in comments" :key="comment.id" class="commentContainerAdmin">
                 <p v-if="(comment.visible == true)" class="visible"><fa icon="check" class="IconCheck"/></p>
                 <p v-else class="visible"><fa icon="xmark" class="IconCross"/></p>
                 <p class="nameAdmin">{{comment.User.firstName}} {{comment.User.lastName}}</p>

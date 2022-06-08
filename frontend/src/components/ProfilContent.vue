@@ -10,7 +10,7 @@
                 <div v-else class="changePP">
                     <input name="image" type="file" @change="selectFile()" class="addPP" ref="image" />
                     <div>
-                        <button  @click="addAvatar()" type="submit" class="buttonPP buttonSave red"> Enregistrer</button>
+                        <button  @click="addAvatar()" type="submit" class="buttonPP buttonSave"> Enregistrer</button>
                         <button @click="cancel()" type="button" class="buttonPP buttonCancel">Annuler</button>
                     </div>
                 </div>
@@ -41,16 +41,16 @@
                 </div>
                 <div class="infoProfil">
                     <p class="infoProfilDetail">Date de création du compte :</p>
-                    <p> {{dayjs(user.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</p>
+                    <p> {{dayjs(user.createdAt).locale("fr").format("DD/MM/YYYY")}}</p>
                 </div>
             </form>
             <div id="profilButton">
                 <p>{{this.msg}}</p>
-                <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="profilButton buttonSave red"> Enregistrer les modifications</button>
-                <button v-if=" (this.modify == true)" @click="cancel()" type="button" class="profilButton">Annuler</button>
+                <button v-if=" (this.modify == true)" @click="changeUser(userEdit)" type="button" class="buttonSave"> Enregistrer les modifications</button>
+                <button v-if=" (this.modify == true)" @click="cancel()" type="button" class="buttonCancel">Annuler</button>
                 <div v-else > 
-                    <button class="profilButton buttonModify" @click="modifyUser()" type="button">Modifier mes informations</button>
-                    <button @click="deleteUser()" type="button" class="profilButton buttonDelete red">Supprimer le compte</button>
+                    <button class="buttonModify" @click="modifyUser()" type="button">Modifier mes informations</button>
+                    <button @click="deleteUser()" type="button" class="deleteButton">Supprimer le compte</button>
                 </div>
             </div>
         </div>
@@ -101,10 +101,13 @@ export default {
             })
         },
         deleteUser() {
-            axios.delete("http://localhost:3000/api/auth/"  + this.userId,{
-            headers: {Authorization: "Bearer " + this.token}})
-            this.$router.push('/login');
-            localStorage.clear();
+            let confirmation = confirm("Voulez-vous vraiment supprimer votre publication ?");
+            if (confirmation == true) {
+                axios.delete("http://localhost:3000/api/auth/"  + this.userId,{
+                headers: {Authorization: "Bearer " + this.token}})
+                this.$router.push('/login');
+                localStorage.clear();
+            }
         },
         modifyUser() {
             this.modify = true;

@@ -24,7 +24,7 @@
       </div>
       <div v-if="this.article.imageUrl != null " class="contentImg ">
         <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" class="imageArticle" ref="image" />
-        <p v-else class="imageContent justify"><img  class="imageArticle" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
+        <p v-else class="imageContent justify"><img class="imageArticle" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
       </div>
       <div v-else id="contentText">
         <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" ></textarea>
@@ -102,11 +102,14 @@ export default {
       this.image = this.$refs.image.files[0];
     },
     deletePost() {
-        axios.delete("http://localhost:3000/api/article/"  + this.article_id,{
-        headers: {Authorization: "Bearer " + this.token}})
-        .then(() => {
-					this.$router.push('/article/text' );
-        })
+        let confirmation = confirm("Voulez-vous vraiment supprimer votre publication ?");
+        if (confirmation == true) {
+          axios.delete("http://localhost:3000/api/article/"  + this.article_id,{
+          headers: {Authorization: "Bearer " + this.token}})
+          .then(() => {
+            this.$router.push('/article/text' );
+          })
+        }
     },
     modifyPost() {
       this.modify = true;

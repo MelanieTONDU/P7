@@ -8,7 +8,6 @@ import ProfilView from '../views/ProfilView.vue'
 import ForumAdmin from '../views/ForumAdmin.vue'
 import OneArticleAdmin from '../views/OneArticleAdmin.vue'
 
-
 const routes = [
   {
     path: '/login',

@@ -18,7 +18,7 @@
         </div>
       </div>
       <div v-for="article in articles" :key="article.id" class="articleList">
-        <a :href = "article.id"  class="lien">
+        <router-link :to="{path: '/article/' + article.id}" class="lien">
           <div class="infoUser">
             <img  v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
@@ -33,7 +33,7 @@
           <p class="title">{{article.title}}</p>
           <img class="image" :src = " article.imageUrl " alt="Image de la publication"/>
           <div class="like">
-            <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p>
+            <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p> 
           </div>
           <div v-if="(article.Comments.length == 0 )">
             <p class="commentNumber">0 Commentaire</p>
@@ -56,7 +56,7 @@
               <p class="dateComment"><time >Publié le {{dayjs(comment.createdAt).locale("fr").format("DD/MM/YY")}}</time></p>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
         <div class="pagination">
           <div v-if="(this.page > 0 )">

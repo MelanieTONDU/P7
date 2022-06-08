@@ -1,5 +1,5 @@
 <template>
-    <router-view/>
+  <router-view/>
 </template>
 
 <style lang="scss">
@@ -13,6 +13,7 @@ $borderLine : #e0e0e0;
 $shadow : #888888;
 $backgroundPagination : #4E5166;
 $blue : rgba(5, 113, 237, 1);
+$green : rgb(2, 179, 49);
 
 *{
   box-sizing: border-box; 
@@ -29,11 +30,11 @@ body, .name, .job, .date, .textPagination, .dateArticle, .commentNumber {
 textarea, input {
   font-family: Lato, Arial, sans-serif;
 }
-.addComment, .oneCommentTop, .topAddPost, .addPostContent, .forum, .addPost, .info, .like, .pagination, .infoUserName, .topPost, .infoUser, .infoLeft, .buttonLike, .photoProfil {
+.addComment, .oneCommentTop, .topAddPost, .addPostContent, .forum, .addPost, .info, .like, .pagination, .infoUserName, .topPost, .infoUser, .infoLeft, .buttonLike, .photoProfil, .listTitle, .list, .commentContainerAdmin {
   display: flex;
   align-items: center;
 }
-.inscrire, .link, .buttonPP, .modifyPPButton, .buttonPagination, .buttonPublier, .modify, .delete, .buttonLike, .thumbs, .addCommentText, .buttonPaginationComment, .profilButton {
+.inscrire, .connexion, .link, .buttonPP, .modifyPPButton, .buttonPagination, .buttonPublier, .modify, .delete, .buttonLike, .thumbs, .addCommentText, .buttonPaginationComment, .deleteButton, .buttonModify, .buttonCancel, .buttonSave {
   border: none;
 }
 .bandeau, .infoUserName, .addPostContent, .articleList, .topAddPost, .addPost, .paginationContainer, .buttonLike, .addComment, .infoProfil, .visible {
@@ -45,19 +46,24 @@ textarea, input {
 .link, .message, .titlePPModify, .IconCross, .trash:hover, .trashComment:hover {
   color: $red;
 }
-.buttonPublier, .textPagination, .buttonPagination, .buttonPP, .profilButton {
+.buttonPublier, .textPagination, .buttonPagination, .buttonPP, .deleteButton, .buttonModify, .buttonCancel, .buttonSave {
   color: white;
 }
-#formulaire, .lien, .publication, .buttonList button, .buttonLike, .user, #publicationAdmin, .buttonVisible {
+#formulaire, .lien, .publication, .buttonList button, .buttonLike, .user, #publicationAdmin, .buttonVisible, .header {
   background-color: white;
+}
+.deleteButton, .buttonSave {
+  background-color : $red;
+}
+.buttonModify, .buttonCancel {
+  background-color: $grey;
 }
 .job, .date, .briefcase, .thumbsPost, .buttonPaginationComment, .dateArticle, .pen, .thumbsgrey, .penComment, .dateComment {
   color: $grey;
 }
-.buttonPublier:hover, .shadow:hover, .thumbsPost, .buttonPagination:hover, .buttonPaginationComment:hover, .buttonList button, .thumbs, .buttonLike, .buttonListComment button, .modifyPPButton:hover, .profilButton:hover, .buttonAdmin:hover, .IconEye:hover {
+.buttonPublier:hover, .shadow:hover, .thumbsPost, .buttonPagination:hover, .buttonPaginationComment:hover, .buttonList button, .thumbs, .buttonLike, .buttonListComment button, .modifyPPButton:hover, .deleteButton:hover, .buttonModify:hover, .buttonCancel:hover, .buttonSave:hover, .buttonAdmin:hover, .IconEye:hover {
   cursor: pointer;
 }
-
 .forum{
   background:url("./assets/architecture.webp") fixed;
   min-height: 89vh;
@@ -66,6 +72,73 @@ textarea, input {
   width: 50%;
   background-color: $bandeauColor;
   min-height: 90vh;
+}
+
+// Header Login/Register //
+#page {
+  background:url("./assets/architecture.webp") no-repeat;
+  width: 100%;
+  height: 100vh;
+}
+.logo{
+  width: 24%;
+}
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  gap: 10%;
+}
+.navRegister {
+  align-self: flex-end;
+  margin-right: 10%;
+  a {
+    font-weight: bold;
+    font-size: 1.4em;
+    color: #2c3e50;
+    padding: 1.2em;
+    text-decoration: none;
+    &.router-link-exact-active {
+      color: $red;
+    }
+  }
+}
+
+// Header Post //
+#header{
+  display: flex;
+  height: 100px;
+}
+.logoPost{
+  width: 20%;
+  object-fit: contain;
+  position: relative;
+  left: 10%;
+}
+.navPost{
+  width: 70%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-right: 5%;
+}
+.link{
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #2c3e50;
+  margin: 6% 2% 2% 2%;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.router-link-exact-active {
+  color: $red;
+}
+.IconDeco {
+  margin-right: 5px;
+  font-size: 22px;
+  color: #000000c4;
 }
 
 // css signup et login //
@@ -100,8 +173,10 @@ textarea, input {
     }
   }
 }
-.link {
+.linkForm {
   font-weight: bold;
+  padding-left: 3px;
+  color: $red;
   &:hover {
     text-decoration: underline;
   }
@@ -143,6 +218,7 @@ textarea, input {
   margin-right: 5px;
   font-size: 13px;
 }
+
 //-------------- Forum text et multimedia --------------//
 // Ajouter un article //
 h2 {
@@ -235,6 +311,7 @@ textarea {
 .up {
   padding-bottom : 2px;
 }
+
 // Pagination //
 .pagination {
   margin-bottom: 30px;
@@ -301,6 +378,7 @@ textarea {
 .imageContent {
   width: 100%;
 }
+
 // Modify and Delete //
 .buttonList {
   margin-right: 40px;
@@ -518,7 +596,7 @@ textarea {
   text-align: start;
   margin-left: 14%;
 }
-.profilButton {
+.deleteButton, .buttonModify, .buttonSave, .buttonCancel {
     font-size: 18px;
     padding: 5px 15px 5px 15px;
     margin: 15px 10px 20px 10px;
@@ -527,17 +605,46 @@ textarea {
       box-shadow: $shadow 1px 1px 5px;
     }
   }
-.red {
-  background-color: $red;
-}
-.grey {
-  background-color: $grey;
-}
 
 //----------------------- ADMIN ---------------------------//
+#headerAdmin{
+  display: flex;
+  height: 100px;
+}
+.logoAdmin{
+  width: 20%;
+  object-fit: contain;
+  position: relative;
+  left: 10%;
+}
+.navAdmin{
+  width: 70%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-right: 5%;
+}
+.linkAdmin{
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #2c3e50;
+  padding: 6% 2% 2% 2%;
+  text-decoration: none;
+  &.router-link-exact-active {
+      color: $red;
+  }
+}
+.linkAdmin:hover{
+  text-decoration: underline;
+}
+.IconDeco {
+  margin-right: 5px;
+  font-size: 22px;
+  color: #000000c4;
+}
 #bandeauAdmin {
   width: 70%;
-  background-color: #122c668f;
+  background-color: $bandeauColor;
   min-height: 89vh;
   & .listPublicationAdmin {
     margin: 0 0 25px 0;
@@ -590,7 +697,7 @@ textarea {
   width: 9%;
 }
 .IconCheck {
-  color: rgb(2, 179, 49);
+  color: $green;
 }
 .buttonAdmin {
   border: none;
@@ -632,7 +739,7 @@ textarea {
   }
 }
 .green:hover {
-  color: rgb(2, 179, 49);
+  color: $green;
 }
 .publicationStatus {
   display: flex;
@@ -694,5 +801,20 @@ textarea {
 }
 h1 {
   font-size: 4vh;
-}}
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0; 
+}
+.logo{
+    width: 80%;
+    padding: 10px 3px 10px 3px;
+}
+.navRegister {
+  display: none;
+}
+}
 </style>

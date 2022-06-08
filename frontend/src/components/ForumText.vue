@@ -18,9 +18,9 @@
         </div>
       </div>
       <div v-for="article in articles" :key="article.id" class="articleList">
-        <a :href = "article.id" class="lien shadow">
+        <router-link :to="{path: '/article/' + article.id}"  class="lien shadow">
           <div class="infoUser">
-            <img  v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
+            <img v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
             <div class="info">
               <div class="infoLeft">
@@ -58,7 +58,7 @@
               </div>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
       <div class="pagination">
         <div v-if="(this.page > 0 )">

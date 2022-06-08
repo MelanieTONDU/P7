@@ -13,9 +13,9 @@
         </label>
       </div>
       <p class="message">{{msg}}</p>
-      <button @click="connectAccount()" type="button" class="noBorder">Connexion</button>
+      <button @click="connectAccount()" type="button" class="connexion">Connexion</button>
       <div >
-        <p class="textUnderButton">Vous n'avez pas encore de compte ? <router-link to="/" class="link noBorder">S'inscrire</router-link></p>
+        <p class="textUnderButton">Vous n'avez pas encore de compte ? <router-link to="/" class="linkForm">S'inscrire</router-link></p>
       </div>
     </form>
   </div>
