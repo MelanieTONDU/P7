@@ -6,7 +6,6 @@ const Op = require("sequelize").Op;
 const fs = require('fs');
 
 exports.createArticle = (req, res, next) => {
-  console.log(req.body)
   const content = req.body.content;
   const users_id = req.auth.userId;
   const articleObject = req.body;

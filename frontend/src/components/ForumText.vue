@@ -109,7 +109,6 @@ export default {
       headers: {Authorization: "Bearer " + this.token}})
       .then(response => {
         this.articles = response.data.articles.rows;
-        console.log(this.articles)
         this.totalPages = response.data.totalPages - 1 ;
       })
       .catch(error => { 

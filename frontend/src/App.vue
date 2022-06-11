@@ -232,7 +232,7 @@ h2 {
   width: 80%;
 }
 #addPostTitle {
-  width: 80%;
+  width: 100%;
   height: 30px;
   margin-bottom: 15px;
   border-radius: 8px;

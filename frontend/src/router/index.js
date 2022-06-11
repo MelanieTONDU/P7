@@ -5,8 +5,8 @@ import OneArticle from '../views/OneArticle.vue'
 import ForumDiscussion from '../views/ForumDiscussion.vue'
 import ForumMultimedia from '../views/ForumMultimedia.vue'
 import ProfilView from '../views/ProfilView.vue'
-import ForumAdmin from '../views/ForumAdmin.vue'
-import OneArticleAdmin from '../views/OneArticleAdmin.vue'
+import ForumAdmin from '../views/Admin/ForumAdmin.vue'
+import OneArticleAdmin from '../views/Admin/OneArticleAdmin.vue'
 
 const routes = [
   {
@@ -48,7 +48,7 @@ const routes = [
     path: '/admin',
     name: 'forumAdmin',
     component: ForumAdmin,
-},
+  }
 ]
 
 const router = createRouter({
