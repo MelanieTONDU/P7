@@ -49,7 +49,7 @@ export default {
 	methods:{
 		createAccount() {
 			this.errorMessage();
-		if (this.valid.every(element => element == true)){
+			if (this.valid.every(element => element == true)){
 				const user = { lastName: this.lastName, firstName : this.firstName, email: this.email, password: this.password };
 				axios.post("http://localhost:3000/api/auth/signup", user)
 				.then(response => {
@@ -62,8 +62,8 @@ export default {
 						this.msg = 'Utilisateur déjà existant !'
 					}
 				})
-		}
-			},
+			}
+		},
 		errorMessage () {
 			let regex = /^[a-zA-Z/s]{2,20}$/;
 			let emailRegex = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/;

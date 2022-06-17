@@ -117,6 +117,7 @@ export default {
     },
     selectFile() {
       this.image = this.$refs.image.files[0];
+      console.log(this.image)
     },
     addPost() {
       const formData = new FormData();

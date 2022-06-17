@@ -25,7 +25,7 @@
                         <div class="contentComment">
                             <textarea v-if="(commentId == comment.id) && (this.modify == true)" v-model= this.newText ></textarea>
                             <p v-else class="comment">{{comment.text}}</p>
-                            <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonPublier">Modifier</button>
+                            <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonModifyComment">Modifier</button>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@ export default {
     methods : { 
         getComments() {
             this.article_id = window.location.href.split("/")[4];
-            axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment?size=" + this.size + "&page=" + this.page ,{
+            axios.get("http://localhost:3000/api/article/" + this.article_id + "/comment?size=3" + this.size + "&page=" + this.page ,{
             headers: {Authorization: "Bearer " + this.token}})
             .then(response => {
                 this.comments = response.data.comments.rows;
@@ -89,7 +89,7 @@ export default {
             })
         },
         addComment(){
-            if(this.text == null || this.text == "") {
+            if(this.text == null || this.text == "" || this.text == "") {
                 this.msg = 'Commentaire vide';
             }
             else {

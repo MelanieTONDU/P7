@@ -30,8 +30,7 @@ const errorHandler = error => {
       console.error(bind + ' is already in use.');
       process.exit(1);
       break;
-    default:
-      throw error;
+    default: throw error;
   }
 };
 
@@ -43,6 +42,5 @@ server.on('listening', () => {
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
   console.log('Listening on ' + bind);
 });
-
 
 server.listen(port);

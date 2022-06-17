@@ -23,13 +23,14 @@
         <h3 v-else id="title">{{this.article.title}}</h3>
       </div>
       <div v-if="this.article.imageUrl != null " class="contentImg ">
-        <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" class="imageArticle" ref="image" />
+        <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" class="imageArticle" ref="image" required/>
         <p v-else class="imageContent justify"><img class="imageArticle" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
       </div>
       <div v-else id="contentText">
         <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" ></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
+      <p class="message">{{msg}}</p>
       <button v-if=" (this.modify == true)" @click="changePost(article.id)" type="button" class="buttonPublier">Modifier</button>
     </form>
     <div class="like">
@@ -64,6 +65,7 @@ export default {
       article: "",
       article_id : "",
       modify : false,
+      msg : "",
       dayjs
     }
   },
@@ -100,6 +102,7 @@ export default {
     },
     selectFile() {
       this.image = this.$refs.image.files[0];
+      console.log(this.image)
     },
     deletePost() {
         let confirmation = confirm("Voulez-vous vraiment supprimer votre publication ?");
@@ -117,15 +120,29 @@ export default {
       this.title = this.article.title;
     },
     changePost() {
-      const formData = new FormData();
-        formData.append("title", this.title);
-        formData.append("content", this.content);
-        formData.append("image", this.image);
-      axios.put("http://localhost:3000/api/article/"  + this.article_id, formData, {headers: {Authorization: "Bearer " + this.token},})
-      .then(() => {
-        this.modify = false;
-        location.reload();
-      })
+      if ((this.image == "" || this.image == null) && (this.content == null || this.content == "")){
+        this.msg = "Publication vide";
+      }
+      else if (this.content == null) {
+        const formData = new FormData();
+          formData.append("title", this.title);
+          formData.append("image", this.image);
+        axios.put("http://localhost:3000/api/article/"  + this.article_id, formData, {headers: {Authorization: "Bearer " + this.token},})
+        .then(() => {
+          this.modify = false;
+          location.reload();
+        })
+      }
+      else {
+        const formData = new FormData();
+          formData.append("title", this.title);
+          formData.append("content", this.content);
+        axios.put("http://localhost:3000/api/article/"  + this.article_id, formData, {headers: {Authorization: "Bearer " + this.token},})
+        .then(() => {
+          this.modify = false;
+          location.reload();
+        })
+      }
     },
     addLike(){
       this.like = 1;

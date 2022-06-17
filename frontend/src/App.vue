@@ -34,7 +34,7 @@ textarea, input {
   display: flex;
   align-items: center;
 }
-.inscrire, .connexion, .link, .buttonPP, .modifyPPButton, .buttonPagination, .buttonPublier, .modify, .delete, .buttonLike, .thumbs, .addCommentText, .buttonPaginationComment, .deleteButton, .buttonModify, .buttonCancel, .buttonSave {
+.inscrire, .connexion, .link, .buttonPP, .modifyPPButton, .buttonPagination, .buttonPublier, .modify, .delete, .buttonLike, .thumbs, .addCommentText, .buttonPaginationComment, .deleteButton, .buttonModify, .buttonCancel, .buttonSave, .buttonModifyComment {
   border: none;
 }
 .bandeau, .infoUserName, .addPostContent, .articleList, .topAddPost, .addPost, .paginationContainer, .buttonLike, .addComment, .infoProfil, .visible {
@@ -46,7 +46,7 @@ textarea, input {
 .link, .message, .titlePPModify, .IconCross, .trash:hover, .trashComment:hover {
   color: $red;
 }
-.buttonPublier, .textPagination, .buttonPagination, .buttonPP, .deleteButton, .buttonModify, .buttonCancel, .buttonSave {
+.buttonPublier, .textPagination, .buttonPagination, .buttonPP, .deleteButton, .buttonModify, .buttonCancel, .buttonSave, .buttonModifyComment {
   color: white;
 }
 #formulaire, .lien, .publication, .buttonList button, .buttonLike, .user, #publicationAdmin, .buttonVisible, .header {
@@ -61,7 +61,7 @@ textarea, input {
 .job, .date, .briefcase, .thumbsPost, .buttonPaginationComment, .dateArticle, .pen, .thumbsgrey, .penComment, .dateComment {
   color: $grey;
 }
-.buttonPublier:hover, .shadow:hover, .thumbsPost, .buttonPagination:hover, .buttonPaginationComment:hover, .buttonList button, .thumbs, .buttonLike, .buttonListComment button, .modifyPPButton:hover, .deleteButton:hover, .buttonModify:hover, .buttonCancel:hover, .buttonSave:hover, .buttonAdmin:hover, .IconEye:hover {
+.buttonPublier:hover,.buttonModifyComment:hover, .shadow:hover, .thumbsPost, .buttonPagination:hover, .buttonPaginationComment:hover, .buttonList button, .thumbs, .buttonLike, .buttonListComment button, .modifyPPButton:hover, .deleteButton:hover, .buttonModify:hover, .buttonCancel:hover, .buttonSave:hover, .buttonAdmin:hover, .IconEye:hover {
   cursor: pointer;
 }
 .forum{
@@ -479,6 +479,7 @@ textarea {
   padding: 10px 20px 10px 20px;
   margin: 0px 25px 0 0;
   max-width: 80%;
+  min-width: 40%;
 }
 .commentTop {
   display: flex;
@@ -489,6 +490,21 @@ textarea {
   text-align: left;
   font-size: 1em;
   word-wrap : break-word;
+}
+.buttonModifyComment {
+  width: 30%;
+  margin: 10px 0 0 35%;
+  background-color: $red;
+  font-size: 18px;
+  padding: 5px 15px 5px 15px;
+  border-radius: 7px;
+  &:hover {
+    box-shadow: $shadow 1px 1px 5px;
+  }
+}
+.contentComment {
+  flex-direction: column;
+  display: flex;
 }
 .contentComment textarea{
   width: 98%;
@@ -515,7 +531,9 @@ textarea {
   margin: 0 0 0 15px;
   color: $darkRed;
 }
-
+.buttonListComment {
+  margin-left: 15px;
+}
 // ------------------PAGE DE PROFIL ------------------//
 .profil {
   min-height: 89vh;
@@ -615,7 +633,7 @@ textarea {
   width: 20%;
   object-fit: contain;
   position: relative;
-  left: 10%;
+  left: 40%;
 }
 .navAdmin{
   width: 70%;
@@ -759,7 +777,7 @@ textarea {
   padding: 0 10px 0 10px;
 }
 .numberCommentAdmin {
-  padding-top: 10px ;
+  padding: 10px 0 10px 0;
   font-weight: bold;
 }
 .commentAdmin {
