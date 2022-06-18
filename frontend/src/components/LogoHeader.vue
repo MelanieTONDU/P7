@@ -1,5 +1,5 @@
 <template>
-    <img class="logo" src="../assets/icon-left-font.png" alt="logo Groupomania"/>
+    <img class="logo" src="../assets/icon-left-font.webp" alt="logo Groupomania"/>
 </template>
 
 <script>

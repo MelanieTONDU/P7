@@ -3,7 +3,7 @@
     <div class="topPost">
       <div class="infoUser">
         <img  v-if="(this.userArticle.imageUrl  != null)" alt="Photo de profil" class="avatar_post" :src=" this.userArticle.imageUrl  " />
-        <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil" />
+        <img v-else  class="avatar_post" src="../assets/avatar.webp" alt="Photo de profil" />
         <div class="info">
           <div class="infoLeft">
             <p class="name" >{{this.userArticle.firstName}} {{this.userArticle.lastName}}</p>

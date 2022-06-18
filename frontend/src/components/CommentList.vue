@@ -4,7 +4,7 @@
         <p v-else class="commentNumber" >{{comments.length}} Commentaire</p>
         <form class="addComment">
             <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
-            <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
+            <img v-else  class="avatar_comment" src="../assets/avatar.webp" alt="Photo de profil"/>
             <textarea class="addCommentText" v-model="text" placeholder="Ajouter un commentaire..." required></textarea>
             <button class="buttonPublier" @click="addComment()" type="submit">Publier</button>
         </form>
@@ -13,7 +13,7 @@
             <div v-for="comment in comments" :key="comment.id" class="oneComment">
                 <div class="oneCommentTop">
                     <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
-                    <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
+                    <img v-else  class="avatar_comment" src="../assets/avatar.webp" alt="Photo de profil"/>
                     <div class="commentaire" >
                         <div class="commentTop">
                             <p class="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>

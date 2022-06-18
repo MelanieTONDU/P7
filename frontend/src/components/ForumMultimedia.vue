@@ -21,7 +21,7 @@
         <router-link :to="{path: '/article/' + article.id}" class="lien">
           <div class="infoUser">
             <img  v-if="(article.User.imageUrl != null)" class="avatar_post" :src=" article.User.imageUrl " alt="Photo de profil"/>
-            <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
+            <img v-else  class="avatar_post" src="../assets/avatar.webp" alt="Photo de profil"/>
             <div class="info">
               <div class="infoLeft">
                 <p class="name" >{{article.User.firstName}} {{article.User.lastName}}</p>
@@ -43,7 +43,7 @@
             <div v-for="comment in article.Comments" :key="comment.id" class="oneComment">
               <div v-if="(comment.visible == true)"  class="oneCommentTop">
                   <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>
-                  <img v-else  class="avatar_comment" src="../assets/avatar.png" alt="Photo de profil"/>
+                  <img v-else  class="avatar_comment" src="../assets/avatar.webp" alt="Photo de profil"/>
                   <div class="commentaire" >
                       <div class="commentTop">
                           <p class="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>

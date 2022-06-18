@@ -5,7 +5,7 @@
             <h3 class="titlePPModify" v-if="(this.modify == true )">Veuillez compléter les champs que vous souhaitez modifier : </h3>
             <div class="photoProfil">
                 <img  v-if="(this.user.imageUrl != null)" class="imagePP" :src=" this.user.imageUrl " alt="Photo de profil"/>
-                <img v-else  class="imagePP" src="../assets/avatar.png" alt="Photo de profil"/>
+                <img v-else  class="imagePP" src="../assets/avatar.webp" alt="Photo de profil"/>
                 <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" class="modifyPPButton">Modifier sa photo</button>
                 <div v-else class="changePP">
                     <input name="image" type="file" @change="selectFile()" class="addPP" ref="image" />

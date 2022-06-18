@@ -1,7 +1,7 @@
 <template>
     <div class="infoUser">
       <img  v-if="(this.user.imageUrl != null)" class="avatar_post" :src=" this.user.imageUrl " alt="Photo de profil"/>
-      <img v-else  class="avatar_post" src="../assets/avatar.png" alt="Photo de profil"/>
+      <img v-else  class="avatar_post" src="../assets/avatar.webp" alt="Photo de profil"/>
         <div class="infoUserName">
             <p class="name">{{user.firstName}} {{user.lastName}}</p>
             <p class="job"><fa icon="briefcase" class="briefcase"/>{{user.job}}</p>
