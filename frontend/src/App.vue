@@ -835,4 +835,21 @@ h1 {
   display: none;
 }
 }
+
+@media screen and (min-width:768px) and (max-width:1200px)
+{
+  .header {
+    gap: 8%;
+  }
+  .navRegister {
+    margin-right: 7%;
+  }
+  .logo {
+    width: 40%;
+  }
+  #formulaire {
+    width: 50%;
+    left: 25%;
+  }
+}
 </style>
