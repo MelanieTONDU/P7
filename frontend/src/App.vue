@@ -798,6 +798,7 @@ textarea {
 }
 
 //---------------- RESPONSIVE ------------------//
+// TELEPHONE //
 @media screen and (max-width:768px) {
 #formulaire{
   margin: 25% 0 35% 0;
@@ -836,6 +837,7 @@ h1 {
 }
 }
 
+// TABLETTE //
 @media screen and (min-width:768px) and (max-width:1200px)
 {
   .header {
