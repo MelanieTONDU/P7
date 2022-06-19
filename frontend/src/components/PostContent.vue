@@ -102,7 +102,6 @@ export default {
     },
     selectFile() {
       this.image = this.$refs.image.files[0];
-      console.log(this.image)
     },
     deletePost() {
         let confirmation = confirm("Voulez-vous vraiment supprimer votre publication ?");
