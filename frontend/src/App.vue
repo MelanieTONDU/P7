@@ -43,7 +43,7 @@ textarea, input {
 .forum, .infoUserName, .infoLeft, .addPostContent, .photoProfil, #infoUser, .listPublicationAdmin, #publicationAdmin {
   flex-direction: column;
 }
-.link, .message, .titlePPModify, .IconCross, .trash:hover, .trashComment:hover {
+.link, .titlePPModify, .IconCross, .trash:hover, .trashComment:hover {
   color: $red;
 }
 .buttonPublier, .textPagination, .buttonPagination, .buttonPP, .deleteButton, .buttonModify, .buttonCancel, .buttonSave, .buttonModifyComment {
@@ -253,6 +253,7 @@ textarea {
 }
 .message {
   margin: 15px 0 0 0;
+  color: $buttonRed;
 }
 .buttonPublier {
   background-color: $buttonRed;

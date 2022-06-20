@@ -27,7 +27,7 @@
         <p v-else class="imageContent justify"><img class="imageArticle" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
       </div>
       <div v-else id="contentText">
-        <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" ></textarea>
+        <textarea  v-if="((this.modify == true)  && (this.content != null))" v-model="content" aria-label="modifer publication"></textarea>
         <p v-else class="content" >{{this.article.content}}</p>
       </div>
       <p class="message">{{msg}}</p>
