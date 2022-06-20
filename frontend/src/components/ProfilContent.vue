@@ -101,7 +101,7 @@ export default {
             })
         },
         deleteUser() {
-            let confirmation = confirm("Voulez-vous vraiment supprimer votre publication ?");
+            let confirmation = confirm("Voulez-vous vraiment supprimer votre compte ?");
             if (confirmation == true) {
                 axios.delete("http://localhost:3000/api/auth/"  + this.userId,{
                 headers: {Authorization: "Bearer " + this.token}})
