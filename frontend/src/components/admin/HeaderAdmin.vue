@@ -3,7 +3,7 @@
         <LogoHeader class="logoAdmin"/>
         <nav class="navAdmin">
             <router-link to="/admin" class="linkAdmin">Liste des publications</router-link>
-            <router-link to="/login" @click="deco()" class="linkAdmin"><fa icon="arrow-right-from-bracket" class="IconDeco"/></router-link>
+            <router-link to="/login" @click="deco()" class="linkAdmin"><fa icon="arrow-right-from-bracket" class="IconDeco" aria-label="Déconnexion"/></router-link>
         </nav>
     </div>
 </template>

@@ -5,7 +5,7 @@
         <form class="addComment">
             <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_comment" src="../assets/avatar.webp" alt="Photo de profil"/>
-            <textarea class="addCommentText" v-model="text" placeholder="Ajouter un commentaire..." required></textarea>
+            <textarea class="addCommentText" v-model="text" placeholder="Ajouter un commentaire..." required aria-label="commentaire"></textarea>
             <button class="buttonPublier" @click="addComment()" type="submit">Publier</button>
         </form>
         <p class="messageComment">{{msg}}</p>
@@ -18,12 +18,12 @@
                         <div class="commentTop">
                             <p class="name">{{comment.User.firstName}} {{comment.User.lastName}}</p>
                             <div v-if="(this.userId == comment.User.id)" class="buttonListComment"> 
-                                <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment"/></button>
-                                <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment"/></button>
+                                <button class="modify" @click="modifyComment(comment.id)" type="button"><fa icon="pen" class="penComment" aria-label="modifer"/></button>
+                                <button class="delete" @click="deleteComment(comment.id)" type="button"><fa icon="trash" class="trashComment" aria-label="supprimer"/></button>
                             </div>
                         </div>
                         <div class="contentComment">
-                            <textarea v-if="(commentId == comment.id) && (this.modify == true)" v-model= this.newText ></textarea>
+                            <textarea v-if="(commentId == comment.id) && (this.modify == true)" v-model= this.newText aria-label="Modifier commentaire"></textarea>
                             <p v-else class="comment">{{comment.text}}</p>
                             <button v-if="(commentId == comment.id) &&  (this.modify == true)" @click="changeComment(comment.id)" type="button" class="buttonModifyComment">Modifier</button>
                         </div>

@@ -3,24 +3,16 @@
 		<form id="formulaire">
 			<h1>Créer un compte</h1>
 			<div class="form-group">
-				<label>
-					<input v-model="lastName" id="lastName" type="text" placeholder="Nom" required />
-				</label>
+				<input v-model="lastName" id="lastName" type="text" placeholder="Nom" required aria-label="lastname" />
 			</div>
 			<div class="form-group">
-				<label>
-					<input v-model="firstName" id="firstName" type="text" placeholder="Prénom" required />
-				</label>
+				<input v-model="firstName" id="firstName" type="text" placeholder="Prénom" required aria-label="firstname"/>
 			</div>
 			<div class="form-group">
-				<label>
-					<input v-model="email" id="email" placeholder="Email" type="email" required />
-				</label>
+				<input v-model="email" id="email" placeholder="Email" type="email" required aria-label="email"/>
 			</div>
 			<div class="form-group">
-				<label>
-					<input v-model="password" id="password" placeholder="Mot de passe"  type="password" required autocomplete="off"/>
-				</label>
+				<input v-model="password" id="password" placeholder="Mot de passe"  type="password" required autocomplete="off" aria-label="password"/>
 			</div>
 			<p class="message">{{msg}}</p>
 			<button :disabled="email && password && lastName && firstName == ''" @click="createAccount()" type="button" class=" inscrire">S'inscrire</button>

@@ -8,7 +8,7 @@
                 <img v-else  class="imagePP" src="../assets/avatar.webp" alt="Photo de profil"/>
                 <button v-if="(this.change == false)" @click="modifyAvatar()" type="button" class="modifyPPButton">Modifier sa photo</button>
                 <div v-else class="changePP">
-                    <input name="image" type="file" @change="selectFile()" class="addPP" ref="image" />
+                    <input name="image" type="file" @change="selectFile()" class="addPP" ref="image" aria-label="Ajouter une image"/>
                     <div>
                         <button  @click="addAvatar()" type="submit" class="buttonPP buttonSave"> Enregistrer</button>
                         <button @click="cancel()" type="button" class="buttonPP buttonCancel">Annuler</button>
@@ -19,12 +19,12 @@
                 <div class="infoProfil">
                     <p class="infoProfilDetail">Prénom : </p>
                     <p v-if="(this.modify == false)">{{user.firstName}}</p>
-                    <input v-else v-model="userEdit.firstName" type="text" id="firstName" :placeholder= user.firstName />
+                    <input v-else v-model="userEdit.firstName" type="text" id="firstName" :placeholder= user.firstName aria-label="firstname" />
                 </div>
                 <div class="infoProfil">
                     <p class="infoProfilDetail">Nom : </p>
                     <p v-if="(this.modify == false)">{{user.lastName}}</p>
-                    <input v-else v-model="userEdit.lastName" type="text" id="lastName" :placeholder= user.lastName />
+                    <input v-else v-model="userEdit.lastName" type="text" id="lastName" :placeholder= user.lastName aria-label="lastname"/>
                 </div>
                 <div v-if="(this.modify == false)" class="infoProfil">
                     <p class="infoProfilDetail">Email : </p>
@@ -32,12 +32,12 @@
                 </div>
                 <div v-if="(this.modify == true)" class="infoProfil">
                     <p class="infoProfilDetail">Nouveau mot de passe : </p>
-                    <input v-model="userEdit.password" type="password" id="password" :placeholder= user.password />
+                    <input v-model="userEdit.password" type="password" id="password" :placeholder= user.password aria-label="password"/>
                 </div>
                 <div class="infoProfil">
                     <p class="infoProfilDetail">Poste occupé : </p>
                     <p v-if="(this.modify == false)">{{user.job}}</p>
-                    <input v-else v-model="userEdit.job" type="text" id="job" :placeholder= user.job />
+                    <input v-else v-model="userEdit.job" type="text" id="job" :placeholder= user.job aria-label="job"/>
                 </div>
                 <div class="infoProfil">
                     <p class="infoProfilDetail">Date de création du compte :</p>

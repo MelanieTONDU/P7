@@ -7,8 +7,8 @@ $red : #FD2D01;
 $darkRed : #ff000098;
 $bandeauColor : #122c668f;
 $inputColor : #f2f2f2;
-$buttonRed : #FF0000;
-$grey : rgb(145, 145, 145);
+$buttonRed : #ec0000;
+$grey : rgb(87, 87, 87);
 $borderLine : #e0e0e0;
 $shadow : #888888;
 $backgroundPagination : #4E5166;
@@ -24,7 +24,7 @@ $green : rgb(2, 179, 49);
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
-body, .name, .job, .date, .textPagination, .dateArticle, .commentNumber {
+body, .name, .job, .date, .textPagination, .dateArticle, h3 {
   margin: 0;
 }
 textarea, input {
@@ -53,7 +53,7 @@ textarea, input {
   background-color: white;
 }
 .deleteButton, .buttonSave {
-  background-color : $red;
+  background-color : $buttonRed;
 }
 .buttonModify, .buttonCancel {
   background-color: $grey;
@@ -176,7 +176,7 @@ textarea, input {
 .linkForm {
   font-weight: bold;
   padding-left: 3px;
-  color: $red;
+  color: $buttonRed;
   &:hover {
     text-decoration: underline;
   }
@@ -221,7 +221,7 @@ textarea, input {
 
 //-------------- Forum text et multimedia --------------//
 // Ajouter un article //
-h2 {
+.addArticle {
   font-size: 1.5em;
   margin: 10px 0 0 0;
   padding-bottom: 7px;
@@ -255,7 +255,7 @@ textarea {
   margin: 15px 0 0 0;
 }
 .buttonPublier {
-  background-color: $red;
+  background-color: $buttonRed;
   font-size: 18px;
   padding: 5px 15px 5px 15px;
   margin: 5px 0 10px 0;
@@ -276,7 +276,7 @@ textarea {
   text-decoration: none;
   color: black;
 }
-.title {
+.h2 {
   font-weight: bold;
   font-size: 1.5em;
   margin-top: 0;
@@ -443,7 +443,7 @@ textarea {
 }
 
 // Commentaires //
-.commentNumber {
+.h3 {
   padding: 10px 0 10px 0;
   font-weight: bolder;
   font-size: 1.1em;
@@ -494,7 +494,7 @@ textarea {
 .buttonModifyComment {
   width: 30%;
   margin: 10px 0 0 35%;
-  background-color: $red;
+  background-color: $buttonRed;
   font-size: 18px;
   padding: 5px 15px 5px 15px;
   border-radius: 7px;

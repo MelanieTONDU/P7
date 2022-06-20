@@ -11,7 +11,7 @@
             <button v-if="(this.article.visible == true)" @click="hidden()" class="buttonVisible red"><fa icon="eye-slash" class="IconEye"/>Masquer cette publication</button>
             <button v-else @click="visible()" class="buttonVisible green"><fa icon="eye" class="IconEye"/>Rendre visible cette publication</button>
         </div>
-        <h3 id="title">{{this.article.title}}</h3>
+        <h1 id="title">{{this.article.title}}</h1>
         <div id="content">
             <p v-if="this.article.imageUrl != null " ><img  id="imageAdmin" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
             <p v-else class="content" >{{this.article.content}}</p>

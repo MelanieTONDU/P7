@@ -4,13 +4,13 @@
       <div class="articleList">
         <div class="lien">
           <div class="topAddPost">
-            <h2>Créer une publication</h2>
+            <h1 class="addArticle">Créer une publication</h1>
           </div>
           <InfoUser/>
           <div class="addPost ">
             <form class="addPostContent">
-              <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
-              <textarea id="addPostText" v-model="text" placeholder="Ecrivez quelque chose..." required></textarea>
+              <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required aria-label="title"/>
+              <textarea id="addPostText" v-model="text" placeholder="Ecrivez quelque chose..." required aria-label="publication"></textarea>
               <p class="message">{{msg}}</p>
               <button class="buttonPublier" @click="addPost()" type="submit">Publier</button>
             </form>
@@ -30,7 +30,7 @@
               <p class="date"><time >Publié le {{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
             </div>
           </div>
-          <p class="title">{{article.title}}</p>
+          <h2 class="title">{{article.title}}</h2>
           <p class="content">{{article.content}}</p>
           <div class="like">
             <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p>

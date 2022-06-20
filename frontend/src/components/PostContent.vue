@@ -13,17 +13,17 @@
       </div>
     <div class="buttonList">
       <p class="dateArticle"><time >Publié le {{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
-      <button v-if="(this.userId == this.article.users_id)" class="modify" @click="modifyPost()" type="button"><fa icon="pen" class="pen"/></button>
-      <button v-if="(this.userId == this.article.users_id)" @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash"/></button>
+      <button v-if="(this.userId == this.article.users_id)" class="modify" @click="modifyPost()" type="button"><fa icon="pen" class="pen" aria-label="modifier"/></button>
+      <button v-if="(this.userId == this.article.users_id)" @click="deletePost()" type="button" class="delete"><fa icon="trash" class="trash" aria-label="supprimer"/></button>
     </div>
     </div>
     <form id="content">
       <div id="titleOnePost">
-        <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" :placeholder= article.title />
+        <input v-if=" (this.modify == true)" v-model="title" type="text" id="title" :placeholder= article.title aria-label="titre"/>
         <h3 v-else id="title">{{this.article.title}}</h3>
       </div>
       <div v-if="this.article.imageUrl != null " class="contentImg ">
-        <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" class="imageArticle" ref="image" required/>
+        <input v-if="(this.modify == true) && (this.article.imageUrl != null)" name="image" type="file" @change="selectFile()" class="imageArticle" ref="image" required aria-label="modifier publication"/>
         <p v-else class="imageContent justify"><img class="imageArticle" :src=" this.article.imageUrl " alt="Image de la publication"/></p>
       </div>
       <div v-else id="contentText">

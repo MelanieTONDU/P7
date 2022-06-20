@@ -4,13 +4,13 @@
       <div class="articleList">
         <div class="lien">
           <div class="topAddPost">
-            <h2>Créer une publication</h2>
+            <h1>Créer une publication</h1>
           </div>
           <InfoUser/>
           <div class="addPost">
             <form id="addPostContent">
-              <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required/>
-              <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" required/>
+              <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required aria-label="tittle"/>
+              <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" required aria-label="Ajouter une image"/>
               <p class="message">{{msg}}</p>
               <button class="buttonPublier" @click="addPost()" type="submit">Publier</button>
             </form>
@@ -30,7 +30,7 @@
               <p class="date"><time >Publié le {{dayjs(article.createdAt).locale("fr").format("DD/MM/YY [à] HH[h]mm")}}</time></p>
             </div>
           </div>
-          <p class="title">{{article.title}}</p>
+          <h2 class="title">{{article.title}}</h2>
           <img class="image" :src = " article.imageUrl " alt="Image de la publication"/>
           <div class="like">
             <p class="likeLength">{{article.likes}}<fa icon="thumbs-up" class="thumbsPost up"/></p> 
@@ -39,7 +39,7 @@
             <p class="commentNumber">0 Commentaire</p>
           </div>
           <div v-else>
-            <p class="commentNumber">Commentaires récents</p>
+            <h3 class="commentNumber">Commentaires récents</h3>
             <div v-for="comment in article.Comments" :key="comment.id" class="oneComment">
               <div v-if="(comment.visible == true)"  class="oneCommentTop">
                   <img  v-if="(comment.User.imageUrl != null)" class="avatar_comment" :src=" comment.User.imageUrl " alt="Photo de profil"/>

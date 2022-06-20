@@ -3,14 +3,10 @@
     <form id="formulaire">
       <h1>Se connecter</h1>
       <div class="form-group">
-        <label>
-          <input v-model="email" id="email" placeholder="Email" type="email" required />
-        </label>
+        <input v-model="email" id="email" placeholder="Email" type="email" required aria-label="email"/>
       </div>
       <div class="form-group">
-        <label>
-          <input v-model="password" id="password" placeholder="Mot de passe" type="password" required autocomplete="off"/>
-        </label>
+        <input v-model="password" id="password" placeholder="Mot de passe" type="password" required autocomplete="off" aria-label="password"/>
       </div>
       <p class="message">{{msg}}</p>
       <button @click="connectAccount()" type="button" class="connexion">Connexion</button>
