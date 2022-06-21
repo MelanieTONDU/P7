@@ -6,7 +6,7 @@
             <img  v-if="(this.user.imageUrl != null)" class="avatar_comment" :src=" user.imageUrl " alt="Photo de profil"/>
             <img v-else  class="avatar_comment" src="../assets/avatar.webp" alt="Photo de profil"/>
             <textarea class="addCommentText" v-model="text" placeholder="Ajouter un commentaire..." required aria-label="commentaire"></textarea>
-            <button class="buttonPublier" @click="addComment()" type="submit">Publier</button>
+            <button class="buttonPublier" @click="addComment()" type="button">Publier</button>
         </form>
         <p class="messageComment">{{msg}}</p>
         <div class="commentsList">

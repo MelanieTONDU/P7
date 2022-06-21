@@ -4,7 +4,7 @@
       <div class="articleList">
         <div class="lien">
           <div class="topAddPost">
-            <h1>Créer une publication</h1>
+            <h1 class="addArticle">Créer une publication</h1>
           </div>
           <InfoUser/>
           <div class="addPost">
@@ -12,7 +12,7 @@
               <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required aria-label="tittle"/>
               <input name="image" type="file" @change="selectFile()" id="addPostImage" ref="image" required aria-label="Ajouter une image"/>
               <p class="message">{{msg}}</p>
-              <button class="buttonPublier" @click="addPost()" type="submit">Publier</button>
+              <button class="buttonPublier" @click="addPost()" type="button">Publier</button>
             </form>
           </div>
         </div>

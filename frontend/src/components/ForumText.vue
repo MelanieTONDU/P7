@@ -12,7 +12,7 @@
               <input id="addPostTitle" v-model="title" type="text" placeholder="Titre de la publication" maxlength="70" required aria-label="title"/>
               <textarea id="addPostText" v-model="text" placeholder="Ecrivez quelque chose..." required aria-label="publication"></textarea>
               <p class="message">{{msg}}</p>
-              <button class="buttonPublier" @click="addPost()" type="submit">Publier</button>
+              <button class="buttonPublier" @click="addPost()" type="button">Publier</button>
             </form>
           </div>
         </div>
