@@ -51,10 +51,12 @@ Page d'inscription :
 ![PageSignup](https://user-images.githubusercontent.com/97337779/181840529-687aad6d-560f-4003-85a8-b78e9ffa22bc.png)
 
 Page de publication :
+
 ![PublicationText](https://user-images.githubusercontent.com/97337779/181840832-8a5f9f52-66ea-4f6d-bbc5-27e53c27a71a.png)
 
 Exemple de publication: 
-![Capture d’écran (770)](https://user-images.githubusercontent.com/97337779/181842151-eef3afee-2a77-48f0-ad44-b8ff8bbe7665.png)
+![OnePublication](https://user-images.githubusercontent.com/97337779/181842216-9fa1a411-dcdf-4540-9ce3-0179db5d9dc4.png)
+
 
 Page de profil :
 ![Profil](https://user-images.githubusercontent.com/97337779/181841856-40589b1a-2a62-4ccd-afbc-de20a282b905.png)
