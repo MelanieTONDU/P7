@@ -48,3 +48,5 @@ nodemon server
 
 ## **Rendu visuel :**
 ![PageSignup](https://user-images.githubusercontent.com/97337779/181840529-687aad6d-560f-4003-85a8-b78e9ffa22bc.png)
+![PublicationText](https://user-images.githubusercontent.com/97337779/181840832-8a5f9f52-66ea-4f6d-bbc5-27e53c27a71a.png)
+![Compte](https://user-images.githubusercontent.com/97337779/181840851-5a20e12b-c896-4fe9-80c9-449b1c65f5db.png)
