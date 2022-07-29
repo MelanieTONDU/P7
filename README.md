@@ -47,7 +47,9 @@ nodemon server
 ```
 
 ## **Rendu visuel :**
-Page d'inscription : ![PageSignup](https://user-images.githubusercontent.com/97337779/181840529-687aad6d-560f-4003-85a8-b78e9ffa22bc.png)
+Page d'inscription :
+![PageSignup](https://user-images.githubusercontent.com/97337779/181840529-687aad6d-560f-4003-85a8-b78e9ffa22bc.png)
+Page de publication :
 ![PublicationText](https://user-images.githubusercontent.com/97337779/181840832-8a5f9f52-66ea-4f6d-bbc5-27e53c27a71a.png)
+Page de profil :
 ![Profil](https://user-images.githubusercontent.com/97337779/181841856-40589b1a-2a62-4ccd-afbc-de20a282b905.png)
-![ModifierProfil](https://user-images.githubusercontent.com/97337779/181841863-6fb63d90-c90e-4e73-b7cf-d868fbb26b88.png)
