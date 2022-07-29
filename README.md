@@ -46,7 +46,7 @@ Pour le backend, se placer à l'aide du terminal dans le dossier "backend" et ta
 nodemon server
 ```
 
-## **Rendu visuel :**
+## **Aperçu visuel :**
 ###  Page d'inscription :
 
 ![PageSignup](https://user-images.githubusercontent.com/97337779/181840529-687aad6d-560f-4003-85a8-b78e9ffa22bc.png)
